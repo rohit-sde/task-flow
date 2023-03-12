@@ -1,10 +1,10 @@
-import FormBody from '../components/FormBody/FormBody';
+import FormLayout from '../components/FormLayout/FormLayout';
 import clssses from'./App.module.scss';
 
 function App() {
 	return (
 		<div className={clssses.App}>
-			<FormBody formType="Login"/>
+			<FormLayout formType="Login"/>
 		</div>
 	);
 }
