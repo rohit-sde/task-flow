@@ -1,18 +1,53 @@
 import React, {useRef, useState} from 'react'
-import classes from './FormLogin.module.scss'
+import classes from './FormResetPassword.module.scss'
 import Input from '../../UI/Input/Input'
-import Button from './../../UI/Button/Button'
+import Button from '../../UI/Button/Button'
 import {Link, useHistory} from 'react-router-dom'
+import GetEmail from './GetEmail/GetEmail'
+import VerifyOTP from './VerifyOTP/VerifyOTP'
+import SetNewPassword from './SetNewPassword/SetNewPassword'
 
-const FormLogin = props => {
-	const emailRef = useRef();
+const FormResetPassword = props => {
+	// Possible States: getEmail, verifyOTP, setNewPassword
+	// const [state, setState] = useState('getEmail')
+	const [state, setState] = useState('setNewPassword')
+	const [resetPassError, setResetPassError] = useState('')
+
+	let render = null;
+	switch(state){
+		case 'verifyOTP':
+			render = <VerifyOTP/>
+			break;
+		case 'setNewPassword':
+			render = <SetNewPassword/>
+			break;
+		default:
+			render = <GetEmail/>
+			break;
+	}
+	return (
+		<div className={classes.FormResetPassword}>
+			<h2>Reset Password</h2>
+			{render}
+			<p className={classes.Error}>{resetPassError !== '' ? resetPassError: <br/>}</p>
+			<hr/>
+			<p className={classes.GoToLoginPage}>
+				{`Go to `}
+				<Link to="/login">Login</Link>
+				{` page`}
+			</p>
+		</div>
+	)
+
+
+	/* const emailRef = useRef();
 	const passwordRef = useRef();
 	const histroy = useHistory();
 	const [loginError, setLoginError] = useState('');
 	return (
 		<div className={classes.FormLogin}>
 			<h2>Login</h2>
-			<form id="loginForm">
+			<form id="resetPasswordForm">
 				<Input
 					label="Email"
 					attr={{
@@ -60,7 +95,7 @@ const FormLogin = props => {
 			</form>
 		</div>
 		
-	)
+	) */
 }
 
 const emailHandler = (e, setValue, setError) => {
@@ -79,4 +114,4 @@ const loginHandler = (e, emailRef, passwordRef, setLoginError) => {
 	console.log(password)
 	setLoginError("Whooore")
 }
-export default FormLogin
+export default FormResetPassword

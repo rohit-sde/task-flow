@@ -1,0 +1,56 @@
+$toneColor: blueviolet;
+@mixin inputTagDiv {
+	font-size: 1em;
+    width: 100%;
+	position: relative;
+}
+@mixin inputTag {
+	font-size: 1em;
+	padding: 0.9em;
+	border-radius: 5px;
+	border: 1px solid silver;
+	width: 100%;
+	outline: none;
+	&:focus{
+		border-color: $toneColor;
+		outline: 1px solid $toneColor;
+		+label{
+			animation: label 100ms ease-in 0s 1 normal forwards;
+		}
+	}
+	&::placeholder{
+		color: #b0b0b0;
+	}
+}
+@mixin inputTagLabel {
+	color: $toneColor;
+	display: inline-block;
+	padding: 1px 4px;
+	background-color: white;
+	position: absolute;
+	font-size: 1em;
+	z-index: 0;
+	left: 1em;
+	top: 0.75em;
+	color: #b0b0b0;
+}
+@mixin inputTagError {
+	margin: 0px;
+	color: red;
+	font-size: 0.8em;
+	margin-left: 1em;
+	margin-bottom: 0.9em;
+}
+
+@keyframes label {
+	0%{
+		z-index: 0;
+		top: 1em;
+	}
+	100%{
+		z-index: 0;
+		top: -0.75em;
+		font-size: 0.85em;
+		color: $toneColor;
+	}
+}

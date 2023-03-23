@@ -1,5 +1,5 @@
 @import './../../UI/mixins.scss';
-.FormLogin{
+.FormSignup{
 	padding: 0px 50px 30px;
 	>h2{
 		text-align: center;
@@ -13,12 +13,17 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		
+		>div[id="fname_lname_con"]{
+			width: 100%;
+		}
 		>hr{
 			align-self: stretch;
 			border-top: 1px solid $toneColor;
 			width: 90%;
 			margin-top: 0.8em;
 		}
+		
 	}
 }
 .Button{
@@ -40,5 +45,20 @@
 	padding: 0;
 	>a{
 		text-decoration: none;
+	}
+}
+@media only screen and (min-width: 450px) {
+	.FormSignup{
+		form{
+			div[id="fname_lname_con"]{
+				display: flex;
+			}
+			div[id="fname_div"]{
+				margin-right: 0.5em;
+			}
+			div[id="lname_div"]{
+				margin-left: 0.5em;
+			}
+		}
 	}
 }

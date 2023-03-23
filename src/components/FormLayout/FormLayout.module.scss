@@ -15,11 +15,12 @@
 .Login{
 	transform: translateY(-20%);
 }
-.SignUp{
-	
+.Signup{
+	transform: translateY(-15%);
+	width: 500px;
 }
-.RecoverPassword{
-	
+.ResetPassword{
+	transform: translateY(-20%);
 }
 .Logo{
     height: 120px;
@@ -44,6 +45,9 @@
 		background-color: white;
 		border-radius: 50%;
 		overflow: hidden;
+		background-repeat: no-repeat;
+		background-size: 70%;
+		background-position: center;
 	}
 
 	img{

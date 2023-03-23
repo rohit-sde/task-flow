@@ -1,5 +1,7 @@
 import React from 'react';
 import FormLogin from './FormLogin/FormLogin'
+import FormSignup from './FormSignup/FormSignup'
+import FormResetPassword from './FormResetPassword/FormResetPassword'
 import classes from './FormLayout.module.scss'
 import logo from './logo-transparent-192x192.png'
 import textImage from './task-cutive.JPG'
@@ -7,22 +9,25 @@ import textImage from './task-cutive.JPG'
 const FormLayout = props => {
 	let clsNames = [classes.FormLayout]
 	props.formType === 'Login' && clsNames.push(classes[props.formType])
+	props.formType === 'Signup' && clsNames.push(classes[props.formType])
+	props.formType === 'ResetPassword' && clsNames.push(classes[props.formType])
 	clsNames = clsNames.join(' ')
-	let text = Array.from({length: 10}, (v, i) => <p key={i*i}>{i}</p>)
 	// console.log(logo)
 
 	return (
 		<div className={clsNames}>
 			<div className={classes.Logo}>
-				<div>
-					<img src={logo} alt="Logo"/>
-				</div>
+				<div style={{backgroundImage: `url(${logo})`}}></div>
 			</div>
 			{/* Font Family used: https://fonts.google.com/specimen/Akronim */}
 			<div className={classes.taskCutiveImage} style={{backgroundImage: `url("${textImage}")`}}></div>
 			<hr/>
-			<div><FormLogin/></div>
-			<div>{text}</div>
+			<div>
+				{props.formType === 'Login' && <FormLogin/>}
+				{props.formType === 'Signup' && <FormSignup/>}
+				{props.formType === 'ResetPassword' && <FormResetPassword/>}
+			</div>
+			{/* <div>{Array.from({length: 10}, (v, i) => <p key={i*i}>{i}</p>)}</div> */}
 		</div>
 	)
 }

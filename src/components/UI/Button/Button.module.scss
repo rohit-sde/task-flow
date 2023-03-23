@@ -1,0 +1,35 @@
+$toneColor: blueviolet;
+$successButton: #00a000;
+.Button{
+	background-color: $toneColor;
+	color: white;
+	font-size: 1em;
+    padding: 0.8em 1.2em;
+    outline: none;
+    border: 1px solid $toneColor;
+	cursor: pointer;
+	letter-spacing: 0.8px;
+	&:hover{
+		background-color: #7725c3;
+	}
+	&:active{
+		background-color: #6420a3;
+	}
+	&:focus{
+		outline: 3px solid #d9b0ff;
+	}
+}
+.Success{
+	background-color: $successButton;
+	border-color: $successButton;
+
+	&:hover{
+		background-color: #008300;
+	}
+	&:active{
+		background-color: #007800;
+	}
+	&:focus{
+		outline: 3px solid #9ae39a;
+	}
+}
