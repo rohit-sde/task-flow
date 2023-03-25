@@ -9,7 +9,7 @@ const FormSignup = props => {
 	const lnameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const histroy = useHistory();
+	const history = useHistory();
 	const [loginError, setLoginError] = useState('');
 	return (
 		<div className={classes.FormSignup}>
@@ -67,7 +67,7 @@ const FormSignup = props => {
 				<Button
 					id="signup"
 					onClick={e => {
-						signupHandler.call(this, e, fnameRef, lnameRef, emailRef, passwordRef, setLoginError)
+						signupHandler.call(this, e, fnameRef, lnameRef, emailRef, passwordRef, setLoginError, history)
 					}}
 					>Signup</Button>
 				<p className={classes.Error}>{loginError !== '' ? loginError: <br/>}</p>
@@ -94,7 +94,7 @@ const emailHandler = (e, setValue, setError) => {
 const passwordHandler = (e, setValue, setError) => {
 	setValue(e.target.value)
 }
-const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, setLoginError) => {
+const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, setLoginError, history) => {
 	let fname = fnameRef.current.value
 	let lname = lnameRef.current.value
 	let email = emailRef.current.value
@@ -104,6 +104,8 @@ const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, setLoginErr
 	console.log(e)
 	console.log(email)
 	console.log(password)
+	console.log(history)
 	setLoginError("Whooore")
+	history.push('/verifyEmail')
 }
 export default FormSignup

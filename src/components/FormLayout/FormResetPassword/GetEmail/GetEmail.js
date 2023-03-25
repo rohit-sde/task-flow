@@ -16,6 +16,7 @@ const GetEmail = props => {
 				/>
 			<Button
 				id="sendOTP"
+				onClick={props.onClick}
 				>Send OTP</Button>
 		</form>
 	)

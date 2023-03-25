@@ -24,6 +24,7 @@ const SetNewPassword = props => {
 				/>
 			<Button
 				id="setNewPassword"
+				onClick={props.onClick}
 				>Set Password</Button>
 		</form>
 	)

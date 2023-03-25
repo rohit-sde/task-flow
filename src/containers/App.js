@@ -15,6 +15,9 @@ function App() {
 				<Route path="/resetPassword">
 					<FormLayout formType="ResetPassword"/>
 				</Route>
+				<Route path="/verifyEmail">
+					<FormLayout formType="VerifyEmail"/>
+				</Route>
 				<Route path="/">
 					<FormLayout formType="Login"/>
 				</Route>

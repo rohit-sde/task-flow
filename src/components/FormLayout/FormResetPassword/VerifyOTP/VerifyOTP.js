@@ -16,6 +16,7 @@ const VerifyOTP = props => {
 				/>
 			<Button
 				id="verifyOTP"
+				onClick={props.onClick}
 				>Verify OTP</Button>
 		</form>
 	)
