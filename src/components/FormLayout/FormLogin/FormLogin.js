@@ -3,12 +3,15 @@ import classes from './FormLogin.module.scss'
 import Input from '../../UI/Input/Input'
 import Button from './../../UI/Button/Button'
 import {Link, useHistory} from 'react-router-dom'
+import { connect } from 'react-redux'
+import * as actions from './../../../store/actions/index'
 
 const FormLogin = props => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const histroy = useHistory();
 	const [loginError, setLoginError] = useState('');
+	console.log(props.isLoggedIn)
 	return (
 		<div className={classes.FormLogin}>
 			<h2>Login</h2>
@@ -39,7 +42,8 @@ const FormLogin = props => {
 				<Button
 					id="login"
 					onClick={e => {
-						loginHandler.call(this, e, emailRef, passwordRef, setLoginError)
+						props.loginHandler(e, emailRef, passwordRef, setLoginError)
+						// loginHandler.call(this, e, emailRef, passwordRef, setLoginError)
 					}}
 					>Login</Button>
 				<p className={classes.Error}>{loginError !== '' ? loginError: <br/>}</p>
@@ -79,4 +83,15 @@ const loginHandler = (e, emailRef, passwordRef, setLoginError) => {
 	console.log(password)
 	setLoginError("Whooore")
 }
-export default FormLogin
+
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.auth
+	}
+}
+const mapDispatchToProps = dispatch => {
+	return {
+		loginHandler: (...args) => dispatch(actions.login(...args))
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(FormLogin)
