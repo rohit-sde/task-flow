@@ -1,3 +1,4 @@
+export const UPDATE_LOGGED_IN = 'UPDATE_LOGGED_IN'
 export const LOGIN = 'LOGIN'
 
 

@@ -19,6 +19,7 @@ const reducers = combineReducers({
 	task: tasksReducer
 })
 
+// eslint-disable-next-line no-unused-vars
 const logger = store => {
 	return next => {
 		return action => {
@@ -30,7 +31,7 @@ const logger = store => {
 	}
 }
 
-const store = createStore(reducers, composeEnhancers( applyMiddleware(logger, thunk) ))
+const store = createStore(reducers, composeEnhancers( applyMiddleware(thunk) ))
 
 ReactDOM.render(
 	<React.StrictMode>

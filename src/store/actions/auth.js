@@ -8,3 +8,12 @@ export const login = (e, email, pass) => {
 		pass
 	}
 }
+export const updateLoggedIn = (isLoggedIn, histroy) => {
+	if(histroy.location.pathname !== '/' && isLoggedIn){
+		histroy.push('/')
+	}
+	return {
+		type: constants.UPDATE_LOGGED_IN,
+		isLoggedIn
+	}
+}

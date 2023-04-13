@@ -11,7 +11,6 @@ const FormLogin = props => {
 	const passwordRef = useRef();
 	const histroy = useHistory();
 	const [loginError, setLoginError] = useState('');
-	console.log(props.isLoggedIn)
 	return (
 		<div className={classes.FormLogin}>
 			<h2>Login</h2>
