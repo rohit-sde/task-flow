@@ -9,26 +9,27 @@ export const login = (e, email, pass) => {
 		pass
 	}
 }
+export const updateAuth = (payload) => {
+	return {
+		type: constants.UPDATE_AUTH,
+		payload
+	}
+}
 export const updateLoadApp = (loadApp) => {
 	return {
 		type: constants.UPDATE_LOAD_APP,
 		loadApp
 	}
 }
-export const updateLoggedIn = (isLoggedIn, histroy) => {
-	if(histroy.location.pathname !== '/' && isLoggedIn){
-		histroy.push('/')
+export const updateLoggedIn = (isLoggedIn, history) => {
+	if(history.location.pathname !== '/' && isLoggedIn){
+		history.push('/')
 	}
 	return {
-		type: constants.UPDATE_LOGGED_IN,
-		isLoggedIn
-	}
-}
-const refreshTokenAction = (accessToken, refreshToken) => {
-	return {
-		type: constants.REFRESH_TOKEN,
-		accessToken,
-		refreshToken
+		type: constants.UPDATE_AUTH,
+		payload: {
+			isLoggedIn: true
+		}
 	}
 }
 export const refreshToken = (refreshToken, history) => {
@@ -40,12 +41,27 @@ export const refreshToken = (refreshToken, history) => {
 					if(res.data.status){
 						let data = res.data.data
 						const {accessToken, refreshToken} = data
+						/* 
+						console.log(0)
 						dispatch( refreshTokenAction(accessToken, refreshToken) )
-						dispatch( updateLoggedIn(true, history) )
+						console.log(1)
 						dispatch( updateLoadApp(true) )
+						console.log(2)
+						dispatch( updateLoggedIn(true, history) )
+						console.log(3)
+						 */
+						if(history.location.pathname !== '/'){
+							history.push('/')
+						}
+						dispatch( updateAuth({
+							accessToken,
+							refreshToken,
+							loadApp: true,
+							isLoggedIn: true
+						}) )
 					}
 					else{
-						console.log("error")
+						console.log("Refresh ...")
 					}
 				})
 		}
@@ -53,13 +69,4 @@ export const refreshToken = (refreshToken, history) => {
 			console.log('Axios error', e)
 		}
 	}
-
-	// let accessToken = ''
-	
-	// // history
-	// return {
-	// 	type: constants.REFRESH_TOKEN,
-	// 	accessToken,
-	// 	refreshToken
-	// }
 }
