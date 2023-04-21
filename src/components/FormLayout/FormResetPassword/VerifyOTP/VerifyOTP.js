@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './VerifyOTP.module.scss'
+// import classes from './VerifyOTP.module.scss'
 import Input from './../../../UI/Input/Input'
 import Button from './../../../UI/Button/Button'
 

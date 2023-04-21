@@ -19,21 +19,29 @@
 			width: 90%;
 			margin-top: 0.8em;
 		}
+		button{
+			margin-bottom: 1em;
+		}
 	}
 }
-.Button{
-	background-color: blueviolet;
-}
-.Button:hover{
-	background-color: #6622a5;
-}
-.Error{
+.Message{
 	@include inputTagError;
 	align-self: stretch;
 	text-align: center;
 	margin-left: 0;
-	margin-bottom: 0.4em;
-	margin-top: 0.2em;
+	margin-bottom: 0.6em;
+	margin-top: 0em;
+	padding: 0.5em;
+	font-size: 0.9em;
+	letter-spacing: 0.7px;
+}
+.Error{
+	background-color: #ffd4d4;
+	color: #df0000;
+}
+.Success{
+	background-color: #acefac;
+	color: #008500;
 }
 .ForgotPassword{
 	margin: 0;

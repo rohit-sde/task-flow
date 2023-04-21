@@ -33,6 +33,7 @@
 	margin: 0.5em auto;
 	letter-spacing: 1px;
 	background: -webkit-linear-gradient(45deg, blueviolet, #2b9ee2, blueviolet);
+	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }

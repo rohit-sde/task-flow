@@ -5,13 +5,23 @@ const Input = props => {
 	/* 
 		attr = {id, name}
 	*/
+	// console.log(props)
 	let initialValue = props.attr.value && typeof props.attr.value === 'string' ? props.attr.value : ''
 	delete props.attr.value
 	const [value, setValue] = useState( initialValue )
 	const [error, setError] = useState( '' )
 	let attr = ( (typeof props.attr) === (typeof {}) ) ? props.attr : {}
 	let div = ( (typeof props.div) === (typeof {}) ) ? props.div : {}
-	
+	let onChangeArgs = ( (typeof attr.args_on_change) === (typeof []) ) ? attr.args_on_change : []
+	// console.log(onChangeArgs)
+	let newAttr = {}
+	for (const key in attr) {
+		if (key !== 'args_on_change') {
+			newAttr[key] = attr[key]
+		}
+	}
+	attr = newAttr
+
 	let classNames = [classes.Input]
 	if(value !== '') classNames.push(classes.HideLabel)
 	return (
@@ -22,7 +32,8 @@ const Input = props => {
 				onChange={
 					(e) => {
 						if( (typeof props.attr.onChange) === typeof (()=>{}) ){
-							props.attr.onChange.call(null, e, setValue, setError)
+							// console.log(onChangeArgs)
+							props.attr.onChange.call(null, e, setValue, setError, ...onChangeArgs)
 						}
 						else{
 							setValue(e.target.value);

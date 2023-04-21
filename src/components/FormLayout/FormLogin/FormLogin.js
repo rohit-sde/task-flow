@@ -10,11 +10,18 @@ const FormLogin = props => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const histroy = useHistory();
-	const [loginError, setLoginError] = useState('');
+	const [message, setMessage] = useState({text: '', show: 0, error: 1});
 	return (
 		<div className={classes.FormLogin}>
 			<h2>Login</h2>
 			<form id="loginForm">
+				{
+					message.show ? (
+						<p className={classes.Message + ' ' + (message.error? classes.Error : classes.Success)}>
+							{message.text !== '' ? message.text: <br/>}
+						</p>
+					) : null
+				}
 				<Input
 					label="Email"
 					attr={{
@@ -24,7 +31,8 @@ const FormLogin = props => {
 						type: "text",
 						autoFocus: true,
 						ref: emailRef,
-						onChange: emailHandler
+						onChange: emailHandler,
+						args_on_change: [message, setMessage]
 					}}
 					/>
 				<Input
@@ -35,17 +43,17 @@ const FormLogin = props => {
 						name: "pass",
 						type: "password",
 						ref: passwordRef,
-						onChange: passwordHandler
+						onChange: passwordHandler,
+						args_on_change: [message, setMessage]
 					}}
 					/>
 				<Button
 					id="login"
 					onClick={e => {
-						props.loginHandler(e, emailRef, passwordRef, setLoginError)
+						props.loginHandler(e, emailRef, passwordRef, setMessage)
 						// loginHandler.call(this, e, emailRef, passwordRef, setLoginError)
 					}}
 					>Login</Button>
-				<p className={classes.Error}>{loginError !== '' ? loginError: <br/>}</p>
 				<p className={classes.ForgotPassword}>
 					<Link to="/resetPassword">Forgot Password</Link>
 				</p>
@@ -66,21 +74,51 @@ const FormLogin = props => {
 	)
 }
 
-const emailHandler = (e, setValue, setError) => {
+const emailHandler = (e, setValue, setError, message, setMessage) => {
 	setValue(e.target.value)
-}
-const passwordHandler = (e, setValue, setError) => {
-	setValue(e.target.value)
-}
-const loginHandler = (e, emailRef, passwordRef, setLoginError) => {
-	let email = emailRef.current.value
-	let password = passwordRef.current.value
 	
-	e.preventDefault()
-	console.log(e)
-	console.log(email)
-	console.log(password)
-	setLoginError("Whooore")
+	if(message.show) setMessage({...message, show: 0})
+	
+	if(e.target.dataset.checkValidation === undefined){
+		e.target.dataset.checkValidation = true		
+	}
+	else{
+		let errorMessage = '';
+		if(e.target.value === ''){
+			errorMessage = 'Email field is required.'
+		}
+		setError(errorMessage)
+	}
+
+	if(e.target.value === ''){
+		e.target.dataset.error = true
+	}
+	else{
+		e.target.dataset.error = false
+	}
+}
+const passwordHandler = (e, setValue, setError, message, setMessage) => {
+	setValue(e.target.value)
+
+	if(message.show) setMessage({...message, show: 0})
+
+	if(e.target.dataset.checkValidation === undefined){
+		e.target.dataset.checkValidation = true		
+	}
+	else{
+		let error = '';
+		if(e.target.value === ''){
+			error = 'Password field is required.'
+		}
+		setError(error)
+	}
+
+	if(e.target.value === ''){
+		e.target.dataset.error = true
+	}
+	else{
+		e.target.dataset.error = false
+	}
 }
 
 const mapStateToProps = state => {

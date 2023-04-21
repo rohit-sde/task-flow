@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react'
 import classes from './FormVerifyEmail.module.scss'
 import Input from '../../UI/Input/Input'
 import Button from './../../UI/Button/Button'
-import {Link, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 
 const FormVerifyEmail = props => {
 	const otpRef = useRef();

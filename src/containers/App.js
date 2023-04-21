@@ -17,6 +17,9 @@ const App = props => {
 			if(refreshToken){
 				props.refreshToken(refreshToken, history)
 			}
+			else{
+				props.updateLoadApp(true)
+			}
 			// props.updateLoggedIn(true, history)
 		}
 		// console.log(history)
@@ -93,6 +96,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
+		updateLoadApp: (...args) => dispatch( actions.updateLoadApp(...args) ),
 		refreshToken: (...args) => dispatch( actions.refreshToken(...args) )
 	}
 }
