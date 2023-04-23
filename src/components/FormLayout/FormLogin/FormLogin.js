@@ -5,6 +5,7 @@ import Button from './../../UI/Button/Button'
 import {Link, useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as actions from './../../../store/actions/index'
+import AlertMessage from '../../UI/AlertMessage/AlertMessage'
 
 const FormLogin = props => {
 	const emailRef = useRef();
@@ -15,12 +16,9 @@ const FormLogin = props => {
 		<div className={classes.FormLogin}>
 			<h2>Login</h2>
 			<form id="loginForm">
-				{
-					message.show ? (
-						<p className={classes.Message + ' ' + (message.error? classes.Error : classes.Success)}>
-							{message.text !== '' ? message.text: <br/>}
-						</p>
-					) : null
+				{ message.show ?
+					<AlertMessage error={message.error}>{message.text}</AlertMessage>
+					: null
 				}
 				<Input
 					label="Email"
