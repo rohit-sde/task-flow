@@ -71,7 +71,11 @@ const App = props => {
 										<FormLayout formType="ResetPassword"/>
 									</Route>
 									<Route path="/verifyEmail">
-										<FormLayout formType="VerifyEmail"/>
+										{
+											props.user.email !== null ?
+												<FormLayout formType="VerifyEmail"/>
+												: <Redirect to="/login"/>
+										}
 									</Route>
 								</>
 							)
@@ -91,7 +95,8 @@ const App = props => {
 const mapStateToProps = state => {
 	return {
 		isLoggedIn: state.auth.isLoggedIn,
-		loadApp: state.auth.loadApp
+		loadApp: state.auth.loadApp,
+		user: state.auth.user
 	}
 }
 const mapDispatchToProps = dispatch => {

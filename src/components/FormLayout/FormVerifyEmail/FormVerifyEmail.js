@@ -1,17 +1,34 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef, useState, useEffect} from 'react'
 import classes from './FormVerifyEmail.module.scss'
 import Input from '../../UI/Input/Input'
 import Button from './../../UI/Button/Button'
 import {useHistory} from 'react-router-dom'
+import AlertMessage from './../../UI/AlertMessage/AlertMessage'
+import { connect } from 'react-redux'
 
 const FormVerifyEmail = props => {
 	const otpRef = useRef();
 	const histroy = useHistory();
 	const [loginError, setLoginError] = useState('');
+	const [message, setMessage] = useState({text: '', show: 0, error: 1});
+	console.log(props.user)
+
+	useEffect(() => {
+		if(props.user.email !== null){
+			let text = <>OTP is sent to<b> {props.user.email}</b></>
+			setMessage({text: text, show: 1, error: 0})
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	return (
 		<div className={classes.VerifyEmail}>
 			<h2>Login</h2>
 			<form id="loginForm">
+				{ message.show ?
+					<AlertMessage error={message.error}>{message.text}</AlertMessage>
+					: null
+				}
 				<Input
 					label="OTP"
 					attr={{
@@ -60,4 +77,10 @@ const verifyEmailHandler = (e, emailRef, setLoginError) => {
 	console.log(email)
 	setLoginError("Whooore")
 }
-export default FormVerifyEmail
+
+const mapStateToProps = state => {
+	return {
+		user: state.auth.user
+	}
+}
+export default connect(mapStateToProps)(FormVerifyEmail)

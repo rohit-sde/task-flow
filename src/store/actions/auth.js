@@ -142,3 +142,70 @@ export const refreshToken = (refreshToken, history) => {
 		}
 	}
 }
+
+export const signUp = (data, formReset, setMessage, history) => {
+	/* 
+		data = {fname: ..., lname: ..., email: ..., pass: ...}
+	*/
+
+	return dispatch => {
+		try{
+			axios.post('/users', {...data} )
+				.then(res => {
+					console.log(res)
+					if(res.data.status){
+						setMessage({
+							text: 'You have signup susscessfully.',
+							show: 1,
+							error: 0
+						})
+						formReset()
+
+						let data = res.data.data
+						const {_id, fname, lname, email, role, verified} = data
+						
+						dispatch( updateAuth({
+							user: {_id, fname, lname, email, role, verified}
+						}) )
+						setTimeout( () => {
+							console.log("yesssss")
+							history.push('/verifyEmail')
+						}, 1000)
+					}
+					else{
+						if( (/Email already exists./).test(res.data.message) ){
+							setMessage({
+								text: 'Email already exists.',
+								show: 1,
+								error: 1
+							})
+						}
+						else{
+							console.log("Signup ...")
+						}
+					}
+				})
+		}
+		catch(e){
+			console.log('Axios error', e)
+		}
+	}
+}
+/* 
+
+{
+    "status": 1,
+    "data": {
+        "_id": "616ead0ae38a32262f9d619c",
+        "fname": "Test Fname",
+        "lname": "Lname",
+        "email": "demo@gmail.com",
+        "role": "user",
+        "verified": false,
+        "created_at": "2021-10-19T11:33:30.120Z",
+        "updated_at": "2021-10-19T11:33:30.120Z"
+    },
+    "message": "User created successfully."
+}
+
+*/

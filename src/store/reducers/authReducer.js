@@ -4,7 +4,15 @@ const initialState = {
 	loadApp: false,
 	isLoggedIn: false,
 	accessToken: null,
-	refreshToken: null
+	refreshToken: null,
+	user: {
+		_id: null,
+		fname: null,
+		lname: null,
+		email: null,
+		role: null,
+		verified: false
+	}
 }
 // const login = (state, action) => {
 // 	console.log("LOGIN - OK!")

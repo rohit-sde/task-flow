@@ -14,6 +14,11 @@ const Input = props => {
 	let div = ( (typeof props.div) === (typeof {}) ) ? props.div : {}
 	let onChangeArgs = ( (typeof attr.args_on_change) === (typeof []) ) ? attr.args_on_change : []
 	// console.log(onChangeArgs)
+
+	if(typeof props.setValue === typeof (()=>{})){
+		props.setValue(setValue)
+	}
+
 	let newAttr = {}
 	for (const key in attr) {
 		if (key !== 'args_on_change') {
@@ -48,45 +53,3 @@ const Input = props => {
 }
 
 export default Input;
-
-
-
-
-/* import React from 'react';
-import classes from './InputField.module.scss'
-
-const InputField = props => {
-	if(!props.id) throw new Error(`"id" attribute is Required.`)
-	if(!props.name) throw new Error(`"name" attribute is Required.`)
-	let attr = props.attr
-	let type = props.type
-	let div = props.div
-	let label = props.label
-	let error = props.error
-	if( (typeof attr) !== (typeof {}) ) attr = {}
-	if( (typeof type) !== (typeof '') ) type = 'text'
-	if( (typeof div) !== (typeof {}) ) div = {}
-	if( (typeof label) !== (typeof '') ){
-		label = null
-	}
-	label = <label for={props.id}>{label}</label>
-	if( (typeof error) !== (typeof '') || error === '' ){
-		error = <br/>
-	}
-	error = <p className={classes.Error}>{error}</p>
-	console.log(props)
-	return (
-		<div className={classes.InputField} {...div}>
-			<input
-				id={props.id}
-				type={type}
-				{...attr}
-				onChange={props.onChange}
-				/>
-			{label}
-			{error}
-		</div>		
-	);
-}
-
-export default InputField; */

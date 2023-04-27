@@ -6,7 +6,9 @@ const AlertMessage = props => {
 	cls.push( props.error ? classes.Error : classes.Success )
 	return (
 		<p className={cls.join(' ')}>
-			{props.children !== undefined ? props.children : <br/>}
+			{props.children !== undefined && props.children !== '' ?
+				props.children :
+				<br/>}
 		</p>
 	)
 }
