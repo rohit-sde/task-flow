@@ -6,8 +6,7 @@ const Input = props => {
 		attr = {id, name}
 	*/
 	// console.log(props)
-	let initialValue = props.attr.value && typeof props.attr.value === 'string' ? props.attr.value : ''
-	delete props.attr.value
+	let initialValue = (props.attr.value && typeof props.attr.value === typeof '') ? props.attr.value : ''
 	const [value, setValue] = useState( initialValue )
 	const [error, setError] = useState( '' )
 	let attr = ( (typeof props.attr) === (typeof {}) ) ? props.attr : {}
@@ -21,7 +20,7 @@ const Input = props => {
 
 	let newAttr = {}
 	for (const key in attr) {
-		if (key !== 'args_on_change') {
+		if (key !== 'args_on_change' && key !== 'value') {
 			newAttr[key] = attr[key]
 		}
 	}

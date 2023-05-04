@@ -25,10 +25,10 @@ const FormLayout = props => {
 			<div className={classes.taskCutiveImage} style={{backgroundImage: `url("${textImage}")`}}></div>
 			<hr/>
 			<div>
-				{props.formType === 'Login' && <FormLogin/>}
-				{props.formType === 'Signup' && <FormSignup/>}
-				{props.formType === 'ResetPassword' && <FormResetPassword/>}
-				{props.formType === 'VerifyEmail' && <FormVerifyEmail/>}
+				{props.formType === 'Login' && <FormLogin loginData={props.loginData}/>}
+				{props.formType === 'Signup' && <FormSignup loginData={props.loginData}/>}
+				{props.formType === 'ResetPassword' && <FormResetPassword loginData={props.loginData}/>}
+				{props.formType === 'VerifyEmail' && <FormVerifyEmail loginData={props.loginData}/>}
 			</div>
 			{/* <div>{Array.from({length: 10}, (v, i) => <p key={i*i}>{i}</p>)}</div> */}
 		</div>

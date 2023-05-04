@@ -10,8 +10,9 @@ import AlertMessage from '../../UI/AlertMessage/AlertMessage'
 const FormLogin = props => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const histroy = useHistory();
+	const history = useHistory();
 	const [message, setMessage] = useState({text: '', show: 0, error: 1});
+
 	return (
 		<div className={classes.FormLogin}>
 			<h2>Login</h2>
@@ -23,7 +24,7 @@ const FormLogin = props => {
 				<Input
 					label="Email"
 					attr={{
-						value: "",
+						value: "rajpal426a@gmail.com",
 						id: "email",
 						name: "email",
 						type: "text",
@@ -36,7 +37,7 @@ const FormLogin = props => {
 				<Input
 					label="Password"
 					attr={{
-						value: "",
+						value: "rajpal426a@A",
 						id: "pass",
 						name: "pass",
 						type: "password",
@@ -48,7 +49,7 @@ const FormLogin = props => {
 				<Button
 					id="login"
 					onClick={e => {
-						props.loginHandler(e, emailRef, passwordRef, setMessage)
+						props.loginHandler(e, emailRef, passwordRef, setMessage, history, props.loginData)
 						// loginHandler.call(this, e, emailRef, passwordRef, setLoginError)
 					}}
 					>Login</Button>
@@ -62,7 +63,7 @@ const FormLogin = props => {
 						styleType="Success"
 						onClick={e => {
 							e.preventDefault()
-							histroy.push('/signup')
+							history.push('/signup')
 						}}
 						>Create New Account</Button>
 				</p>

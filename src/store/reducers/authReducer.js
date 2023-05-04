@@ -11,7 +11,12 @@ const initialState = {
 		lname: null,
 		email: null,
 		role: null,
-		verified: false
+		verified: false,
+		verifyMeta: {
+			otp: null,
+            issued_at: null,
+            used_for: null
+		}
 	}
 }
 // const login = (state, action) => {

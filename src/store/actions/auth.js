@@ -1,15 +1,14 @@
 import * as constants from './constants'
 import axios from './../../axios'
 
-export const login = (e, emailRef, passRef, setLoginError) => {
+export const login = (e, emailRef, passRef, setLoginError, history, loginData) => {
+	const [login, setLogin] = loginData
 	let email = emailRef.current.value
 	let pass = passRef.current.value
 	console.log(email, pass)
 	e.preventDefault()
-	return dispatch => {
-		console.log(emailRef.current.dataset)
-		console.log(passRef.current.dataset)
-		console.dir(passRef.current.dataset)
+	return (dispatch, getState) => {
+		const state = getState()
 		let sendLoginRequest = false;
 
 		if(emailRef.current.dataset.checkValidation !== undefined && passRef.current.dataset.checkValidation !== undefined){
@@ -18,14 +17,14 @@ export const login = (e, emailRef, passRef, setLoginError) => {
 			}
 		}
 		else{
-			if(emailRef.current.dataset.checkValidation === undefined && passRef.current.dataset.checkValidation !== undefined){
+			if(email === '' && emailRef.current.dataset.checkValidation === undefined && passRef.current.dataset.checkValidation !== undefined){
 				setLoginError({
 					text: 'Email field is required.',
 					show: 1,
 					error: 1
 				})
 			}
-			else if(emailRef.current.dataset.checkValidation !== undefined && passRef.current.dataset.checkValidation === undefined){
+			else if(pass === '' && emailRef.current.dataset.checkValidation !== undefined && passRef.current.dataset.checkValidation === undefined){
 				setLoginError({
 					text: 'Password field is required.',
 					show: 1,
@@ -33,11 +32,16 @@ export const login = (e, emailRef, passRef, setLoginError) => {
 				})
 			}
 			else{
-				setLoginError({
-					text: 'Email & Password are required.',
-					show: 1,
-					error: 1
-				})
+				if(email !== '' && pass !== ''){
+					sendLoginRequest = true
+				}
+				else{
+					setLoginError({
+						text: 'Email & Password are required.',
+						show: 1,
+						error: 1
+					})
+				}
 			}
 		}
 		if( sendLoginRequest ){
@@ -48,23 +52,45 @@ export const login = (e, emailRef, passRef, setLoginError) => {
 				.then(res => {
 					if(res.data.status){
 						let data = res.data.data
-						console.log(data)
+						// console.log('response')
+						// console.log(data)
 						setLoginError({
 							text: 'Logged-in successfully.',
 							show: 1,
 							error: 0
 						})
+
 						setTimeout(() => {
-							localStorage.setItem('task-cutive-token', data.refreshToken)
-							dispatch({
-								type: constants.UPDATE_AUTH,
-								payload: {
-									accessToken: data.accessToken,
-									refreshToken: data.refreshToken,
-									isLoggedIn: true,
-									loadApp: true
+							const payload = {
+								user: {
+									...state.auth.user,
+									...data.user
 								}
-							})
+							}
+							
+							if(data.user.verified){
+								payload.accessToken = data.token.accessToken
+								payload.refreshToken = data.token.refreshToken
+								payload.isLoggedIn = true
+							}
+							
+							if(data.user.verified){
+								localStorage.setItem('task-cutive-token', data.token.refreshToken)
+								dispatch({
+									type: constants.UPDATE_AUTH,
+									payload: payload
+								})	
+							}
+							else{
+								dispatch({
+									type: constants.UPDATE_AUTH,
+									payload: payload
+								})
+								console.log('ji--')
+								setLogin({email: email, pass: pass, from: 'login'})
+								history.push('/verifyEmail')
+							}
+
 						}, 1000)
 					}
 					else{
@@ -143,32 +169,39 @@ export const refreshToken = (refreshToken, history) => {
 	}
 }
 
-export const signUp = (data, formReset, setMessage, history) => {
+export const signUp = (data, formReset, setMessage, history, loginData) => {
 	/* 
-		data = {fname: ..., lname: ..., email: ..., pass: ...}
+		data = {fname: ..., lname: ..., email: ..., pass: ..., sendOTP: ...}
 	*/
 
+	const sendData = {
+		...data,
+		sendOTP: true
+	}
 	return dispatch => {
-		try{
-			axios.post('/users', {...data} )
+		try{		
+			axios.post('/users', sendData )
 				.then(res => {
 					console.log(res)
 					if(res.data.status){
 						setMessage({
-							text: 'You have signup susscessfully.',
+							text: 'You have successfully Signed-Up.',
 							show: 1,
 							error: 0
 						})
 						formReset()
 
 						let data = res.data.data
-						const {_id, fname, lname, email, role, verified} = data
+						console.log(data)
+						const {_id, fname, lname, email, role, verified, verifyMeta} = data
 						
+						const [login, setLogin] = loginData;
+						setLogin({email: data.email, pass: data.pass, from: 'signup'})
+
 						dispatch( updateAuth({
-							user: {_id, fname, lname, email, role, verified}
+							user: {_id, fname, lname, email, role, verified, verifyMeta}
 						}) )
 						setTimeout( () => {
-							console.log("yesssss")
 							history.push('/verifyEmail')
 						}, 1000)
 					}

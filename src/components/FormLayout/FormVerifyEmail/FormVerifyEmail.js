@@ -10,59 +10,103 @@ const FormVerifyEmail = props => {
 	const otpRef = useRef();
 	const histroy = useHistory();
 	const [loginError, setLoginError] = useState('');
-	const [message, setMessage] = useState({text: '', show: 0, error: 1});
-	console.log(props.user)
-
+	// const [message, setMessage] = useState({text: <>OTP is sent to<b> {props.user.email}</b></>, show: 1, error: 0});
+	const [timer, setTimer] = useState(<div className={classes.Timer}><div><AlertMessage error={false}>OTP expires in 60 seconds.</AlertMessage></div></div>)
+	const [login, setLogin] = props.loginData
+	
 	useEffect(() => {
-		if(props.user.email !== null){
-			let text = <>OTP is sent to<b> {props.user.email}</b></>
-			setMessage({text: text, show: 1, error: 0})
-		}
+		setTimerFun(30, setTimer, () => {console.log('Hi'); setTimerFun(15, setTimer); })
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (
-		<div className={classes.VerifyEmail}>
-			<h2>Login</h2>
-			<form id="loginForm">
-				{ message.show ?
-					<AlertMessage error={message.error}>{message.text}</AlertMessage>
-					: null
-				}
-				<Input
-					label="OTP"
-					attr={{
-						value: "",
-						id: "emailVerifyOTP",
-						name: "emailVerifyOTP",
-						type: "text",
-						autoFocus: true,
-						ref: otpRef,
-						onChange: otpHandler
-					}}
-					/>
-				<Button
-					id="login"
-					onClick={e => {
-						verifyEmailHandler.call(this, e, otpRef, setLoginError)
-					}}
-					>Verify Email</Button>
-				<p className={classes.Error}>{loginError !== '' ? loginError: <br/>}</p>
-				<hr/>
-				<p>
-					<Button
-						id="newAccount"
-						styleType="Success"
-						onClick={e => {
-							e.preventDefault()
-							histroy.push('/signup')
-						}}
-						>Create New Account</Button>
-				</p>
-			</form>
-		</div>
-		
+		<>	
+			{login.from === 'login' && login.email !== null &&
+				(
+					<div className={classes.VerifyEmail}>
+						<h2>Verify Email</h2>
+						<form id="verifyEmailForm">
+							{/* { message.show ?
+								<AlertMessage error={message.error}>{message.text}</AlertMessage>
+								: null
+							} */}
+							{timer}
+							<Input
+								label="OTP"
+								attr={{
+									value: "",
+									id: "emailVerifyOTP",
+									name: "emailVerifyOTP",
+									type: "text",
+									autoFocus: true,
+									ref: otpRef,
+									onChange: otpHandler
+								}}
+								/>
+							<Button
+								id="login"
+								onClick={e => {
+									verifyEmailHandler.call(this, e, otpRef, setLoginError)
+								}}
+								>Verify Email</Button>
+							<p className={classes.Error}>{loginError !== '' ? loginError: <br/>}</p>
+							<hr/>
+							<p>
+								<Button
+									id="newAccount"
+									styleType="Success"
+									onClick={e => {
+										e.preventDefault()
+										histroy.push('/signup')
+									}}
+									>Create New Account</Button>
+							</p>
+						</form>
+					</div>
+				)
+			}
+			{login.from === 'signup' && login.email !== null &&
+				(
+					<>
+						Signup
+					</>
+				)
+			}
+			{login.from === 'resetPassword' && login.email !== null &&
+				(
+					<>
+						Reset Pass
+					</>
+				)
+			}
+		</>
 	)
+}
+
+const setTimerFun = (totalSeconds = 60, setTimer, callback ) => {
+	let seconds = totalSeconds
+	let interval = null
+
+	interval = setInterval(() => {
+		if(seconds >= 0){
+			let messageAlert = null
+			if(seconds > 10) messageAlert = <AlertMessage error={false}>OTP expires in {seconds} seconds.</AlertMessage>
+			else if(seconds > 0) messageAlert = <AlertMessage error={true}>OTP expires in {seconds} seconds.</AlertMessage>
+			else messageAlert = <AlertMessage error={true}>OTP expired</AlertMessage>
+			setTimer(
+				<div className={classes.Timer}>
+					<div>
+						{messageAlert}
+					</div>
+				</div>
+			)
+			if(seconds === 0 && typeof callback === typeof (()=>{}) ) callback()
+			seconds--
+		}
+		else{
+			clearInterval(interval)
+		}
+	}, 1000);
 }
 
 const otpHandler = (e, setValue, setError) => {

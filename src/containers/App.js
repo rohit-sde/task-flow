@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormLayout from '../components/FormLayout/FormLayout'
 import TaskLayout from '../components/TasksLayout/TasksLayout'
 import Loading from './../components/Loading/Loading'
@@ -10,6 +10,7 @@ import NotFound from './../components/NotFound/NotFound'
 
 const App = props => {
 	let history = useHistory()
+	const loginData = useState(null)
 	console.log('[App]', props)
 	useEffect(() => {
 		if(!props.isLoggedIn){
@@ -62,18 +63,18 @@ const App = props => {
 										<Redirect to="/login"/>
 									</Route>
 									<Route path="/login">
-										<FormLayout formType="Login"/>
+										<FormLayout formType="Login" loginData={loginData}/>
 									</Route>
 									<Route path="/signup">
-										<FormLayout formType="Signup"/>
+										<FormLayout formType="Signup" loginData={loginData}/>
 									</Route>
 									<Route path="/resetPassword">
-										<FormLayout formType="ResetPassword"/>
+										<FormLayout formType="ResetPassword" loginData={loginData}/>
 									</Route>
 									<Route path="/verifyEmail">
 										{
 											props.user.email !== null ?
-												<FormLayout formType="VerifyEmail"/>
+												<FormLayout formType="VerifyEmail" loginData={loginData}/>
 												: <Redirect to="/login"/>
 										}
 									</Route>

@@ -87,7 +87,7 @@ const FormSignup = props => {
 					id="signup"
 					onClick={e => {
 						const formResetFun = formReset.bind(null, setValueRef, setMessage)
-						signupHandler.call(this, e, fnameRef, lnameRef, emailRef, passwordRef, message, setMessage, props.signUp, formResetFun, history)
+						signupHandler.call(this, e, fnameRef, lnameRef, emailRef, passwordRef, message, setMessage, props.signUp, formResetFun, history, props.loginData)
 					}}
 					>Signup</Button>
 				<hr/>
@@ -214,7 +214,7 @@ const validate = (what, text) => {
 			return error
 	}
 }
-const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, message, setMessage, signUp, formReset, history) => {
+const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, message, setMessage, signUp, formReset, history, loginData) => {
 	e.preventDefault()
 
 	let fname = fnameRef.current.value
@@ -236,7 +236,7 @@ const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, message, se
 		})
 	}
 	else{
-		signUp({fname, lname, email, pass}, formReset, setMessage, history)
+		signUp({fname, lname, email, pass}, formReset, setMessage, history, loginData)
 	}
 }
 const formReset = (setValueRef, setMessage) => {
