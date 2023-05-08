@@ -24,7 +24,7 @@ const FormLogin = props => {
 				<Input
 					label="Email"
 					attr={{
-						value: "rajpal426a@gmail.com",
+						value: "",
 						id: "email",
 						name: "email",
 						type: "text",
@@ -37,7 +37,7 @@ const FormLogin = props => {
 				<Input
 					label="Password"
 					attr={{
-						value: "rajpal426a@A",
+						value: "",
 						id: "pass",
 						name: "pass",
 						type: "password",

@@ -2,11 +2,11 @@ import * as constants from './constants'
 import axios from './../../axios'
 
 export const login = (e, emailRef, passRef, setLoginError, history, loginData) => {
+	e.preventDefault()
 	const [login, setLogin] = loginData
 	let email = emailRef.current.value
 	let pass = passRef.current.value
-	console.log(email, pass)
-	e.preventDefault()
+	
 	return (dispatch, getState) => {
 		const state = getState()
 		let sendLoginRequest = false;
@@ -86,8 +86,7 @@ export const login = (e, emailRef, passRef, setLoginError, history, loginData) =
 									type: constants.UPDATE_AUTH,
 									payload: payload
 								})
-								console.log('ji--')
-								setLogin({email: email, pass: pass, from: 'login'})
+								setLogin({email: email, pass: pass, from: 'login', otpSent: false, otpResend: false})
 								history.push('/verifyEmail')
 							}
 
@@ -97,7 +96,7 @@ export const login = (e, emailRef, passRef, setLoginError, history, loginData) =
 						let message = res.data.message
 						if(message === 'Invalid Email/Password. [1]')
 							// Invalid Email
-							message = 'Invalid Email/Password.'
+							message = `Account doesn't exists. Signup first`
 						else if(message === 'Invalid Email/Password. [3]')
 							// Invalid Pass
 							message = 'Invalid Email/Password.'
@@ -168,7 +167,6 @@ export const refreshToken = (refreshToken, history) => {
 		}
 	}
 }
-
 export const signUp = (data, formReset, setMessage, history, loginData) => {
 	/* 
 		data = {fname: ..., lname: ..., email: ..., pass: ..., sendOTP: ...}
@@ -196,7 +194,7 @@ export const signUp = (data, formReset, setMessage, history, loginData) => {
 						const {_id, fname, lname, email, role, verified, verifyMeta} = data
 						
 						const [login, setLogin] = loginData;
-						setLogin({email: data.email, pass: data.pass, from: 'signup'})
+						setLogin({email: data.email, pass: data.pass, from: 'signup', otpSent: false, otpResend: false})
 
 						dispatch( updateAuth({
 							user: {_id, fname, lname, email, role, verified, verifyMeta}
