@@ -177,7 +177,7 @@ export const signUp = (data, formReset, setMessage, history, loginData) => {
 		sendOTP: true
 	}
 	return dispatch => {
-		try{		
+		try{
 			axios.post('/users', sendData )
 				.then(res => {
 					console.log(res)
@@ -188,14 +188,14 @@ export const signUp = (data, formReset, setMessage, history, loginData) => {
 							error: 0
 						})
 						formReset()
-
+						
 						let data = res.data.data
-						console.log(data)
+						
 						const {_id, fname, lname, email, role, verified, verifyMeta} = data
 						
 						const [login, setLogin] = loginData;
-						setLogin({email: data.email, pass: data.pass, from: 'signup', otpSent: false, otpResend: false})
-
+						setLogin({email: sendData.email, pass: sendData.pass, from: 'signup', otpSent: true, otpResend: false})
+						
 						dispatch( updateAuth({
 							user: {_id, fname, lname, email, role, verified, verifyMeta}
 						}) )

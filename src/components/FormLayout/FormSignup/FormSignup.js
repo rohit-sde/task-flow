@@ -14,7 +14,11 @@ const FormSignup = props => {
 	const passwordRef = useRef();
 
 	const setValueRef = {}
-	const setValueRefFun = (obj, field, setValueRef) => { obj[field] = setValueRef }
+	const setValueRefFun = (obj, field, setValueRef) => { 
+		// console.log(obj)
+		// console.log(field)
+		// console.log(setValueRef)
+		obj[field] = setValueRef }
 
 	const history = useHistory();
 	const [message, setMessage] = useState({text: '', show: 0, error: 1});
@@ -49,7 +53,6 @@ const FormSignup = props => {
 							id: "lname",
 							name: "lname",
 							type: "text",
-							autoFocus: true,
 							ref: lnameRef,
 							onChange: lnameHandler,
 							args_on_change: [message, setMessage]
@@ -64,7 +67,6 @@ const FormSignup = props => {
 						id: "email",
 						name: "email",
 						type: "text",
-						autoFocus: true,
 						ref: emailRef,
 						onChange: emailHandler,
 						args_on_change: [message, setMessage]

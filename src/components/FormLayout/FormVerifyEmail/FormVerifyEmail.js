@@ -13,7 +13,7 @@ const FormVerifyEmail = props => {
 	const history = useHistory();
 	const [loginError, setLoginError] = useState('');
 	// const [message, setMessage] = useState({text: <>OTP is sent to<b> {props.user.email}</b></>, show: 1, error: 0});
-	const defaultSecondsRef = useRef( 60 )
+	const defaultSecondsRef = useRef( 15 )
 	const [seconds, setSeconds] = useState( defaultSecondsRef.current )
 	const defaultTimerRef = useRef( <div className={classes.Timer}><div><AlertMessage error={seconds <= 10}>OTP expires in {seconds} seconds.</AlertMessage></div></div> )
 	const [timer, setTimer] = useState( defaultTimerRef.current )
@@ -31,7 +31,7 @@ const FormVerifyEmail = props => {
 		// console.log( !login.otpResend ? 'T' : 'F' )
 		// console.log( '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' )
 
-		if( !timerIsSet.current && login.from === 'login' && login.email !== null && login.otpSent && !login.otpResend ){
+		if( !timerIsSet.current && (login.from === 'login' || login.from === 'signup') && login.email !== null && login.otpSent && !login.otpResend ){
 			// console.log('[FormVerifyEmail] useEffect')
 			// console.log(login)
 			timerIsSet.current = true
@@ -163,9 +163,68 @@ const FormVerifyEmail = props => {
 			}
 			{login.from === 'signup' && login.email !== null &&
 				(
-					<>
-						Signup
-					</>
+					<div className={classes.VerifyEmail}>
+						<h2>Verify email</h2>
+						{!login.otpSent && login.otpResend &&
+							<>
+								<AlertMessage error>OTP expired.</AlertMessage>
+							</>
+						}
+						<form>
+							{login.otpSent && !login.otpResend &&
+								<>
+									{timer}
+									<div className={classes.OTP}>
+										<Input
+											label="OTP"
+											attr={{
+												value: "",
+												id: "VerifyOTP",
+												name: "VerifyOTP",
+												type: "text",
+												autoFocus: true,
+												autoComplete: 'off',
+												ref: otpRef,
+												onChange: otpHandler,
+												args_on_change: [setLoginError]
+											}}
+											/>
+									</div>
+									<Button
+										id="submitOTP"
+										onClick={e => {
+											submitOTPHandler.call(this, e, otpRef, intervalRef, props.loginData, props.user._id, props.auth, props.updateAuth, setLoginError, history)
+										}}
+										>Submit OTP</Button>
+								</>
+							}
+							{ !login.otpSent && login.otpResend &&
+								<>
+									<Button
+										id="resendOTP"
+										onClick={e => {
+											resendOTPHandler.call(this, e, props.user._id, props.loginData, timerIsSet, setLoginError, history)
+										}}
+										>Resend OTP</Button>
+								</>
+							}
+							<br/>
+							{loginError &&
+								<AlertMessage error>{loginError}</AlertMessage>
+							}
+							<hr/>
+							<p>
+								<Button
+									id="newAccount"
+									styleType="Success"
+									onClick={e => {
+										e.preventDefault()
+										history.push('/signup')
+									}}
+									>Create New Account</Button>
+							</p>
+						</form>
+					</div>
 				)
 			}
 			{login.from === 'resetPassword' && login.email !== null &&
@@ -291,6 +350,7 @@ const submitOTPHandler = (e, otpRef, intervalRef, loginData, userId, auth, updat
 				if(res.data.status){
 					
 					// login user
+					// console.log(login)
 					axios.post(`/users/login`, { userEmail: login.email, userPass: login.pass } )
 						.then(res => {
 							if(res.data.status){
