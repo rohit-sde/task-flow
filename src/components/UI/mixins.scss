@@ -3,6 +3,9 @@ $toneColor: blueviolet;
 	font-size: 1em;
     width: 100%;
 	position: relative;
+	br{
+		user-select: none;
+	}
 }
 @mixin inputTag {
 	font-size: 1em;
@@ -33,6 +36,7 @@ $toneColor: blueviolet;
 	left: 1em;
 	top: 0.75em;
 	color: #b0b0b0;
+	user-select: none;
 }
 @mixin inputTagError {
 	margin: 0px;

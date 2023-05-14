@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {forwardRef, useState} from 'react';
 import classes from './Input.module.scss'
 
-const Input = props => {
+const Input = (props, refObj) => {
+	// console.log(refObj)
 	/* 
 		attr = {id, name}
 	*/
@@ -26,6 +27,11 @@ const Input = props => {
 	}
 	attr = newAttr
 
+	const inputRef = {}
+	if(props.refSet && refObj.current[props.refSet]){
+		inputRef.ref = refObj.current[props.refSet]
+	}
+
 	let classNames = [classes.Input]
 	if(value !== '') classNames.push(classes.HideLabel)
 	return (
@@ -33,6 +39,7 @@ const Input = props => {
 			<input
 				value={value}
 				{...attr}
+				{...inputRef}
 				onChange={
 					(e) => {
 						if( (typeof props.attr.onChange) === typeof (()=>{}) ){
@@ -40,10 +47,11 @@ const Input = props => {
 							props.attr.onChange.call(null, e, setValue, setError, ...onChangeArgs)
 						}
 						else{
-							setValue(e.target.value);
+							setValue(e.target.value)
 						}
 					}
 				}
+				
 				/>
 			<label htmlFor={props.attr.id}>{props.label}</label>
 			<p className={classes.Error}>{error === '' ? <br/> : error}</p>
@@ -51,4 +59,4 @@ const Input = props => {
 	);
 }
 
-export default Input;
+export default forwardRef(Input)

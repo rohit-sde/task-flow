@@ -3,7 +3,7 @@ import axios from './../../axios'
 
 export const login = (e, emailRef, passRef, setLoginError, history, loginData) => {
 	e.preventDefault()
-	const [login, setLogin] = loginData
+	const [ , setLogin] = loginData
 	let email = emailRef.current.value
 	let pass = passRef.current.value
 	
@@ -193,7 +193,7 @@ export const signUp = (data, formReset, setMessage, history, loginData) => {
 						
 						const {_id, fname, lname, email, role, verified, verifyMeta} = data
 						
-						const [login, setLogin] = loginData;
+						const [ , setLogin] = loginData;
 						setLogin({email: sendData.email, pass: sendData.pass, from: 'signup', otpSent: true, otpResend: false})
 						
 						dispatch( updateAuth({
