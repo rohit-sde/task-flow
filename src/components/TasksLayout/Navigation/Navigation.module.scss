@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Playball&display=swap');
+
+$navigationHeight: 4em;
+$navigationBGcolor: blueviolet;
+.Navigation{
+	height: $navigationHeight;
+	background-color: $navigationBGcolor;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+
+	&::after{
+		content: '';
+		height: $navigationHeight;
+		background-color: $navigationBGcolor;
+		display: inline-block;
+		width: calc( (100vw - 100%) / 2 );
+		position: absolute;
+		left: 100%;
+		top: 0px;
+	}
+	&::before{
+		content: '';
+		height: $navigationHeight;
+		background-color: $navigationBGcolor;
+		display: inline-block;
+		width: calc( (100vw - 100%) / 2 );
+		position: absolute;
+		right: 100%;
+		top: 0px;
+	}
+}
+.Logo{
+	// background-color: salmon;
+	display: flex;
+	font-family: 'Playball', cursive;
+	a{
+		// background-color: red;
+		color: white;
+		text-decoration: none;
+		font-size: 2em;
+		margin: auto;
+		cursor: pointer;
+		padding: 3px 10px;
+		text-shadow: 1px 1px 1px cfcfcf;
+		box-shadow: 3px 3px 10px -6px white inset, 3px 3px 10px -8px black;
+		white-space: nowrap;
+	}
+}
+.NavLinks{
+	// margin-left: auto;
+
+	ul{
+		margin: 0px;
+		padding: 0px;
+		list-style-type: none;
+		height: $navigationHeight;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		li {
+			padding-left: 1.2em;
+			padding-right: 1.2em;
+			a{
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				color: white;
+				text-decoration: none;
+				letter-spacing: 1px;
+			}
+		}
+	}
+}
+.AddTask{
+	align-self: stretch;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	a{
+		svg{
+			color: white;
+		}
+
+		&:hover{
+			svg{
+				height: 2.4em;
+				background-color: #7b21cf;
+			}
+		}
+		&:active{
+			svg{
+				height: 2.4em;
+				background-color: #601aa1;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 920px) {
+	.Navigation{
+		padding-left: 1em;
+	}
+}
+@media screen and (max-width: 500px) {
+	.Logo{
+		a{
+			font-size: 1.5em;
+			padding: 3px 5px;
+			box-shadow: unset;
+		}
+	}
+}

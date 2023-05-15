@@ -9,7 +9,7 @@ const VerifyOTP = (props, refObj) => {
 	// console.log(props)
 	// console.log(refObj)
 
-	const defaultSeconds = 15
+	const defaultSeconds = 60
 	const defaultTimerRef = useRef( <div className={classes.Timer}><div><AlertMessage error={defaultSeconds <= 10}>OTP expires in {defaultSeconds} seconds.</AlertMessage></div></div> )
 	const timerHook = useState( defaultTimerRef.current )
 	const [timer, setTimer] = timerHook
