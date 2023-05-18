@@ -1,0 +1,96 @@
+$iconColor: #4e4e4e;
+.Date{
+	width: 6.5em;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	transform: translateY(-15%);
+	margin-right: 0.5em;
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+.Icon{
+	height: 60%;
+	width: 70%;
+	border-radius: 10%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 0 0 0.3em $iconColor inset,
+				0 1.2em 0 0 $iconColor inset;
+	
+	&::after, &::before{
+		content: '';
+		height: 15%;
+		width: 15%;
+		background-color: $iconColor;
+		position: absolute;
+		border-radius: 20% 20% 0 0;
+	}
+	&::after{
+		left: 20%;
+		bottom: 99%;
+	}
+	&::before{
+		right: 20%;
+		bottom: 99%;
+	}
+}
+.Day{
+	color: white;
+	font-size: 0.8em;
+	text-align: center;
+	// background-color: red;
+	line-height: 1.5em;
+}
+.MainDateCon{
+	display: flex;
+	// background-color: chocolate;
+	margin: 0px 7% 7% 7%;
+	flex-grow: 1;
+}
+.DateNum{
+	width: 50%;
+	// background-color: cyan;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	flex-grow: 0;
+	flex-shrink: 0;
+	font-size: 1.3em;
+}
+.MainDateConSub{
+	// background-color: chartreuse;
+	// margin-bottom: 7%;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 0px;
+	text-align: center;
+}
+.Month{
+	font-size: 0.9em;
+}
+.Year{
+	font-size: 0.7em;
+}
+.Flag{
+	// background-color: darkcyan;
+	position: absolute;
+	top: 1em;
+	right: -0.1em;
+	z-index: 1;
+
+	svg{
+		height: 1.8em;
+		width: 1.8em;
+	}
+
+	&[data-high-priority="1"]{
+		svg{
+			color: #ef2121;
+		}
+	}
+}
