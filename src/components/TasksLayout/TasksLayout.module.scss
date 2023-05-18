@@ -4,9 +4,6 @@ $app-width: 900px;
 	width: $app-width;
 	position: relative;
 }
-.TasksList{
-	background-color: white;
-}
 
 @media screen and (max-width: $app-width) {
 	.TasksLayout{

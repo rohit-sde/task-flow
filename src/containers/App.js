@@ -40,6 +40,9 @@ const App = props => {
 						{ props.isLoggedIn ?
 							(
 								<>
+									<Route path="/addTask">
+										hi
+									</Route>
 									<Route path="/" exact>
 										<TaskLayout/>
 									</Route>

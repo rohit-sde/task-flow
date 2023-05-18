@@ -5,6 +5,7 @@
 	// margin-right: 1em;
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 }
 .Done{
 	color: silver;

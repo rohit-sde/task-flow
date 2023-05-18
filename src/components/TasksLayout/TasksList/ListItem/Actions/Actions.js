@@ -10,18 +10,18 @@ const Actions = props => {
 		<div className={classes.Actions}>
 			<div className={classes.Done} data-taskdone="1">
 				<IconContext.Provider value={{size: '1.5em' }}>
-					<IoMdDoneAll tabindex="0"/>
+					<IoMdDoneAll tabIndex="0"/>
 				</IconContext.Provider>
 			</div>
 			<div className={classes.EditDelete}>
 				<div className={classes.Edit}>
 					<IconContext.Provider value={{size: '1.5em' }}>
-						<BiEdit tabindex="0"/>
+						<BiEdit tabIndex="0"/>
 					</IconContext.Provider>
 				</div>
 				<div className={classes.Delete}>
 					<IconContext.Provider value={{size: '1.5em' }}>
-						<MdDeleteOutline tabindex="0"/>
+						<MdDeleteOutline tabIndex="0"/>
 					</IconContext.Provider>
 				</div>
 			</div>

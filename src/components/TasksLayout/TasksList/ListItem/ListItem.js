@@ -10,6 +10,7 @@ const ListItem = props => {
 			<div className={classes.DataCon}>
 				<h2 className={classes.Title}>{props.task.title}</h2>
 				<p className={classes.Description}>{props.task.description}</p>
+				<p className={classes.AddedDate}>Added on: {props.task.created_at}</p>
 			</div>
 			<Actions />
 		</li>
