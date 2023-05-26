@@ -13,21 +13,35 @@ const App = props => {
 	const loginData = useState(null)
 	console.log('[App]', props)
 	useEffect(() => {
-		if(!props.isLoggedIn){
-			const refreshToken = localStorage.getItem('task-cutive-token');
-			if(refreshToken){
-				props.refreshToken(refreshToken, history)
-			}
-			else{
-				props.updateLoadApp(true)
-			}
-			// props.updateLoggedIn(true, history)
-		}
+		loginData[1](0)
+		// if(!props.isLoggedIn){
+		// 	const refreshToken = localStorage.getItem('task-cutive-token');
+		// 	if(refreshToken){
+		// 		props.refreshToken(refreshToken, history)
+		// 	}
+		// 	else{
+		// 		props.updateLoadApp(true)
+		// 	}
+		// 	// props.updateLoggedIn(true, history)
+		// }
 		// console.log(history)
 		console.log("[App] useEffect")
 		// console.log(props.isLoggedIn)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+
+	return (
+		<>
+			<Switch>
+				<Route path="/" exact>/</Route>
+				<Route path="/a">a</Route>
+				<Route path="/b">b
+					<Route path="/b/:x">/1</Route>
+				</Route>
+				<Route path="/c">c</Route>
+			</Switch>
+		</>
+	)
 
 	return (
 		<div className={clssses.App}>
@@ -40,9 +54,6 @@ const App = props => {
 						{ props.isLoggedIn ?
 							(
 								<>
-									<Route path="/addTask">
-										hi
-									</Route>
 									<Route path="/" exact>
 										<TaskLayout/>
 									</Route>

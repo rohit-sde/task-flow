@@ -7,7 +7,7 @@ const Date = props => {
 	let date = window.Date(props.date).split(' ')
 	// date = Date(date + '')
 	// console.log(date)
-	console.log( date )
+	// console.log( date )
 	// const event = new Date('August 19, 1975 23:15:30');
 	// console.log(event.toString());
 	

@@ -6,6 +6,8 @@ import {Switch, Route} from 'react-router-dom'
 import AddTask from './AddTask/AddTask'
 
 const TasksLayout = props => {
+	console.log('props')
+	console.log(props)
 
 	return (
 		<div className={classes.TasksLayout}>

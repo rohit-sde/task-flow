@@ -8,11 +8,11 @@ const TasksList = props => {
 	const [tasks, setTasks] = useState([])
 	
 	useEffect(() => {
-		console.log(localStorage.getItem('task-cutive-token'))
+		// console.log(localStorage.getItem('task-cutive-token'))
 		axios.post('/users/refreshToken', {
 			refreshToken: localStorage.getItem('task-cutive-token')
 		}).then(res => {
-			console.log(res.data)
+			// console.log(res.data)
 			if(res.data.status){
 				axios.get('/tasks',
 					{
