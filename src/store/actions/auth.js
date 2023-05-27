@@ -1,5 +1,6 @@
 import * as constants from './constants'
 import axios from './../../axios'
+import store from './../store'
 
 export const login = (e, emailRef, passRef, setLoginError, history, loginData) => {
 	e.preventDefault()
@@ -137,36 +138,39 @@ export const updateLoggedIn = (isLoggedIn, history) => {
 		}
 	}
 }
-export const refreshToken = (refreshToken, history) => {
+// export const refreshToken = () => new Promise( (resolve, reject) => {
+// 	console.log(store)
+// })
+// 	let token = localStorage.getItem('task-cutive-token')
 	
-	return dispatch => {
-		try{
-			axios.post('/users/refreshToken', {refreshToken} )
-				.then(res => {
-					if(res.data.status){
-						let data = res.data.data
-						const {accessToken, refreshToken} = data
+// 	if(token){
+// 		return dispatch => {
+// 			try{
+// 				axios.post( process.env.REACT_APP_API_HOST_BASE + 'users/refreshToken', {refreshToken: token} )
+// 				.then(res => {
+// 					if(res.data.status){
+// 						let data = res.data.data
+// 						const {accessToken, refreshToken} = data
 						
-						if(history.location.pathname !== '/'){
-							history.push('/')
-						}
-						dispatch( updateAuth({
-							accessToken,
-							refreshToken,
-							loadApp: true,
-							isLoggedIn: true
-						}) )
-					}
-					else{
-						console.log("Refresh ...")
-					}
-				})
-		}
-		catch(e){
-			console.log('Axios error', e)
-		}
-	}
-}
+// 						dispatch( updateAuth({
+// 							accessToken,
+// 							refreshToken
+// 						}) )
+// 					}
+// 					else{
+// 						console.log("Refresh ...")
+// 					}
+// 				})
+// 			}
+// 			catch(e){
+// 				console.log('Axios error', e)
+// 			}
+// 		}
+// 	}
+// 	else{
+// 		console.log('login first')
+// 	}
+// }
 export const signUp = (data, formReset, setMessage, history, loginData) => {
 	/* 
 		data = {fname: ..., lname: ..., email: ..., pass: ..., sendOTP: ...}

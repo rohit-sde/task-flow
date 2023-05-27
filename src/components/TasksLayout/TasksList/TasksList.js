@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import ListItem from './ListItem/ListItem'
 import classes from './TasksList.module.scss'
-import axios from './../../../axios'
+import axios, {axiosAuth} from './../../../axios'
 
 const TasksList = props => {
 

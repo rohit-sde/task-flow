@@ -7,11 +7,16 @@ import {Switch, Route, Redirect, useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as actions from './../store/actions/index'
 import NotFound from './../components/NotFound/NotFound'
+import {axiosAuth} from './../axios'
 
 const App = props => {
 	let history = useHistory()
 	const loginData = useState(null)
 	console.log('[App]', props)
+	setInterval(() => {
+		axiosAuth()
+	}, 3000)
+	// props.refreshToken()
 	useEffect(() => {
 		loginData[1](0)
 		// if(!props.isLoggedIn){
@@ -117,7 +122,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		updateLoadApp: (...args) => dispatch( actions.updateLoadApp(...args) ),
-		refreshToken: (...args) => dispatch( actions.refreshToken(...args) )
+		// refreshToken: (...args) => dispatch( actions.refreshToken(...args) )
 	}
 }
 
