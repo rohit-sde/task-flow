@@ -7,18 +7,48 @@ import {Switch, Route, Redirect, useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as actions from './../store/actions/index'
 import NotFound from './../components/NotFound/NotFound'
-import {axiosAuth} from './../axios'
+import {axiosAuth, refreshAccessToken} from './../axios'
 
 const App = props => {
 	let history = useHistory()
 	const loginData = useState(null)
 	console.log('[App]', props)
-	setInterval(() => {
-		axiosAuth()
-	}, 3000)
+	// setTimeout(() => {
+	// 	axiosAuth()
+	// 	setTimeout(() => {
+	// 		axiosAuth(axios => {
+	// 			console.log(axios)
+	// 			axios.get('tasks')
+	// 				.then(res => {
+	// 					console.log(res.data)
+	// 				})
+	// 		})
+	// 	}, 2000)
+	// }, 2000)
 	// props.refreshToken()
 	useEffect(() => {
-		loginData[1](0)
+		refreshAccessToken()
+			.then(res => {
+				// console.log(res)
+				props.updateAuth({
+					loadApp: true,
+					isLoggedIn: true
+				})
+			})
+			.catch(e => {
+				// console.log(e)
+				if(e === 'Login First.'){
+					props.updateAuth({
+						loadApp: true,
+						isLoggedIn: false
+					})
+				}
+				else{
+					window.alert('Something went wrong')
+				}
+			})
+
+		// loginData[1](0)
 		// if(!props.isLoggedIn){
 		// 	const refreshToken = localStorage.getItem('task-cutive-token');
 		// 	if(refreshToken){
@@ -35,18 +65,18 @@ const App = props => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	return (
-		<>
-			<Switch>
-				<Route path="/" exact>/</Route>
-				<Route path="/a">a</Route>
-				<Route path="/b">b
-					<Route path="/b/:x">/1</Route>
-				</Route>
-				<Route path="/c">c</Route>
-			</Switch>
-		</>
-	)
+	// return (
+	// 	<>
+	// 		<Switch>
+	// 			<Route path="/" exact>/</Route>
+	// 			<Route path="/a">a</Route>
+	// 			<Route path="/b">b
+	// 				<Route path="/b/:x">/1</Route>
+	// 			</Route>
+	// 			<Route path="/c">c</Route>
+	// 		</Switch>
+	// 	</>
+	// )
 
 	return (
 		<div className={clssses.App}>
@@ -59,7 +89,7 @@ const App = props => {
 						{ props.isLoggedIn ?
 							(
 								<>
-									<Route path="/" exact>
+									<Route path="/">
 										<TaskLayout/>
 									</Route>
 									<Route path="/login">
@@ -121,6 +151,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
+		updateAuth: (...args) => dispatch( actions.updateAuth(...args) ),
 		updateLoadApp: (...args) => dispatch( actions.updateLoadApp(...args) ),
 		// refreshToken: (...args) => dispatch( actions.refreshToken(...args) )
 	}

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import store from './store/store'
 import * as actions from './store/actions/index'
+import Base64 from 'crypto-js/enc-base64'
+import UTF8 from 'crypto-js/enc-utf8'
 
 const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_HOST_BASE,
@@ -10,23 +12,31 @@ const axiosInstance = axios.create({
         // return status >= 200 && status < 300; // default
     }
 });
-
-const axiosAuth = () => {
+const axiosAuth = (axiosCallback = (()=>{}) ) => {
     // const auth = store.getState().auth
     getAccessToken()
-    // return axios.create({
-    //     baseURL: 'http://localhost:5000/api/v1/',
-    //     mode: 'no-cors',
-    //     validateStatus: function (status) {
-    //         return true
-    //         // return status >= 200 && status < 300; // default
-    //     }
-    // });
-}
+        .then(res => {
+            console.log(res)
 
+            axiosCallback(
+                axios.create({
+                    baseURL: process.env.REACT_APP_API_HOST_BASE,
+                    mode: 'no-cors',
+                    validateStatus: function (status) {
+                        return true
+                        // return status >= 200 && status < 300; // default
+                    },
+                    headers: {
+                        Authorization: 'Bearer ' + res.accessToken
+                    }
+                }),
+            res.store,
+            res.updateStore)
+        })
+}
 const getAccessToken = () => new Promise( (resolve, reject) => {
     const state = store.getState()
-    console.log(state.auth)
+    // console.log(state.auth)
     const updateStore = payload => {
         store.dispatch(actions.updateAuth(payload))
     }
@@ -34,12 +44,21 @@ const getAccessToken = () => new Promise( (resolve, reject) => {
     
     const accessToken = state.auth.accessToken
     if(accessToken){
-        console.log(accessToken)
-        resolve(3)
+        let data = accessToken.split('.')[1]
+        data = Base64.parse( data )
+        data = UTF8.stringify( data )
+        data = JSON.parse(data)
+        // let lifeTime = data.exp -
+        let now = Math.floor( Date.now() / 1000 )
+        let diff = now - (data.exp - 10)
+        console.log('Token due time: ' + diff)
+        if(diff < 0){
+            isRefreshAccessTokenNeeded = false
+            resolve({accessToken, store, updateStore})
+        }
     }
-    console.log(2)
     if(isRefreshAccessTokenNeeded){
-        refreshAccessTokenFun()
+        refreshAccessToken()
             .then(res => {
                 resolve({accessToken: res.accessToken, store, updateStore})
             })
@@ -49,7 +68,7 @@ const getAccessToken = () => new Promise( (resolve, reject) => {
             })
     }
 } )
-const refreshAccessTokenFun = () => new Promise( (resolve, reject) => {
+const refreshAccessToken = () => new Promise( (resolve, reject) => {
     let token = localStorage.getItem('task-cutive-token')
     if(token){
         try{
@@ -67,19 +86,20 @@ const refreshAccessTokenFun = () => new Promise( (resolve, reject) => {
                     resolve( {accessToken, refreshToken} )
                 }
                 else{
-                    console.log("Refresh ...")
+                    reject( res )
                 }
             })
         }
         catch(e){
-            console.log('Axios error', e)
-            reject()
+            // console.log('Axios error', e)
+            reject( e )
         }
     }
     else{
         console.log('login first')
+        reject('Login First.')
     }
 })
 
 export default axiosInstance
-export {axiosAuth, getAccessToken}
+export {axiosAuth, refreshAccessToken}
