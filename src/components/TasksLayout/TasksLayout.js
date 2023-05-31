@@ -4,6 +4,7 @@ import classes from './TasksLayout.module.scss'
 import TasksList from './TasksList/TasksList'
 import {Switch, Route} from 'react-router-dom'
 import AddTask from './AddTask/AddTask'
+import FilterButtonNavigation from './FilterButtonNavigation/FilterButtonNavigation'
 
 const TasksLayout = props => {
 	console.log('props')
@@ -12,16 +13,38 @@ const TasksLayout = props => {
 	return (
 		<div className={classes.TasksLayout}>
 			<Navigation/>
+			
 			<Switch>
 				<Route path="/addTask">
 					<AddTask />
 				</Route>
-				<Route path="/">
-					<TasksList />
-				</Route>
+				<Route path="/tasks/:filter?/:page?/:pageNum?" render={ props => {
+					const params = props.match.params
+					let pageNum = 1
+					if(params.page === 'page'){
+						let x = Number( params.pageNum )
+						pageNum = (x < 1 || isNaN(x) ) ? 1 : x
+					}
+					let filter = params.filter
+					filter = (filter === 'pending' || filter === 'done') ? filter : 'all'
+					return (
+						<>
+							<FilterButtonNavigation active={filter}/>
+							<TasksList info={{page: pageNum, filter}} {...props}/>
+						</>
+					)
+				}} />
+				<Route path="/" render={ props => {
+					return (
+						<>
+							<FilterButtonNavigation active='all'/>
+							<TasksList info={{page: 1, filter: 'all'}} {...props} />
+						</>
+					)
+				}} />
 			</Switch>
 		</div>
 	)
 }
-
+// Possible filter values: all, done, pending
 export default TasksLayout

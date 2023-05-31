@@ -16,7 +16,7 @@ const axiosAuth = (axiosCallback = (()=>{}) ) => {
     // const auth = store.getState().auth
     getAccessToken()
         .then(res => {
-            console.log(res)
+            // console.log(res)
 
             axiosCallback(
                 axios.create({
