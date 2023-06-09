@@ -45,12 +45,13 @@ const TasksList = props => {
 					})
 			})
 		}
-
 		
 		console.log('[TasksList] useEffect')
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tasks.fetched])
 	useEffect( () => {
 		setTasks( {...tasksIS} )
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.info.page, props.info.filter])
 
 

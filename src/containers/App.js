@@ -12,7 +12,8 @@ import {axiosAuth, refreshAccessToken} from './../axios'
 const App = props => {
 	let history = useHistory()
 	const loginData = useState(null)
-	console.log('[App]', props)
+	console.log('[App]', {...props} )
+	console.log( props.loadApp, props.isLoggedIn )
 	// setTimeout(() => {
 	// 	axiosAuth()
 	// 	setTimeout(() => {
@@ -26,6 +27,7 @@ const App = props => {
 	// 	}, 2000)
 	// }, 2000)
 	// props.refreshToken()
+
 	useEffect(() => {
 		refreshAccessToken()
 			.then(res => {
@@ -64,6 +66,7 @@ const App = props => {
 		// console.log(props.isLoggedIn)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+
 
 	// return (
 	// 	<>

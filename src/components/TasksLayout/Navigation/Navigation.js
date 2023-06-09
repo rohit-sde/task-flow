@@ -11,11 +11,11 @@ const Navigation = props => {
 		<div className={classes.Navigation}>
 			<div className={classes.Logo}><Link to='/'>Task Cutive</Link></div>
 			<div className={classes.AddTask}>
-				<a href="/addTask" title="Profile">
+				<Link to="/addTask" title="Profile">
 					<IconContext.Provider value={{size: '2.5em' }}>
 						<IoAddCircleOutline/>
 					</IconContext.Provider>
-				</a>
+				</Link>
 			</div>
 			<div className={classes.NavLinks}>
 				<ul>

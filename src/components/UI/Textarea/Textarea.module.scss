@@ -1,0 +1,31 @@
+.Textarea{
+	// background-color: brown;
+
+	label{
+		color: blueviolet;
+		font-weight: bold;
+		display: inline-block;
+		padding: 0.4em 0.6em;
+		font-size: 1.4em;
+	}
+	textarea{
+		margin: 0.4em 0.6em;
+		outline: none;
+		border: 2px solid blueviolet;
+		font-size: 1em;
+		padding: 0.4em 0.6em;
+		width: 100%;
+		line-height: 1.6em;
+		height: 2.6em;
+		overflow-y: clip;
+		resize: vertical;
+
+		&::placeholder{
+			color: #c0c0c0;
+		}
+
+		&:focus{
+			outline: 3px solid #d9afff;
+		}
+	}
+}
