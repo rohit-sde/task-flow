@@ -3,6 +3,7 @@ import Textarea from '../../UI/Textarea/Textarea'
 import classes from './AddTask.module.scss'
 import Button from './../../UI/Button/Button'
 import AlertMessage from '../../UI/AlertMessage/AlertMessage'
+import DateTimePicker from '../../UI/DateTimePicker/DateTimePicker'
 import { axiosAuth } from '../../../axios'
 
 const AddTask = props => {
@@ -25,7 +26,8 @@ const AddTask = props => {
 				<Textarea
 					value=""
 					name="title"
-					stateObj={stateObj} label="Tasks"
+					stateObj={stateObj}
+					label="Tasks"
 					textarea={{
 						placeholder: "Enter brief title",
 						autoFocus: true
@@ -34,11 +36,15 @@ const AddTask = props => {
 					value=""
 					name="description"
 					stateObj={stateObj}
-					minRows={4}
 					label="Description"
+					minRows={4}
 					textarea={{
 						placeholder: "Enter more info about task"
 					}}/>
+				<DateTimePicker
+					name="due_datetime"
+					stateObj={stateObj}
+					label="Due date"/>
 				<div className={classes.ButtonCon}>
 					<Button id="addNewTask" onClick={addNewTaskHandler.bind(null, stateObj)}>Add task</Button>
 				</div>
