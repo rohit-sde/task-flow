@@ -1,5 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'
 import classes from './DateTimePicker.module.scss'
+import TextField from '@mui/material/TextField'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import DateTimePickerMUI from '@mui/lab/DateTimePicker'
 
 const DateTimePicker = props => {
 	let d = (new Date()).getTime()
@@ -12,7 +16,7 @@ const DateTimePicker = props => {
 	const ref = useRef(null)
 
 	useEffect(() => {
-		props.stateObj.DataTime = {
+		props.stateObj.dueDate = {
 			value: value,
 			more: {
 				valueIS,
@@ -24,28 +28,14 @@ const DateTimePicker = props => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 	useEffect(() => {
-		props.stateObj.DataTime.value = value
+		props.stateObj.dueDate.value = (new Date(value) ).toISOString()
 		console.log('[DateTimePicker] useEffect "[value]"')
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value])
 
-	let onChangeFun = e => {
-		console.log(e)
-		// if(typeof props.evChange === typeof (()=>{}) ){
-		// 	props.evChange.bind(null, setHeight.bind(null, e.target))
-		// }
-		// else{
-		// 	setHeight(e.target)
-		// 	setValue(e.target.value)
-		// }
-		// props.stateObj[props.name].more.e = e
-
-		// const messageHST = props.stateObj.messageHST
-		// if(messageHST){
-		// 	if(messageHST[0].show === 1){
-		// 		messageHST[1]({show: 0, error: 0, text: ''})
-		// 	}
-		// }
+	let onChangeFun = newValue => {
+		console.log(newValue)
+		setValue(newValue)
 	}
 	
 
@@ -57,37 +47,19 @@ const DateTimePicker = props => {
 
 	return (
 		<div className={classes.DataTimePicker}>
-			{value}
-			<label htmlFor={attr.id}>{props.label}</label><br/>
-			<textarea
-				ref={ref}
-				id=""
-				value={value}
-				{...attr}
-				onChange={onChangeFun}
-					></textarea>
+			<label>{props.label}</label>
+			<br/>
+			<div className={classes.Style} {...attr}>
+				<LocalizationProvider dateAdapter={AdapterDateFns}>
+					<DateTimePickerMUI
+						renderInput={(props) => <TextField {...props} />}
+						// label={props.label}
+						value={value}
+						onChange={onChangeFun} />
+				</LocalizationProvider>
+			</div>
 		</div>
 	)
-}
-
-const setHeight = ele => {
-	// const ele = e.target
-	const minrows = Number( ele.dataset.minrows )
-	const oneRowHeight = 25
-
-	let scroll = ele.scrollHeight
-	const x = 4 - 0.8
-	// console.log( getComputedStyle(ele).height )
-	// console.log(scroll)
-	ele.style.height = scroll + x + 'px'
-	while(scroll !== ele.scrollHeight){
-		// console.log(scroll)
-		scroll = ele.scrollHeight
-		ele.style.height = scroll + x + 'px'
-	}
-	if( Math.floor( (scroll + x) / oneRowHeight) < minrows ){
-		ele.style.height = ( (scroll + x) % oneRowHeight ) + (oneRowHeight * minrows) + 'px'
-	}
 }
 
 export default DateTimePicker

@@ -18,7 +18,7 @@ const TasksList = props => {
 		if( !tasks.fetched ) {
 			// setTasks( {...tasksIS} )
 			let queryParams = {
-				perPage: 2,
+				perPage: 10,
 				page: props.info.page
 			}
 			if(props.info.filter === 'done' || props.info.filter === 'pending'){

@@ -8,24 +8,34 @@
 		padding: 0.4em 0.6em;
 		font-size: 1.2em;
 	}
-	textarea{
-		margin: 0.4em 0.6em;
-		outline: none;
-		border: 2px solid blueviolet;
-		font-size: 1em;
+	div{
 		padding: 0.4em 0.6em;
-		width: 100%;
-		line-height: 1.6em;
-		height: 2.6em;
-		overflow-y: clip;
-		resize: vertical;
-
-		&::placeholder{
-			color: #c0c0c0;
-		}
-
-		&:focus{
-			outline: 3px solid #d9afff;
+		textarea{
+			outline: none;
+			border: 2px solid blueviolet;
+			font-size: 1em;
+			padding: 0.4em 0.6em;
+			width: 100%;
+			line-height: 1.6em;
+			height: 2.6em;
+			overflow-y: clip;
+			resize: vertical;
+			
+			&::placeholder{
+				color: #c0c0c0;
+			}
+			
+			&:focus{
+				outline: 3px solid #d9afff;
+			}
 		}
 	}
+}
+
+.Required{
+	color: red;
+	font-size: 0.7em;
+	font-weight: normal;
+	display: inline-block;
+	transform: translateY(-0.15em);
 }

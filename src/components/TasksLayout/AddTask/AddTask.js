@@ -5,11 +5,14 @@ import Button from './../../UI/Button/Button'
 import AlertMessage from '../../UI/AlertMessage/AlertMessage'
 import DateTimePicker from '../../UI/DateTimePicker/DateTimePicker'
 import { axiosAuth } from '../../../axios'
+import Radiogroup from '../../UI/RadioGroup/RadioGroup'
+import { useHistory } from 'react-router'
 
 const AddTask = props => {
 	const stateObj = {}
 	const messageHST = useState({error: 1, show: 0, text: ''})
 	stateObj.messageHST = messageHST
+	stateObj.history = useHistory()
 	const [message] = messageHST
 
 	return (
@@ -30,7 +33,8 @@ const AddTask = props => {
 					label="Tasks"
 					textarea={{
 						placeholder: "Enter brief title",
-						autoFocus: true
+						autoFocus: true,
+						required: true
 					}}/>
 				<Textarea
 					value=""
@@ -41,10 +45,25 @@ const AddTask = props => {
 					textarea={{
 						placeholder: "Enter more info about task"
 					}}/>
-				<DateTimePicker
-					name="due_datetime"
-					stateObj={stateObj}
-					label="Due date"/>
+				<div className={classes.InputCon}>
+					<div>
+						<DateTimePicker
+							name="due_datetime"
+							stateObj={stateObj}
+							label="Due date"/>
+					</div>
+					<div>
+						<Radiogroup
+							stateObj={stateObj}
+							label="Priority"
+							data={[
+								{label: 'High', name: 'priority', value: '1'},
+								{label: 'Normal', name: 'priority', value: '0'}
+							]}
+							value="0"
+							/>
+					</div>
+				</div>
 				<div className={classes.ButtonCon}>
 					<Button id="addNewTask" onClick={addNewTaskHandler.bind(null, stateObj)}>Add task</Button>
 				</div>
@@ -73,10 +92,35 @@ const addNewTaskHandler = (stateObj, e) => {
 
 	if(title === ''){
 		setMessage({show: 1, error: 1, text: 'Title is Required.'})
+		stateObj.title.more.ref.current.focus()
 		return
 	}
 
-	// axiosAuth
+	const p = stateObj.priority.value;
+	const isHighPriority = (p === '1' || p === 1 || p === true) ? true : false
+	const data = {
+		title: stateObj.title.value,
+		description: stateObj.description.value,
+		dueDatetime: stateObj.dueDate.value,
+		isHighPriority,
+	}
+	// console.log(data)
+	// console.log(stateObj)
+	axiosAuth(axios => {
+		axios.post('tasks', data)
+			.then(res => {
+				// console.log(res)
+				if(res.data.status){
+					stateObj.history.push('/')
+				}
+				else{
+					console.log(res.data)
+				}
+			})
+			.catch(e => {
+				// console.log(e)
+			})
+	})
 }
 
 export default AddTask

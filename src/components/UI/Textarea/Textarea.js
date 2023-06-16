@@ -48,14 +48,20 @@ const Textarea = props => {
 
 	return (
 		<div className={classes.Textarea}>
-			<label htmlFor={textareaAttr.id}>{props.label}</label><br/>
-			<textarea
-				ref={ref}
-				id=""
-				value={value}
-				{...textareaAttr}
-				onChange={onChangeFun}
-					></textarea>
+			<label htmlFor={textareaAttr.id}>{props.label}</label>
+			{props.textarea.required === true ?
+				<span className={classes.Required}>(Required)</span> :
+				null}
+			<br/>
+			<div>
+				<textarea
+					ref={ref}
+					id=""
+					value={value}
+					{...textareaAttr}
+					onChange={onChangeFun}
+						></textarea>
+			</div>
 		</div>
 	)
 }
