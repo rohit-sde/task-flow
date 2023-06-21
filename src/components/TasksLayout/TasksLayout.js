@@ -26,7 +26,7 @@ const TasksLayout = props => {
 						pageNum = (x < 1 || isNaN(x) ) ? 1 : x
 					}
 					let filter = params.filter
-					filter = (filter === 'pending' || filter === 'done') ? filter : 'all'
+					filter = (filter === 'pending' || filter === 'done' || filter === 'recent') ? filter : 'upcoming'
 					return (
 						<>
 							<FilterButtonNavigation active={filter}/>
@@ -37,8 +37,8 @@ const TasksLayout = props => {
 				<Route path="/" render={ props => {
 					return (
 						<>
-							<FilterButtonNavigation active='all'/>
-							<TasksList info={{page: 1, filter: 'all'}} {...props} />
+							<FilterButtonNavigation active='upcoming'/>
+							<TasksList info={{page: 1, filter: 'upcoming'}} {...props} />
 						</>
 					)
 				}} />

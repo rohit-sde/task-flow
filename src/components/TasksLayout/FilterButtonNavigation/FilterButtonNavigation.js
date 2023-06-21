@@ -8,8 +8,12 @@ const FilterButtonNavigation = props => {
 			<div>
 				<Link
 					to='/'
-					className={classes.FilterButton + (props.active === 'all' ? ' ' + classes.FilterButtonActive : '' )}
-					>All Tasks</Link>
+					className={classes.FilterButton + (props.active === 'upcoming' ? ' ' + classes.FilterButtonActive : '' )}
+					>Upcoming</Link>
+				<Link
+					to='/tasks/recent/page/1'
+					className={classes.FilterButton + (props.active === 'recent' ? ' ' + classes.FilterButtonActive : '' )}
+					>Recent</Link>
 				<Link
 					to='/tasks/done/page/1'
 					className={classes.FilterButton + (props.active === 'done' ? ' ' + classes.FilterButtonActive : '' )}

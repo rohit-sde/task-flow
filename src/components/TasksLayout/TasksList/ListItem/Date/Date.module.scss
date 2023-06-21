@@ -3,15 +3,19 @@ $iconColor: #4e4e4e;
 	width: 6.5em;
 	display: flex;
 	justify-content: center;
-	align-items: flex-end;
-	transform: translateY(-15%);
+	align-items: center;
+	// transform: translateY(-20%);
 	margin-right: 0.5em;
 	flex-grow: 0;
 	flex-shrink: 0;
+	>div{
+		position: relative;
+		padding-top: 0.4em;
+	}
 }
 .Icon{
-	height: 60%;
-	width: 70%;
+	height: 3.8em;
+	width: 5em;
 	border-radius: 10%;
 	position: relative;
 	display: flex;
@@ -79,8 +83,8 @@ $iconColor: #4e4e4e;
 .Flag{
 	// background-color: darkcyan;
 	position: absolute;
-	top: 1em;
-	right: -0.1em;
+	top: -0.8em;
+	right: -1em;
 	z-index: 1;
 
 	svg{
@@ -93,4 +97,7 @@ $iconColor: #4e4e4e;
 			color: #ef2121;
 		}
 	}
+}
+.LeftTime{
+	font-size: 0.6em;
 }

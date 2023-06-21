@@ -99,8 +99,8 @@ const addNewTaskHandler = (stateObj, e) => {
 	const p = stateObj.priority.value;
 	const isHighPriority = (p === '1' || p === 1 || p === true) ? true : false
 	const data = {
-		title: stateObj.title.value,
-		description: stateObj.description.value,
+		title: title,
+		description: description,
 		dueDatetime: stateObj.dueDate.value,
 		isHighPriority,
 	}

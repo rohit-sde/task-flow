@@ -63,38 +63,8 @@ const RadioGroup = props => {
 					)
  				})}
 			</div>
-			{/* {value}
-			<label htmlFor={attr.id}>{props.label}</label><br/> */}
-
-			{/* <textarea
-				ref={ref}
-				id=""
-				value={value}
-				{...attr}
-				onChange={onChangeFun}
-					></textarea> */}
 		</div>
 	)
-}
-
-const setHeight = ele => {
-	// const ele = e.target
-	const minrows = Number( ele.dataset.minrows )
-	const oneRowHeight = 25
-
-	let scroll = ele.scrollHeight
-	const x = 4 - 0.8
-	// console.log( getComputedStyle(ele).height )
-	// console.log(scroll)
-	ele.style.height = scroll + x + 'px'
-	while(scroll !== ele.scrollHeight){
-		// console.log(scroll)
-		scroll = ele.scrollHeight
-		ele.style.height = scroll + x + 'px'
-	}
-	if( Math.floor( (scroll + x) / oneRowHeight) < minrows ){
-		ele.style.height = ( (scroll + x) % oneRowHeight ) + (oneRowHeight * minrows) + 'px'
-	}
 }
 
 export default RadioGroup

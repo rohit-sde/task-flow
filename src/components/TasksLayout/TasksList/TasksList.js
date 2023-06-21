@@ -5,14 +5,13 @@ import {axiosAuth} from './../../../axios'
 import CircularLoader from './../../UI/Loader/CircularLoader/CircularLoader'
 
 const TasksList = props => {
-	const [fetchData, setFetchData] = useState(true)
 	const tasksIS = {
 		data: [],
 		fetched: false
 	}
 	const [tasks, setTasks] = useState( tasksIS )
-	console.log('---------------------------------')
-	console.log({...tasks})
+	// console.log('---------------------------------')
+	// console.log({...tasks})
 	
 	useEffect(() => {
 		if( !tasks.fetched ) {
@@ -23,6 +22,9 @@ const TasksList = props => {
 			}
 			if(props.info.filter === 'done' || props.info.filter === 'pending'){
 				queryParams.isCompleted = (props.info.filter === 'done') ? true : false
+			}
+			if(props.info.filter === 'upcoming'){
+				queryParams.filter = 'upcoming'
 			}
 			queryParams = Object.keys(queryParams).map(key => {
 				return `${key}=${queryParams[key]}`

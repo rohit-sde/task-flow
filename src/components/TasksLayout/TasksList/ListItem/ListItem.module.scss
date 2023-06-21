@@ -62,5 +62,12 @@
 	flex-grow: 0;
 	flex-shrink: 0;
 	margin-top: auto;
-	color: #a0a0a0
+	color: #a0a0a0;
+
+	>span:first-child{
+		color: #606060;
+	}
+	>span.RedColor{
+		color: red;
+	}
 }
