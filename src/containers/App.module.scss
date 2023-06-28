@@ -4,4 +4,10 @@
 	min-height: 100vh;
 	justify-content: center;
     align-items: flex-start;
+	position: relative;
+
+	// To disable scrolling
+	// margin: 0;
+	// width: 100%;
+	// height: 100%;
 }

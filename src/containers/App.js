@@ -8,12 +8,14 @@ import {connect} from 'react-redux'
 import * as actions from './../store/actions/index'
 import NotFound from './../components/NotFound/NotFound'
 import {axiosAuth, refreshAccessToken} from './../axios'
+import Backdrop from './../components/UI/Backdrop/Backdrop'
 
 const App = props => {
 	let history = useHistory()
 	const loginData = useState(null)
 	console.log('[App]', {...props} )
 	console.log( props.loadApp, props.isLoggedIn )
+	console.log(props.backdrop)
 	// setTimeout(() => {
 	// 	axiosAuth()
 	// 	setTimeout(() => {
@@ -140,7 +142,9 @@ const App = props => {
 					</Switch>
 				)
 			}
-			
+			{ (props.backdrop.show) && (
+				<Backdrop data={props.backdrop.data}/>
+			) }
 		</div>
 	);
 }
@@ -149,7 +153,8 @@ const mapStateToProps = state => {
 	return {
 		isLoggedIn: state.auth.isLoggedIn,
 		loadApp: state.auth.loadApp,
-		user: state.auth.user
+		user: state.auth.user,
+		backdrop: state.backdrop
 	}
 }
 const mapDispatchToProps = dispatch => {

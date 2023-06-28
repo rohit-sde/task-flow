@@ -5,4 +5,4 @@ export const REFRESH_TOKEN = 'REFRESH_TOKEN'
 export const LOGIN = 'LOGIN'
 
 
-export const LIST_TASKS = 'LIST_TASKS'
+export const UPDATE_BACKDROP = 'UPDATE_BACKDROP'

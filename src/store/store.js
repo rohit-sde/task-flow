@@ -1,5 +1,5 @@
 import authReducer from './reducers/authReducer'
-import tasksReducer from './reducers/tasksReducer'
+import backdropReducer from './reducers/backdropReducer'
 
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
@@ -8,7 +8,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reducers = combineReducers({
 	auth: authReducer,
-	task: tasksReducer
+	backdrop: backdropReducer
 })
 
 // eslint-disable-next-line no-unused-vars
