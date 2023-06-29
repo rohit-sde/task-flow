@@ -1,24 +1,28 @@
 import React, { useRef } from 'react'
 import classes from './Actions.module.scss'
-import {IconContext} from 'react-icons'
+import { IconContext } from 'react-icons'
 import { IoMdDoneAll } from 'react-icons/io'
 import { MdDeleteOutline } from 'react-icons/md'
 import { BiEdit } from 'react-icons/bi'
 import { connect } from 'react-redux'
 import * as actions from './../../../../../store/actions/index'
+import DialogAlert from './../../../../UI/DialogAlert/DialogAlert'
+import { useHistory } from 'react-router'
 
 const Actions = props => {
 
 	const editRef = useRef(null)
 	const deleteRef = useRef(null)
 	const doneRef = useRef(null)
+	const history = useHistory()
 
 	const obj = {
 		task: props.task,
 		editRef,
 		deleteRef,
 		doneRef,
-		updateBackdrop: props.updateBackdrop
+		updateBackdrop: props.updateBackdrop,
+		history
 	}
 
 	return (
@@ -47,13 +51,18 @@ const Actions = props => {
 }
 
 const deleteHandler = (obj, e) => {
+	const cbSuccessFun = (updateBackdrop, e) => {
+		console.log(obj)
+		obj.history.push(obj.history.location.pathname)
+	}
+	
 	const {updateBackdrop, task} = obj
 	console.log(obj)
 	console.log(task)
 	
 	updateBackdrop({
 		show: true,
-		data: 'Hello'
+		data: <DialogAlert cbSuccess={cbSuccessFun}/>
 	})
 }
 const doneHandler = (obj, e) => {
