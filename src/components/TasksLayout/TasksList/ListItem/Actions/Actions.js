@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import * as actions from './../../../../../store/actions/index'
 import DialogAlert from './../../../../UI/DialogAlert/DialogAlert'
 import { useHistory } from 'react-router'
+import { axiosAuth } from '../../../../../axios'
 
 const Actions = props => {
 
@@ -22,7 +23,8 @@ const Actions = props => {
 		deleteRef,
 		doneRef,
 		updateBackdrop: props.updateBackdrop,
-		history
+		history,
+		refreshTasksLayout: props.refreshTasksLayout
 	}
 
 	return (
@@ -53,13 +55,30 @@ const Actions = props => {
 const deleteHandler = (obj, e) => {
 	const cbSuccessFun = (updateBackdrop, e) => {
 		console.log(obj)
-		obj.history.push(obj.history.location.pathname)
+		axiosAuth(axios => {
+			axios.delete('tasks/' + task._id)
+			.then(res => {
+				if(res.data.status){
+					obj.refreshTasksLayout()
+					updateBackdrop({
+						show: false,
+						data: null
+					})
+				}
+				else{
+					console.log(res.data)
+				}
+			})
+			.catch(e => {
+				console.log(e)
+			})
+		})
 	}
 	
 	const {updateBackdrop, task} = obj
 	console.log(obj)
 	console.log(task)
-	
+
 	updateBackdrop({
 		show: true,
 		data: <DialogAlert cbSuccess={cbSuccessFun}/>
@@ -72,7 +91,7 @@ const doneHandler = (obj, e) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		updateBackdrop: (...args) => dispatch( actions.updateBackdrop(...args) ),
+		updateBackdrop: (...args) => dispatch( actions.updateBackdrop(...args) )
 	}
 }
 

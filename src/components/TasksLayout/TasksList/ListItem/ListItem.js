@@ -41,7 +41,7 @@ const ListItem = props => {
 					<span>Added on: {addedOnTime(props.task.due_datetime)}</span>
 				</p>
 			</div>
-			<Actions task={props.task}/>
+			<Actions task={props.task} refreshTasksLayout={props.refreshTasksLayout}/>
 		</li>
 	)
 }
