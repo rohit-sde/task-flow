@@ -30,15 +30,18 @@ const ListItem = props => {
 				<h2 className={classes.Title}>{props.task.title}</h2>
 				<p className={classes.Description}>{props.task.description}</p>
 				<p className={classes.AddedDate}>
-					{ !remaining.expired ? (
-						<span className={remaining.seconds < 10 * 60 ? classes.RedColor : null}>
-							Remaining: {remaining.dueTime}
-						</span>
-					) : (
-						"Time over"
-					) }
+					{ props.task.is_completed ? (
+						<>Completed At: {formatDate(props.task.completed_at)}</>
+					) : ( !remaining.expired ? (
+							<span className={remaining.seconds < 10 * 60 ? classes.RedColor : null}>
+								Remaining: {remaining.dueTime}
+							</span>
+						) : (
+							"Time over"
+						)
+					)}			
 					<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-					<span>Added on: {addedOnTime(props.task.due_datetime)}</span>
+					<span>Added on: {formatDate(props.task.due_datetime)}</span>
 				</p>
 			</div>
 			<Actions task={props.task} refreshTasksLayout={props.refreshTasksLayout}/>
@@ -115,12 +118,12 @@ const remainingTime = date => {
 	}
 	return obj
 }
-const addedOnTime = date => {
+const formatDate = date => {
 	const d = new window.Date(date)
 	let x = d.toString().split(' ')
-	const addedOnDate = x[1] + ' ' + x[2] + ', ' + x[3]
-	const addedOnTime = d.toLocaleTimeString()
-	return addedOnDate + ' at ' + addedOnTime
+	const dateStr = x[1] + ' ' + x[2] + ', ' + x[3]
+	const timeStr = d.toLocaleTimeString()
+	return dateStr + ' at ' + timeStr
 }
 
 export default ListItem

@@ -16,7 +16,7 @@ const Actions = props => {
 	const deleteRef = useRef(null)
 	const doneRef = useRef(null)
 	const history = useHistory()
-
+	console.log(props.task)
 	const obj = {
 		task: props.task,
 		editRef,
@@ -24,18 +24,27 @@ const Actions = props => {
 		doneRef,
 		updateBackdrop: props.updateBackdrop,
 		history,
-		refreshTasksLayout: props.refreshTasksLayout
+		refreshTasksLayout: props.refreshTasksLayout,
+		isExpired: isExpiredFun(props.task)
 	}
 
 	return (
 		<div className={classes.Actions}>
-			<div className={classes.Done} data-taskdone={props.task.is_completed? '1' : '0'} ref={doneRef}  onClick={doneHandler.bind(null, obj)}>
-				<IconContext.Provider value={{size: '1.5em' }}>
-					<IoMdDoneAll tabIndex="0"/>
-				</IconContext.Provider>
-			</div>
+			{ !obj.isExpired ? (
+				<div
+					className={classes.Done + (props.task.is_completed ? ' ' + classes.NoPointer : '') }
+					data-taskdone={props.task.is_completed? '1' : '0'}
+					ref={doneRef}
+					onClick={!props.task.is_completed ? doneHandler.bind(null, obj) : null}>
+						<IconContext.Provider value={{size: '1.5em' }}>
+							<IoMdDoneAll tabIndex={!props.task.is_completed ? 0 : null}/>
+						</IconContext.Provider>
+				</div>
+			) : (<div className={classes.Done}/>)}
+			
+			
 			<div className={classes.EditDelete}>
-				{ !props.task.is_completed && (
+				{ !props.task.is_completed && !obj.isExpired && (
 					<div className={classes.Edit} ref={editRef}>
 						<IconContext.Provider value={{size: '1.5em' }}>
 							<BiEdit tabIndex="0"/>
@@ -76,6 +85,43 @@ const deleteHandler = (obj, e) => {
 	}
 	
 	const {updateBackdrop, task} = obj
+	// console.log(obj)
+	// console.log(task)
+
+	updateBackdrop({
+		show: true,
+		data: <DialogAlert cbSuccess={cbSuccessFun}/>
+	})
+}
+const doneHandler = (obj, e) => {
+	const cbSuccessFun = (updateBackdrop, e) => {
+		// console.log(obj)
+
+		const data = {
+			"isCompleted": true
+		}
+		axiosAuth(axios => {
+			axios.patch('tasks/' + task._id, data)
+			.then(res => {
+				console.log(res)
+				if(res.data.status){
+					obj.refreshTasksLayout()
+					updateBackdrop({
+						show: false,
+						data: null
+					})
+				}
+				else{
+					console.log(res.data)
+				}
+			})
+			.catch(e => {
+				console.log(e)
+			})
+		})
+	}
+	
+	const {updateBackdrop, task} = obj
 	console.log(obj)
 	console.log(task)
 
@@ -84,9 +130,11 @@ const deleteHandler = (obj, e) => {
 		data: <DialogAlert cbSuccess={cbSuccessFun}/>
 	})
 }
-const doneHandler = (obj, e) => {
-	const {updateBackdrop, task} = obj
-	
+const isExpiredFun = task => {
+	const due = (new window.Date(task.due_datetime)).getTime()
+	const now = (new window.Date()).getTime()
+
+	return (now - due > 0) ? true : false
 }
 
 const mapDispatchToProps = dispatch => {

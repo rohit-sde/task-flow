@@ -28,6 +28,10 @@
 			
 		}
 	}
+
+	&.NoPointer{
+		cursor: unset;
+	}
 }
 .EditDelete{
 	display: flex;

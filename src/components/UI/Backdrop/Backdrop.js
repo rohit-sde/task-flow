@@ -29,7 +29,7 @@ const clickHandler = (updateBackdrop, e) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		updateBackdrop: (...args) => dispatch( actions.updateBackdrop(...args) ),
+		updateBackdrop: (...args) => dispatch( actions.updateBackdrop(...args) )
 	}
 }
 
