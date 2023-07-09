@@ -2,12 +2,18 @@ import React, {useState, useEffect} from 'react'
 import Navigation from './Navigation/Navigation'
 import classes from './TasksLayout.module.scss'
 import TasksList from './TasksList/TasksList'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import AddTask from './AddTask/AddTask'
 import FilterButtonNavigation from './FilterButtonNavigation/FilterButtonNavigation'
+import EditTask from './EditTask/EditTask'
 
 const TasksLayout = props => {
 	const [reload, setReload] = useState(0)
+	const [editTaskState, setEditTaskState] = useState({
+		edit: false,
+		task: null,
+		url: null
+	})
 	console.log('[TasksLayout]')
 	console.log('Reload: '+ reload)
 
@@ -28,6 +34,14 @@ const TasksLayout = props => {
 				<Route path="/addTask">
 					<AddTask />
 				</Route>
+				<Route path="/editTask">
+					{ editTaskState.edit ? (
+						<EditTask editTaskState={editTaskState} setEditTaskState={setEditTaskState}/>
+					) : (
+						<Redirect to="/"/>
+					)}
+					
+				</Route>
 				{ reload === 0 && (
 					<Switch>
 						<Route replace path="/tasks/:filter?/:page?/:pageNum?" render={ props => {
@@ -42,7 +56,7 @@ const TasksLayout = props => {
 							return (
 								<>
 									<FilterButtonNavigation active={filter}/>
-									<TasksList info={{page: pageNum, filter}} {...props} refreshTasksLayout={refreshTasksLayout.bind(null, setReload)}/>
+									<TasksList info={{page: pageNum, filter}} {...props} setEditTaskState={setEditTaskState} refreshTasksLayout={refreshTasksLayout.bind(null, setReload)}/>
 								</>
 							)
 						}} />
@@ -50,7 +64,7 @@ const TasksLayout = props => {
 							return (
 								<>
 									<FilterButtonNavigation active='upcoming'/>
-									<TasksList info={{page: 1, filter: 'upcoming'}} {...props} refreshTasksLayout={refreshTasksLayout.bind(null, setReload)}/>
+									<TasksList info={{page: 1, filter: 'upcoming'}} {...props} setEditTaskState={setEditTaskState} refreshTasksLayout={refreshTasksLayout.bind(null, setReload)}/>
 								</>
 							)
 						}} />

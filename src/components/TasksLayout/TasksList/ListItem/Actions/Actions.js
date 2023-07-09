@@ -16,16 +16,19 @@ const Actions = props => {
 	const deleteRef = useRef(null)
 	const doneRef = useRef(null)
 	const history = useHistory()
-	console.log(props.task)
+	// console.log(props)
 	const obj = {
 		task: props.task,
+		tasks: props.tasks,
+		setTasks: props.setTasks,
+		updateBackdrop: props.updateBackdrop,
+		refreshTasksLayout: props.refreshTasksLayout,
+		setEditTaskState: props.setEditTaskState,
+		isExpired: isExpiredFun(props.task),
 		editRef,
 		deleteRef,
 		doneRef,
-		updateBackdrop: props.updateBackdrop,
-		history,
-		refreshTasksLayout: props.refreshTasksLayout,
-		isExpired: isExpiredFun(props.task)
+		history
 	}
 
 	return (
@@ -33,7 +36,7 @@ const Actions = props => {
 			{ !obj.isExpired ? (
 				<div
 					className={classes.Done + (props.task.is_completed ? ' ' + classes.NoPointer : '') }
-					data-taskdone={props.task.is_completed? '1' : '0'}
+					data-taskdone={props.task.is_completed ? '1' : '0'}
 					ref={doneRef}
 					onClick={!props.task.is_completed ? doneHandler.bind(null, obj) : null}>
 						<IconContext.Provider value={{size: '1.5em' }}>
@@ -45,7 +48,7 @@ const Actions = props => {
 			
 			<div className={classes.EditDelete}>
 				{ !props.task.is_completed && !obj.isExpired && (
-					<div className={classes.Edit} ref={editRef}>
+					<div className={classes.Edit} ref={editRef}  onClick={editHandler.bind(null, obj)}>
 						<IconContext.Provider value={{size: '1.5em' }}>
 							<BiEdit tabIndex="0"/>
 						</IconContext.Provider>
@@ -106,6 +109,25 @@ const doneHandler = (obj, e) => {
 				console.log(res)
 				if(res.data.status){
 					obj.refreshTasksLayout()
+					
+					/*
+					// This is to Avoid Refresh. But Without refresh no. of same type of get affected.
+					// There is little bit difference in "completed_at" seconds.
+					const newTask = {
+						...obj.task
+					}
+					newTask.is_completed = true
+					newTask.completed_at = (new Date()).toISOString()
+
+					const newTasks = {
+						...obj.tasks
+					}
+					newTasks.data = [ ...obj.tasks.data ]
+					const index = obj.tasks.data.findIndex(v => v._id === obj.task._id)
+					newTasks.data[index] = newTask
+					obj.setTasks( newTasks )
+					*/
+
 					updateBackdrop({
 						show: false,
 						data: null
@@ -122,13 +144,21 @@ const doneHandler = (obj, e) => {
 	}
 	
 	const {updateBackdrop, task} = obj
-	console.log(obj)
-	console.log(task)
+	// console.log(obj)
+	// console.log(task)
 
 	updateBackdrop({
 		show: true,
 		data: <DialogAlert cbSuccess={cbSuccessFun}/>
 	})
+}
+const editHandler = (obj, e) => {
+	obj.setEditTaskState({
+		edit: true,
+		task: obj.task,
+		url: obj.history.location.pathname
+	})
+	obj.history.push('/editTask')
 }
 const isExpiredFun = task => {
 	const due = (new window.Date(task.due_datetime)).getTime()

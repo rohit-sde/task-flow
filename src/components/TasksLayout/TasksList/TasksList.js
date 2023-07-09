@@ -67,7 +67,13 @@ const TasksList = props => {
 					<ul>
 						{
 							tasks.data.map(task => (
-								<ListItem task={task} key={task._id} refreshTasksLayout={props.refreshTasksLayout}/>
+								<ListItem
+									key={task._id}
+									task={task}
+									tasks={tasks}
+									setTasks={setTasks}
+									refreshTasksLayout={props.refreshTasksLayout}
+									setEditTaskState={props.setEditTaskState}/>
 							) )
 						}
 					</ul>
