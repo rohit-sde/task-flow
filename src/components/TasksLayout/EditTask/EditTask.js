@@ -29,7 +29,7 @@ const EditTask = props => {
 			</div>
 			<form>
 				<Textarea
-					value={props.editTaskState.task.title}
+					value={removeBRTag(props.editTaskState.task.title)}
 					name="title"
 					stateObj={stateObj}
 					label="Task"
@@ -39,7 +39,7 @@ const EditTask = props => {
 						required: true
 					}}/>
 				<Textarea
-					value={props.editTaskState.task.description}
+					value={removeBRTag(props.editTaskState.task.description)}
 					name="description"
 					stateObj={stateObj}
 					label="Description"
@@ -83,16 +83,16 @@ const updateTaskTaskHandler = (stateObj, e) => {
 
 	let title = stateObj.title.value
 	let description = stateObj.description.value
-	const patternS = /^([(\\n|\\r\\n|\\r)\s]+)/g
-	const patternE = /([(\\n|\\r\\n|\\r)\s]+)$/g
+	const patternS = /^([(\n|\r\n|\r)\s]+)/g
+	const patternE = /([(\n|\r\n|\r)\s]+)$/g
 
 	title = title.replaceAll(patternS, '')
 	title = title.replaceAll(patternE, '')
-	title = title.replace(/\r\n|\r|\n/g,"<br/>")
+	title = addBRTag(title)
 	description = description.replace(patternS, '')
-	description = description.replace(patternE, '')
-	description = description.replace(/\r\n|\r|\n/g,"<br/>")
-
+	// description = description.replace(patternE, '')
+	description = addBRTag(description)
+	console.log(description)
 	if(title === ''){
 		setMessage({show: 1, error: 1, text: 'Title is Required.'})
 		stateObj.title.more.ref.current.focus()
@@ -102,8 +102,8 @@ const updateTaskTaskHandler = (stateObj, e) => {
 	const p = stateObj.priority.value;
 	const isHighPriority = (p === '1' || p === 1 || p === true) ? true : false
 	const data = {}
-	if(title !== stateObj.EditTaskProps.editTaskState.task.title) data.title = title
-	if(description !== stateObj.EditTaskProps.editTaskState.task.description) data.description = description
+	if(title !== removeBRTag( stateObj.EditTaskProps.editTaskState.task.title) ) data.title = title
+	if(description !== removeBRTag( stateObj.EditTaskProps.editTaskState.task.description) ) data.description = description
 	if(isHighPriority !== stateObj.EditTaskProps.editTaskState.task.is_high_priority) data.isHighPriority = isHighPriority
 
 	let preDD = Math.floor( (new Date(stateObj.EditTaskProps.editTaskState.task.due_datetime) ).getTime() / 1000 )
@@ -132,6 +132,7 @@ const updateTaskTaskHandler = (stateObj, e) => {
 					}
 					else{
 						console.log(res.data)
+						stateObj.history.push(stateObj.EditTaskProps.editTaskState.url)
 					}
 				})
 				.catch(e => {
@@ -142,6 +143,12 @@ const updateTaskTaskHandler = (stateObj, e) => {
 	else{
 		stateObj.history.push(stateObj.EditTaskProps.editTaskState.url)
 	}
+}
+const addBRTag = data => {
+	return data !== '' && data.replace(/\r\n|\r|\n/g,"<br/>")
+}
+const removeBRTag = data => {
+	return data !== '' && data.replace(/<br\/>/g,"\n")
 }
 
 export default EditTask

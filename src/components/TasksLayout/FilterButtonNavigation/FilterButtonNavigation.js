@@ -3,25 +3,27 @@ import classes from './FilterButtonNavigation.module.scss'
 import {Link} from 'react-router-dom'
 
 const FilterButtonNavigation = props => {
+
+	const routes = [
+		{text: 'Recent', filter: 'recent', route: '/tasks/recent/page/1'},
+		{text: 'Upcoming', filter: 'upcoming', route: '/'},
+		{text: 'Pending', filter: 'pending', route: '/tasks/pending/page/1'},
+		{text: 'Done', filter: 'done', route: '/tasks/done/page/1'},
+		{text: 'Expired', filter: 'expired', route: '/tasks/expired/page/1'}
+	]
+
 	return (
 		<div className={classes.FilterButtonDiv}>
 			<div>
-				<Link
-					to='/'
-					className={classes.FilterButton + (props.active === 'upcoming' ? ' ' + classes.FilterButtonActive : '' )}
-					>Upcoming</Link>
-				<Link
-					to='/tasks/recent/page/1'
-					className={classes.FilterButton + (props.active === 'recent' ? ' ' + classes.FilterButtonActive : '' )}
-					>Recent</Link>
-				<Link
-					to='/tasks/done/page/1'
-					className={classes.FilterButton + (props.active === 'done' ? ' ' + classes.FilterButtonActive : '' )}
-					>Done</Link>
-				<Link
-					to='/tasks/pending/page/1'
-					className={classes.FilterButton + (props.active === 'pending' ? ' ' + classes.FilterButtonActive : '' )}
-					>Pending</Link>
+				{
+					routes.map(link => (
+						<Link
+							key={link.filter}
+							to={link.route}
+							className={classes.FilterButton + (props.active === link.filter ? ' ' + classes.FilterButtonActive : '' )}
+							>{link.text}</Link>
+					))
+				}
 			</div>
 		</div>
 	)

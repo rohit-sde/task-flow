@@ -80,15 +80,15 @@ const addNewTaskHandler = (stateObj, e) => {
 
 	let title = stateObj.title.value
 	let description = stateObj.description.value
-	const patternS = /^([(\\n|\\r\\n|\\r)\s]+)/g
-	const patternE = /([(\\n|\\r\\n|\\r)\s]+)$/g
+	const patternS = /^([(\n|\r\n|\r)\s]+)/g
+	const patternE = /([(\n|\r\n|\r)\s]+)$/g
 
 	title = title.replaceAll(patternS, '')
 	title = title.replaceAll(patternE, '')
-	title = title.replace(/\r\n|\r|\n/g,"<br/>")
+	title = addBRTag(title)
 	description = description.replace(patternS, '')
 	description = description.replace(patternE, '')
-	description = description.replace(/\r\n|\r|\n/g,"<br/>")
+	description = addBRTag(description)
 
 	if(title === ''){
 		setMessage({show: 1, error: 1, text: 'Title is Required.'})
@@ -111,7 +111,7 @@ const addNewTaskHandler = (stateObj, e) => {
 			.then(res => {
 				// console.log(res)
 				if(res.data.status){
-					stateObj.history.push('/')
+					stateObj.history.push('/tasks/recent/page/1')
 				}
 				else{
 					console.log(res.data)
@@ -121,6 +121,9 @@ const addNewTaskHandler = (stateObj, e) => {
 				// console.log(e)
 			})
 	})
+}
+const addBRTag = data => {
+	return data !== '' && data.replace(/\r\n|\r|\n/g,"<br/>")
 }
 
 export default AddTask

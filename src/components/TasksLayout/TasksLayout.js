@@ -44,27 +44,21 @@ const TasksLayout = props => {
 				</Route>
 				{ reload === 0 && (
 					<Switch>
-						<Route replace path="/tasks/:filter?/:page?/:pageNum?" render={ props => {
+						<Route replace path="/:tasks?/:filter?/:page?/:pageNum?" render={ props => {
 							const params = props.match.params
 							let pageNum = 1
 							if(params.page === 'page'){
 								let x = Number( params.pageNum )
 								pageNum = (x < 1 || isNaN(x) ) ? 1 : x
 							}
-							let filter = params.filter
-							filter = (filter === 'pending' || filter === 'done' || filter === 'recent') ? filter : 'upcoming'
+							let filter = 'upcoming'
+							if(params.tasks === 'tasks'){
+								filter = ['recent', 'upcoming', 'done', 'pending', 'expired'].includes(params.filter) ? params.filter : filter
+							}
 							return (
 								<>
 									<FilterButtonNavigation active={filter}/>
 									<TasksList info={{page: pageNum, filter}} {...props} setEditTaskState={setEditTaskState} refreshTasksLayout={refreshTasksLayout.bind(null, setReload)}/>
-								</>
-							)
-						}} />
-						<Route path="/" render={ props => {
-							return (
-								<>
-									<FilterButtonNavigation active='upcoming'/>
-									<TasksList info={{page: 1, filter: 'upcoming'}} {...props} setEditTaskState={setEditTaskState} refreshTasksLayout={refreshTasksLayout.bind(null, setReload)}/>
 								</>
 							)
 						}} />

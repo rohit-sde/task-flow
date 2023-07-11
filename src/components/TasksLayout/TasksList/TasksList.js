@@ -18,18 +18,20 @@ const TasksList = props => {
 			// setTasks( {...tasksIS} )
 			let queryParams = {
 				perPage: 10,
-				page: props.info.page
+				page: props.info.page,
+				filter: props.info.filter
 			}
-			if(props.info.filter === 'done' || props.info.filter === 'pending'){
-				queryParams.isCompleted = (props.info.filter === 'done') ? true : false
-			}
-			if(props.info.filter === 'upcoming'){
-				queryParams.filter = 'upcoming'
-			}
-			queryParams = Object.keys(queryParams).map(key => {
-				return `${key}=${queryParams[key]}`
-			})
-			queryParams = queryParams.join('&')
+			// if(props.info.filter === 'done' || props.info.filter === 'pending'){
+			// 	queryParams.isCompleted = (props.info.filter === 'done') ? true : false
+			// }
+			// if(props.info.filter === 'upcoming'){
+			// 	queryParams.filter = 'upcoming'
+			// }
+			// queryParams = Object.keys(queryParams).map(key => {
+			// 	return `${key}=${queryParams[key]}`
+			// })
+			// queryParams = queryParams.join('&')
+			queryParams = Object.keys(queryParams).map(key => `${key}=${queryParams[key]}`).join('&')
 	
 			axiosAuth( (axios) => {
 				axios.get('tasks?' + queryParams)

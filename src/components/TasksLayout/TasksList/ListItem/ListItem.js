@@ -41,7 +41,7 @@ const ListItem = props => {
 						)
 					)}			
 					<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-					<span>Added on: {formatDate(props.task.due_datetime)}</span>
+					<span>Added on: {formatDate(props.task.created_at)}</span>
 				</p>
 			</div>
 			<Actions
