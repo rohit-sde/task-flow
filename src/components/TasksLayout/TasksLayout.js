@@ -9,6 +9,7 @@ import EditTask from './EditTask/EditTask'
 
 const TasksLayout = props => {
 	const [reload, setReload] = useState(0)
+	const [perPage] = useState(10)
 	const [editTaskState, setEditTaskState] = useState({
 		edit: false,
 		task: null,
@@ -51,14 +52,15 @@ const TasksLayout = props => {
 								let x = Number( params.pageNum )
 								pageNum = (x < 1 || isNaN(x) ) ? 1 : x
 							}
-							let filter = 'upcoming'
+							const defaultFilter = 'upcoming'
+							let filter = defaultFilter
 							if(params.tasks === 'tasks'){
 								filter = ['recent', 'upcoming', 'done', 'pending', 'expired'].includes(params.filter) ? params.filter : filter
 							}
 							return (
 								<>
 									<FilterButtonNavigation active={filter}/>
-									<TasksList info={{page: pageNum, filter}} {...props} setEditTaskState={setEditTaskState} refreshTasksLayout={refreshTasksLayout.bind(null, setReload)}/>
+									<TasksList info={{page: pageNum, filter, perPage, defaultFilter}} {...props} setEditTaskState={setEditTaskState} refreshTasksLayout={refreshTasksLayout.bind(null, setReload)}/>
 								</>
 							)
 						}} />
