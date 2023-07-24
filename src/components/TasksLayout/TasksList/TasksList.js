@@ -94,7 +94,9 @@ const TasksList = props => {
 						)}
 					</>
 					) : (
-						'no'
+						<div className={classes.NoTaskAvailable}>
+							<div>No task available.</div>
+						</div>
 					)
 				)
 			}

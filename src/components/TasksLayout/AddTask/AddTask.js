@@ -7,6 +7,7 @@ import DateTimePicker from '../../UI/DateTimePicker/DateTimePicker'
 import { axiosAuth } from '../../../axios'
 import Radiogroup from '../../UI/RadioGroup/RadioGroup'
 import { useHistory } from 'react-router'
+import * as taskUtils from './../taskUtils'
 
 const AddTask = props => {
 	const stateObj = {}
@@ -77,18 +78,10 @@ const addNewTaskHandler = (stateObj, e) => {
 	// console.log(stateObj)
 	const setMessage = stateObj.messageHST[1]
 
-
 	let title = stateObj.title.value
 	let description = stateObj.description.value
-	const patternS = /^([(\n|\r\n|\r)\s]+)/g
-	const patternE = /([(\n|\r\n|\r)\s]+)$/g
-
-	title = title.replaceAll(patternS, '')
-	title = title.replaceAll(patternE, '')
-	title = addBRTag(title)
-	description = description.replace(patternS, '')
-	description = description.replace(patternE, '')
-	description = addBRTag(description)
+	title = taskUtils.trimStart(taskUtils.trimEnd(title))
+	description = taskUtils.trimStart(taskUtils.trimEnd(description))
 
 	if(title === ''){
 		setMessage({show: 1, error: 1, text: 'Title is Required.'})
@@ -96,16 +89,20 @@ const addNewTaskHandler = (stateObj, e) => {
 		return
 	}
 
+	title = taskUtils.addBRTag(title)
+	description = taskUtils.addBRTag(description)
+
 	const p = stateObj.priority.value;
 	const isHighPriority = (p === '1' || p === 1 || p === true) ? true : false
+	
 	const data = {
 		title: title,
 		description: description,
 		dueDatetime: stateObj.dueDate.value,
 		isHighPriority,
 	}
-	// console.log(data)
-	// console.log(stateObj)
+	// console.log(data)	
+
 	axiosAuth(axios => {
 		axios.post('tasks', data)
 			.then(res => {
@@ -121,9 +118,6 @@ const addNewTaskHandler = (stateObj, e) => {
 				// console.log(e)
 			})
 	})
-}
-const addBRTag = data => {
-	return data !== '' && data.replace(/\r\n|\r|\n/g,"<br/>")
 }
 
 export default AddTask

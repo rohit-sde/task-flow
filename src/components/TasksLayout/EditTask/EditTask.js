@@ -7,6 +7,7 @@ import DateTimePicker from '../../UI/DateTimePicker/DateTimePicker'
 import { axiosAuth } from '../../../axios'
 import Radiogroup from '../../UI/RadioGroup/RadioGroup'
 import { useHistory } from 'react-router'
+import * as taskUtils from './../taskUtils'
 
 const EditTask = props => {
 	const stateObj = {}
@@ -29,7 +30,7 @@ const EditTask = props => {
 			</div>
 			<form>
 				<Textarea
-					value={removeBRTag(props.editTaskState.task.title)}
+					value={taskUtils.removeBRTag(props.editTaskState.task.title)}
 					name="title"
 					stateObj={stateObj}
 					label="Task"
@@ -39,7 +40,7 @@ const EditTask = props => {
 						required: true
 					}}/>
 				<Textarea
-					value={removeBRTag(props.editTaskState.task.description)}
+					value={taskUtils.removeBRTag(props.editTaskState.task.description)}
 					name="description"
 					stateObj={stateObj}
 					label="Description"
@@ -77,22 +78,16 @@ const EditTask = props => {
 
 const updateTaskTaskHandler = (stateObj, e) => {
 	e.preventDefault()
-	// console.log(stateObj)
+	console.log(stateObj)
+	console.log('------------------------------------')
 	const setMessage = stateObj.messageHST[1]
 
 
 	let title = stateObj.title.value
 	let description = stateObj.description.value
-	const patternS = /^([(\n|\r\n|\r)\s]+)/g
-	const patternE = /([(\n|\r\n|\r)\s]+)$/g
+	title = taskUtils.trimStart(taskUtils.trimEnd(title))
+	description = taskUtils.trimStart(taskUtils.trimEnd(description))
 
-	title = title.replaceAll(patternS, '')
-	title = title.replaceAll(patternE, '')
-	title = addBRTag(title)
-	description = description.replace(patternS, '')
-	// description = description.replace(patternE, '')
-	description = addBRTag(description)
-	console.log(description)
 	if(title === ''){
 		setMessage({show: 1, error: 1, text: 'Title is Required.'})
 		stateObj.title.more.ref.current.focus()
@@ -101,25 +96,25 @@ const updateTaskTaskHandler = (stateObj, e) => {
 
 	const p = stateObj.priority.value;
 	const isHighPriority = (p === '1' || p === 1 || p === true) ? true : false
+	
 	const data = {}
-	if(title !== removeBRTag( stateObj.EditTaskProps.editTaskState.task.title) ) data.title = title
-	if(description !== removeBRTag( stateObj.EditTaskProps.editTaskState.task.description) ) data.description = description
+	if(title !== taskUtils.removeBRTag( stateObj.EditTaskProps.editTaskState.task.title) ){
+		data.title = taskUtils.addBRTag(title)
+	}
+	if(description !== taskUtils.removeBRTag( stateObj.EditTaskProps.editTaskState.task.description) ){
+		data.description = taskUtils.addBRTag(description)
+	}
 	if(isHighPriority !== stateObj.EditTaskProps.editTaskState.task.is_high_priority) data.isHighPriority = isHighPriority
 
 	let preDD = Math.floor( (new Date(stateObj.EditTaskProps.editTaskState.task.due_datetime) ).getTime() / 1000 )
 	let newDD = Math.floor( (new Date(stateObj.dueDate.value) ).getTime() / 1000 )
-	console.log(preDD)
-	console.log(newDD)
+	// console.log(preDD)
+	// console.log(newDD)
 
 	if(preDD !== newDD) data.dueDatetime = stateObj.dueDate.value
-	// const data = {
-	// 	title: title,
-	// 	description: description,
-	// 	dueDatetime: stateObj.dueDate.value,
-	// 	isHighPriority,
-	// }
-	// console.log(data)
-	// console.log(stateObj)
+	
+	console.log(data)
+	
 	const id = stateObj.EditTaskProps.editTaskState.task._id
 
 	if(Object.keys(data).length > 0){
@@ -143,12 +138,6 @@ const updateTaskTaskHandler = (stateObj, e) => {
 	else{
 		stateObj.history.push(stateObj.EditTaskProps.editTaskState.url)
 	}
-}
-const addBRTag = data => {
-	return data !== '' && data.replace(/\r\n|\r|\n/g,"<br/>")
-}
-const removeBRTag = data => {
-	return data !== '' && data.replace(/<br\/>/g,"\n")
 }
 
 export default EditTask
