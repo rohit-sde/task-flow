@@ -6,6 +6,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import AddTask from './AddTask/AddTask'
 import FilterButtonNavigation from './FilterButtonNavigation/FilterButtonNavigation'
 import EditTask from './EditTask/EditTask'
+import Profile from './Profile/Profile'
 
 const TasksLayout = props => {
 	const [reload, setReload] = useState(0)
@@ -41,7 +42,9 @@ const TasksLayout = props => {
 					) : (
 						<Redirect to="/"/>
 					)}
-					
+				</Route>
+				<Route path="/profile">
+					<Profile/>
 				</Route>
 				{ reload === 0 && (
 					<Switch>

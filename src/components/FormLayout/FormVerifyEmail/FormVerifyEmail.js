@@ -13,7 +13,7 @@ const FormVerifyEmail = props => {
 	const history = useHistory();
 	const [loginError, setLoginError] = useState('');
 	// const [message, setMessage] = useState({text: <>OTP is sent to<b> {props.user.email}</b></>, show: 1, error: 0});
-	const defaultSecondsRef = useRef( 15 )
+	const defaultSecondsRef = useRef( 60 )
 	const [seconds, setSeconds] = useState( defaultSecondsRef.current )
 	const defaultTimerRef = useRef( <div className={classes.Timer}><div><AlertMessage error={seconds <= 10}>OTP expires in {seconds} seconds.</AlertMessage></div></div> )
 	const [timer, setTimer] = useState( defaultTimerRef.current )

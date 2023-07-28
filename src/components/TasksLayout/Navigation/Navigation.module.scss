@@ -62,11 +62,12 @@ $navigationBGcolor: blueviolet;
 		li {
 			padding-left: 1.2em;
 			padding-right: 1.2em;
-			a{
+			a, div{
 				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 				color: white;
 				text-decoration: none;
 				letter-spacing: 1px;
+				cursor: pointer;
 			}
 		}
 	}

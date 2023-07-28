@@ -85,68 +85,63 @@ const App = props => {
 
 	return (
 		<div className={clssses.App}>
-			{ !props.loadApp ?
-				(
+			{ !props.loadApp ? (
 					<Loading/>
-				) :
-				(
-					<Switch>
-						{ props.isLoggedIn ?
-							(
-								<>
-									<Route path="/">
-										<TaskLayout/>
-									</Route>
-									<Route path="/login">
-										<Redirect to="/"/>
-									</Route>
-									<Route path="/signup">
-										<Redirect to="/"/>
-									</Route>
-									<Route path="/resetPassword">
-										<Redirect to="/"/>
-									</Route>
-									<Route path="/verifyEmail">
-										<Redirect to="/"/>
-									</Route>
-								</>
-							) :
-							(
-								<>
-									<Route path="/" exact>
-										<Redirect to="/login"/>
-									</Route>
-									<Route path="/login">
-										<FormLayout formType="Login" loginData={loginData}/>
-									</Route>
-									<Route path="/signup">
-										<FormLayout formType="Signup" loginData={loginData}/>
-									</Route>
-									<Route path="/resetPassword">
-										<FormLayout formType="ResetPassword" loginData={loginData}/>
-									</Route>
-									<Route path="/verifyEmail">
-										{
-											props.user.email !== null ?
-												<FormLayout formType="VerifyEmail" loginData={loginData}/>
-												: <Redirect to="/login"/>
-										}
-									</Route>
-								</>
-							)
-						}
-					
-						<Route path="/">
-							<NotFound/>
-						</Route>
-					</Switch>
-				)
-			}
-			{ (props.backdrop.show) && (
-				<Backdrop data={props.backdrop.data}/>
-			) }
+				) : (
+					<>
+						{ props.isLoggedIn ? (
+							<Switch>
+								<Route path="/">
+									<TaskLayout/>
+								</Route>
+								<Route path="/login">
+									<Redirect to="/"/>
+								</Route>
+								<Route path="/signup">
+									<Redirect to="/"/>
+								</Route>
+								<Route path="/resetPassword">
+									<Redirect to="/"/>
+								</Route>
+								<Route path="/verifyEmail">
+									<Redirect to="/"/>
+								</Route>
+							</Switch>
+						) : (
+							<Switch>
+								<Route path="/" exact>
+									<Redirect to="/login"/>
+								</Route>
+								<Route path="/login">
+									<FormLayout formType="Login" loginData={loginData}/>
+								</Route>
+								<Route path="/signup">
+									<FormLayout formType="Signup" loginData={loginData}/>
+								</Route>
+								<Route path="/resetPassword">
+									<FormLayout formType="ResetPassword" loginData={loginData}/>
+								</Route>
+								<Route path="/verifyEmail">
+									{
+										props.user.email !== null ?
+											<FormLayout formType="VerifyEmail" loginData={loginData}/>
+											: <Redirect to="/login"/>
+									}
+								</Route>
+								<Route path="/">
+									<Redirect to="/"/>
+								</Route>
+							</Switch>
+						)}
+					</>
+			)}
+			
+			{/* <Route path="/">
+				<NotFound/>
+			</Route> */}
+			{ props.backdrop.show ? <Backdrop data={props.backdrop.data}/> : null}
 		</div>
-	);
+	)
 }
 
 const mapStateToProps = state => {
