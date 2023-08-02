@@ -38,7 +38,7 @@ const TasksList = props => {
 			axiosAuth( (axios) => {
 				axios.get('tasks?' + queryParams)
 					.then(res => {
-						console.log(res.data)
+						// console.log(res.data)
 						if(res.data.status){
 							setTasks({
 								data: res.data.data,
@@ -48,12 +48,12 @@ const TasksList = props => {
 						}
 					})
 					.catch(e => {
-						console.log(e)
+						// console.log(e)
 					})
 			})
 		}
 		
-		console.log('[TasksList] useEffect')
+		// console.log('[TasksList] useEffect')
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tasks.fetched])
 	useEffect( () => {

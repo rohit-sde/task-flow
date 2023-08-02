@@ -16,8 +16,8 @@ const TasksLayout = props => {
 		task: null,
 		url: null
 	})
-	console.log('[TasksLayout]')
-	console.log('Reload: '+ reload)
+	// console.log('[TasksLayout]')
+	// console.log('Reload: '+ reload)
 
 	useEffect(() => {
 		if(reload === 1){

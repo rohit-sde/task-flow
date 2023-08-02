@@ -24,17 +24,17 @@ const DateTimePicker = props => {
 				ref
 			}
 		}
-		console.log('[DateTimePicker] useEffect "[]"')
+		// console.log('[DateTimePicker] useEffect "[]"')
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 	useEffect(() => {
 		props.stateObj.dueDate.value = (new Date(value) ).toISOString()
-		console.log('[DateTimePicker] useEffect "[value]"')
+		// console.log('[DateTimePicker] useEffect "[value]"')
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value])
 
 	let onChangeFun = newValue => {
-		console.log(newValue)
+		// console.log(newValue)
 		setValue(newValue)
 	}
 	

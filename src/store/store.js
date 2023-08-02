@@ -15,9 +15,9 @@ const reducers = combineReducers({
 const logger = store => {
 	return next => {
 		return action => {
-			console.log(`[Middleware Dispatching]`, action)
+			// console.log(`[Middleware Dispatching]`, action)
 			const result = next(action)
-			console.log(`[MIddleware] next state`, store.getState() )
+			// console.log(`[MIddleware] next state`, store.getState() )
 			return result
 		}
 	}

@@ -20,11 +20,11 @@ const Profile = props => {
 						])
 					}
 					else{
-						console.log(res)
+						// console.log(res)
 					}
 				})
 				.catch(e => {
-					console.log(e)
+					// console.log(e)
 				})
 		})
 	}, [])

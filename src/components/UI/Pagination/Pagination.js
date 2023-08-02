@@ -53,13 +53,13 @@ const getList = (t, c, i = 0, a = []) => {
 	else{
 		if( a.length < 5 && a.length < t ){
 			if(i > 0){
-				console.log('p')
+				// console.log('p')
 				if(c+i <= t) a.push(c+i)
 				return getList(t, c, -(++i) , a)
 				// return c - (i+1) >=1 ? getList(t, c, -(++i) , a) : getList(t, c, ++i , a)
 			}
 			else{
-				console.log('u')
+				// console.log('u')
 				if(c+i >= 1) a.unshift(c+i)
 				return getList(t, c, Math.abs(i) , a)
 				// return c + Math.abs(i) <= t ? getList(t, c, Math.abs(i) , a) : getList(t, c, --i , a)

@@ -185,7 +185,7 @@ export const signUp = (data, formReset, setMessage, history, loginData) => {
 		try{
 			axios.post('/users', sendData )
 				.then(res => {
-					console.log(res)
+					// console.log(res)
 					if(res.data.status){
 						setMessage({
 							text: 'You have successfully Signed-Up.',
@@ -217,13 +217,13 @@ export const signUp = (data, formReset, setMessage, history, loginData) => {
 							})
 						}
 						else{
-							console.log("Signup ...")
+							// console.log("Signup ...")
 						}
 					}
 				})
 		}
 		catch(e){
-			console.log('Axios error', e)
+			// console.log('Axios error', e)
 		}
 	}
 }

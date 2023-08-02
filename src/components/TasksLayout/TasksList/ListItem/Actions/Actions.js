@@ -66,7 +66,7 @@ const Actions = props => {
 
 const deleteHandler = (obj, e) => {
 	const cbSuccessFun = (updateBackdrop, e) => {
-		console.log(obj)
+		// console.log(obj)
 		axiosAuth(axios => {
 			axios.delete('tasks/' + task._id)
 			.then(res => {
@@ -78,11 +78,11 @@ const deleteHandler = (obj, e) => {
 					})
 				}
 				else{
-					console.log(res.data)
+					// console.log(res.data)
 				}
 			})
 			.catch(e => {
-				console.log(e)
+				// console.log(e)
 			})
 		})
 	}
@@ -106,7 +106,7 @@ const doneHandler = (obj, e) => {
 		axiosAuth(axios => {
 			axios.patch('tasks/' + task._id, data)
 			.then(res => {
-				console.log(res)
+				// console.log(res)
 				if(res.data.status){
 					obj.refreshTasksLayout()
 					
@@ -134,11 +134,11 @@ const doneHandler = (obj, e) => {
 					})
 				}
 				else{
-					console.log(res.data)
+					// console.log(res.data)
 				}
 			})
 			.catch(e => {
-				console.log(e)
+				// console.log(e)
 			})
 		})
 	}

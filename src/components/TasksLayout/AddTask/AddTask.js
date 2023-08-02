@@ -111,7 +111,7 @@ const addNewTaskHandler = (stateObj, e) => {
 					stateObj.history.push('/tasks/recent/page/1')
 				}
 				else{
-					console.log(res.data)
+					// console.log(res.data)
 				}
 			})
 			.catch(e => {

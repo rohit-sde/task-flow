@@ -30,17 +30,17 @@ const RadioGroup = props => {
 				data
 			}
 		}
-		console.log('[DateTimePicker] useEffect "[]"')
+		// console.log('[DateTimePicker] useEffect "[]"')
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 	useEffect(() => {
 		props.stateObj.priority.value = value
-		console.log('[DateTimePicker] useEffect "[value]"')
+		// console.log('[DateTimePicker] useEffect "[value]"')
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value])
 
 	let onChangeFun = e => {
-		console.log(e.target.value)
+		// console.log(e.target.value)
 		setValue(e.target.value)
 		// props.stateObj.priority.value = e.target.value
 	}

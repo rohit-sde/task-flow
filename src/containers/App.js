@@ -13,9 +13,9 @@ import Backdrop from './../components/UI/Backdrop/Backdrop'
 const App = props => {
 	let history = useHistory()
 	const loginData = useState(null)
-	console.log('[App]', {...props} )
-	console.log( props.loadApp, props.isLoggedIn )
-	console.log(props.backdrop)
+	// console.log('[App]', {...props} )
+	// console.log( props.loadApp, props.isLoggedIn )
+	// console.log(props.backdrop)
 	// setTimeout(() => {
 	// 	axiosAuth()
 	// 	setTimeout(() => {
@@ -64,7 +64,7 @@ const App = props => {
 		// 	// props.updateLoggedIn(true, history)
 		// }
 		// console.log(history)
-		console.log("[App] useEffect")
+		// console.log("[App] useEffect")
 		// console.log(props.isLoggedIn)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])

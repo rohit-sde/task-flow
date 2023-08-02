@@ -112,7 +112,7 @@ const resenOTP = (userId, userEmail, setPage, setMessage, e) => {
 	e.preventDefault()
 	axios.patch('/users/000000000000000000000000/verifyEmail', {email: userEmail} )
 		.then(res => {
-			console.log(res)
+			// console.log(res)
 			if(res.data.status){
 				let data = res.data.data
 				const userId = data._id
@@ -126,7 +126,7 @@ const resenOTP = (userId, userEmail, setPage, setMessage, e) => {
 			}
 		})
 		.catch(e => {
-			console.log(e)
+			// console.log(e)
 			setMessage('Something went wrong.A')
 		})
 
@@ -137,7 +137,7 @@ const setTimerFun = (stateHook, setTimer, callback) => {
 	const [state, setState] = stateHook
 	let seconds = state.secondsRef.current
 	
-	console.log(state)
+	// console.log(state)
 	// console.log(seconds)
 	state.intervalRef.current = setInterval(() => {
 		if(seconds >= 0){

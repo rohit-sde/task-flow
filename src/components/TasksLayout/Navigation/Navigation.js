@@ -49,7 +49,7 @@ const logoutHandler = (updateBackdrop, updateAuth) => {
 		axiosAuth(axios => {
 			axios.post('users/logout', {refreshToken: window.localStorage.getItem('task-cutive-token')})
 			.then(res => {
-				console.log(res)
+				// console.log(res)
 				if(res.data.status){
 					updateBackdrop({
 						show: false,
@@ -64,11 +64,11 @@ const logoutHandler = (updateBackdrop, updateAuth) => {
 					window.location.reload()
 				}
 				else{
-					console.log(res.data)
+					// console.log(res.data)
 				}
 			})
 			.catch(e => {
-				console.log(e)
+				// console.log(e)
 			})
 		})
 	}

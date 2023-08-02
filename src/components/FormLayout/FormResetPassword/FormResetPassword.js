@@ -139,7 +139,7 @@ const verifyOTPHandler = (setPage, otpRef, userId, userEmail, setMessage, timerH
 			}
 		})
 		.catch(e => {
-			console.log(e)
+			// console.log(e)
 			setMessage('Something went wrong.A')
 		})
 	}
@@ -176,7 +176,7 @@ const setPasswordHandler = (setPage, refObj, setMessage, e) => {
 			}
 		})
 			.then(res => {
-				console.log(res)
+				// console.log(res)
 				if(res.data.status){
 					setMessage( {text: 'Password has been Reset successfully.', show: 1, error: 0} )
 
@@ -186,14 +186,14 @@ const setPasswordHandler = (setPage, refObj, setMessage, e) => {
 							userPass
 						})
 							.then(res => {
-								console.log(res)
+								// console.log(res)
 								if(res.data.status){
 									let data = res.data.data
 									// console.log(data)
 									// console.log(refObj)
 									const auth = refObj.current.authStore.auth
 									const updateAuth = refObj.current.authStore.updateAuth
-									console.log(refObj.current)
+									// console.log(refObj.current)
 									const payload = {
 										...auth,
 										user: {
@@ -212,13 +212,13 @@ const setPasswordHandler = (setPage, refObj, setMessage, e) => {
 									// console.log('¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬')
 								}
 								else{
-									console.log('[Login Error]')
+									// console.log('[Login Error]')
 									// console.log('[Login Error] - ' + res.data.message)
 								}
 							})
 							.catch(e => {
-								console.log('[Login Error] catch block')
-								console.log(e)
+								// console.log('[Login Error] catch block')
+								// console.log(e)
 							})
 					}, 800)
 				}
@@ -227,7 +227,7 @@ const setPasswordHandler = (setPage, refObj, setMessage, e) => {
 				}
 			})
 			.catch(e => {
-				console.log(e)
+				// console.log(e)
 				setMessage( {text: 'Something went wrong. Try again later.', show: 1, error: 1} )
 			})
 	}

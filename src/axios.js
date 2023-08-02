@@ -51,7 +51,7 @@ const getAccessToken = () => new Promise( (resolve, reject) => {
         // let lifeTime = data.exp -
         let now = Math.floor( Date.now() / 1000 )
         let diff = now - (data.exp - 10)
-        console.log('Token due time: ' + diff)
+        // console.log('Token due time: ' + diff)
         if(diff < 0){
             isRefreshAccessTokenNeeded = false
             resolve({accessToken, store, updateStore})
@@ -63,7 +63,7 @@ const getAccessToken = () => new Promise( (resolve, reject) => {
                 resolve({accessToken: res.accessToken, store, updateStore})
             })
             .catch(e => {
-                console.log(e)
+                // console.log(e)
                 reject()
             })
     }
@@ -96,7 +96,7 @@ const refreshAccessToken = () => new Promise( (resolve, reject) => {
         }
     }
     else{
-        console.log('login first')
+        // console.log('login first')
         reject('Login First.')
     }
 })

@@ -16,7 +16,7 @@ const EditTask = props => {
 	stateObj.history = useHistory()
 	stateObj.EditTaskProps = props
 	const [message] = messageHST
-	console.log(props)
+	// console.log(props)
 
 	return (
 		<div className={classes.EditTask}>
@@ -78,8 +78,8 @@ const EditTask = props => {
 
 const updateTaskTaskHandler = (stateObj, e) => {
 	e.preventDefault()
-	console.log(stateObj)
-	console.log('------------------------------------')
+	// console.log(stateObj)
+	// console.log('------------------------------------')
 	const setMessage = stateObj.messageHST[1]
 
 
@@ -113,7 +113,7 @@ const updateTaskTaskHandler = (stateObj, e) => {
 
 	if(preDD !== newDD) data.dueDatetime = stateObj.dueDate.value
 	
-	console.log(data)
+	// console.log(data)
 	
 	const id = stateObj.EditTaskProps.editTaskState.task._id
 
@@ -126,7 +126,7 @@ const updateTaskTaskHandler = (stateObj, e) => {
 						stateObj.history.push(stateObj.EditTaskProps.editTaskState.url)
 					}
 					else{
-						console.log(res.data)
+						// console.log(res.data)
 						stateObj.history.push(stateObj.EditTaskProps.editTaskState.url)
 					}
 				})
