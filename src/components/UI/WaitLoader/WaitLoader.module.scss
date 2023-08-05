@@ -1,0 +1,139 @@
+.WaitLoader{
+	// background-color: red;
+	height: 100vh;
+	width: 100vw;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 100000;
+
+	[class~=backdrop]{
+		background-color: #000000bb;
+		height: inherit;
+		width: inherit;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+	}
+
+	[class~=loaderCon]{
+		min-height: 100px;
+		min-width: 200px;
+		position: absolute;
+		background-color: white;
+		top: calc(40vh - 100px);
+		left: calc(50vw - 100px);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 40px;
+
+		>p{
+			// background-color: silver;
+			margin: 0px;
+			margin-top: 20px;
+			font-size: 15px;
+			color: #673ab7;
+		}
+	}
+}
+.loader{
+	height: 100px;
+	width: 100px;
+	// background-color: red;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+
+	>span[class~=base]{
+		position: relative;
+		display: inline-block;
+		height: 90%;
+		width: 90%;
+		border-radius: 50%;  
+		background: #f0f0f0;
+		overflow:hidden;
+		box-shadow: 0 0 3px -1px #000000a0 inset;
+		
+		&::after{
+			content: "";
+			position: absolute;
+			top: 15%;
+			left: 14%;
+			display: block;
+			height: 70%;
+			width: 70%;
+			background: #fafafa;
+			border-radius: 50%;
+			box-shadow: 0 0 3px -1px #000000a0;
+		}
+
+		>span[class~=left], >span[class~=right]{
+			position: absolute;
+			height: 100%;
+			width: 50%;
+			overflow: hidden;
+			top: 0px;
+			&:nth-child(1){
+				left: 0px;
+			}
+			&:nth-child(1){
+				left: 50%;
+			}
+			
+			>span{
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				height: 100%;
+				width: 100%;
+				background-color: blueviolet;
+				opacity: 0.8;
+				animation: rotate-left 3s infinite;
+				transform-origin: right center;
+				
+			}
+			&:nth-child(1){
+				span{
+					transform-origin: left center;
+				}
+			}		
+		}
+		>span[class~=text]{
+			display: inline-block;
+			position: relative;
+			top: calc(50% - 12.5px);
+			left: calc(50% - 25px);
+			height: 25px;
+			line-height: 28px;
+			text-align: left;
+			width: 50px;
+			// background-color: silver;
+			z-index: 1;
+			color: blueviolet;
+			font-weight: 500;
+			text-shadow: 1px 1px 2px #000000aa;
+
+			>span{
+				&:first-child{
+					display: inline-block;
+					margin-right: 1px;
+				}
+			}
+		}
+	}
+}
+
+
+@keyframes rotate-left{
+	0%{transform:rotate(0deg)}
+	20%{transform:rotate(0deg)}
+	50%{transform:rotate(180deg)}
+	80%{transform:rotate(180deg)}
+	100%{transform:rotate(360deg)}
+}

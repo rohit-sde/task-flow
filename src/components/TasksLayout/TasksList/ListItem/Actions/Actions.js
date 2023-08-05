@@ -28,7 +28,8 @@ const Actions = props => {
 		editRef,
 		deleteRef,
 		doneRef,
-		history
+		history,
+		updateWaitLoader: props.updateWaitLoader
 	}
 
 	return (
@@ -67,9 +68,15 @@ const Actions = props => {
 const deleteHandler = (obj, e) => {
 	const cbSuccessFun = (updateBackdrop, e) => {
 		// console.log(obj)
+		const {updateWaitLoader} = obj
+		updateWaitLoader({
+			show: true,
+			message: 'Deleting tasks.'
+		})
 		axiosAuth(axios => {
 			axios.delete('tasks/' + task._id)
 			.then(res => {
+				updateWaitLoader({})
 				if(res.data.status){
 					obj.refreshTasksLayout()
 					updateBackdrop({
@@ -83,6 +90,7 @@ const deleteHandler = (obj, e) => {
 			})
 			.catch(e => {
 				// console.log(e)
+				updateWaitLoader({})
 			})
 		})
 	}
@@ -103,10 +111,16 @@ const doneHandler = (obj, e) => {
 		const data = {
 			"isCompleted": true
 		}
+		const {updateWaitLoader} = obj
+		updateWaitLoader({
+			show: true,
+			message: 'Marking as done.'
+		})
 		axiosAuth(axios => {
 			axios.patch('tasks/' + task._id, data)
 			.then(res => {
 				// console.log(res)
+				updateWaitLoader({})
 				if(res.data.status){
 					obj.refreshTasksLayout()
 					
@@ -139,6 +153,7 @@ const doneHandler = (obj, e) => {
 			})
 			.catch(e => {
 				// console.log(e)
+				updateWaitLoader({})
 			})
 		})
 	}
@@ -169,7 +184,8 @@ const isExpiredFun = task => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		updateBackdrop: (...args) => dispatch( actions.updateBackdrop(...args) )
+		updateBackdrop: (...args) => dispatch( actions.updateBackdrop(...args) ),
+		updateWaitLoader: (...args) => dispatch( actions.updateWaitLoader(...args) )
 	}
 }
 
