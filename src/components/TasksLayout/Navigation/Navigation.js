@@ -31,7 +31,7 @@ const Navigation = props => {
 						</Link>
 					</li>
 					<li>
-						<div title="Logout" onClick={logoutHandler.bind(null, props.updateBackdrop, props.updateAuth, props.updateWaitLoader)}>
+						<div title="Logout" onClick={logoutHandler.bind(null, props.updateBackdrop, props.updateAuth)}>
 							<IconContext.Provider value={{ color: 'white', size: '2em' }}>
 								<IoIosLogOut/>
 							</IconContext.Provider>
@@ -43,18 +43,13 @@ const Navigation = props => {
 	)
 }
 
-const logoutHandler = (updateBackdrop, updateAuth, updateWaitLoader) => {
+const logoutHandler = (updateBackdrop, updateAuth) => {
 	const cbSuccessFun = (updateBackdrop, e) => {
 		// console.log('here', updateBackdrop)
-		updateWaitLoader({
-			show: true,
-			message: 'Logging Out.'
-		})
 		axiosAuth(axios => {
 			axios.post('users/logout', {refreshToken: window.localStorage.getItem('task-cutive-token')})
 			.then(res => {
 				// console.log(res)
-				updateWaitLoader({})
 				if(res.data.status){
 					updateBackdrop({
 						show: false,
@@ -74,7 +69,6 @@ const logoutHandler = (updateBackdrop, updateAuth, updateWaitLoader) => {
 			})
 			.catch(e => {
 				// console.log(e)
-				updateWaitLoader({})
 			})
 		})
 	}
@@ -87,8 +81,7 @@ const logoutHandler = (updateBackdrop, updateAuth, updateWaitLoader) => {
 const mapDispatchToProps = dispatch => {
 	return {
 		updateAuth: (...args) => dispatch( actions.updateAuth(...args) ),
-		updateBackdrop: (...args) => dispatch( actions.updateBackdrop(...args) ),
-		updateWaitLoader: (...args) => dispatch( actions.updateWaitLoader(...args) )
+		updateBackdrop: (...args) => dispatch( actions.updateBackdrop(...args) )
 	}
 }
 

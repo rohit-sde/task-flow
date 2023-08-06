@@ -49,7 +49,7 @@ const FormLogin = props => {
 				<Button
 					id="login"
 					onClick={e => {
-						props.loginHandler(e, emailRef, passwordRef, setMessage, history, props.loginData, props.updateWaitLoader)
+						props.loginHandler(e, emailRef, passwordRef, setMessage, history, props.loginData)
 						// loginHandler.call(this, e, emailRef, passwordRef, setLoginError)
 					}}
 					>Login</Button>
@@ -127,8 +127,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		loginHandler: (...args) => dispatch(actions.login(...args)),
-		updateWaitLoader: (...args) => dispatch(actions.updateWaitLoader(...args))
+		loginHandler: (...args) => dispatch(actions.login(...args))
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FormLogin)

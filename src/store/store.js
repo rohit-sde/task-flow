@@ -1,6 +1,5 @@
 import authReducer from './reducers/authReducer'
 import backdropReducer from './reducers/backdropReducer'
-import waitLoaderReducer from './reducers/waitLoaderReducer'
 
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
@@ -9,8 +8,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reducers = combineReducers({
 	auth: authReducer,
-	backdrop: backdropReducer,
-	waitLoader: waitLoaderReducer
+	backdrop: backdropReducer
 })
 
 // eslint-disable-next-line no-unused-vars

@@ -24,9 +24,9 @@ const FormResetPassword = props => {
 
 	const authStore = {auth: props.auth, updateAuth: props.updateAuth}
 	const history = useHistory()
-	const refObj = useRef({ emailRef, otpRef, pass1Ref, pass2Ref, authStore, history, updateWaitLoader: props.updateWaitLoader })
+	const refObj = useRef({ emailRef, otpRef, pass1Ref, pass2Ref, authStore, history })
 
-	const verifyOTPHandlerArgs = [setPage, otpRef, page.props.userId, page.props.userEmail, setMessage, props.updateWaitLoader]
+	const verifyOTPHandlerArgs = [setPage, otpRef, page.props.userId, page.props.userEmail, setMessage]
 
 	let render = null;
 	switch(page.name){
@@ -41,7 +41,7 @@ const FormResetPassword = props => {
 			break;
 		case 'setNewPassword':
 			render = <SetNewPassword
-						onClick={setPasswordHandler.bind(null, setPage, refObj, setMessage, props.updateWaitLoader)}
+						onClick={setPasswordHandler.bind(null, setPage, refObj, setMessage)}
 						ref={refObj}
 						messageStateHook={messageStateHook}
 						{...page.props}
@@ -49,7 +49,7 @@ const FormResetPassword = props => {
 			break;
 		default:
 			render = <GetEmail
-						onClick={sendOTPHandler.bind(null, setPage, emailRef, setMessage, props.updateWaitLoader)}
+						onClick={sendOTPHandler.bind(null, setPage, emailRef, setMessage)}
 						ref={refObj}
 						messageStateHook={messageStateHook}
 						{...page.props}
@@ -75,7 +75,7 @@ const FormResetPassword = props => {
 	)
 }
 
-const sendOTPHandler = (setPage, emailRef, setMessage, updateWaitLoader, e) => {
+const sendOTPHandler = (setPage, emailRef, setMessage, e) => {
 	e.preventDefault()
 
 	let email = emailRef.current.value
@@ -87,13 +87,8 @@ const sendOTPHandler = (setPage, emailRef, setMessage, updateWaitLoader, e) => {
 		setMessage({text: 'Invalid Email.', error: 1, show: 1})
 	}
 	else{
-		updateWaitLoader({
-			show: true,
-			message: 'Sending OTP.'
-		})
 		axios.patch('/users/000000000000000000000000/verifyEmail', {email})
 		.then(res => {
-			updateWaitLoader({})
 			// console.log(res)
 			if(res.data.status){
 				let data = res.data.data
@@ -104,48 +99,34 @@ const sendOTPHandler = (setPage, emailRef, setMessage, updateWaitLoader, e) => {
 				})
 			}
 			else{
-				if(/Failed to send OTP/.test(res.data.message))
-					setMessage({text: 'Please inform the app owner, Email Server not Working.', error: 1, show: 1})
-				else
-					setMessage({text: 'Something went wrong.', error: 1, show: 1})
+				setMessage('Something went wrong.')
 			}
 		})
 		.catch(e => {
 			// console.log(e)
-			updateWaitLoader({})
-			setMessage({text: 'Something went wrong.A', error: 1, show: 1})
+			setMessage('Something went wrong.A')
 		})
 	}
 }
-const verifyOTPHandler = (setPage, otpRef, userId, userEmail, setMessage, updateWaitLoader, timerHook, stateHook, e) => {
+const verifyOTPHandler = (setPage, otpRef, userId, userEmail, setMessage, timerHook, stateHook, e) => {
 	e.preventDefault()
 	// console.log(setPage, otpRef, userId, userEmail, setMessage, timerHook, stateHook, e)
-	
+
 	let otp = otpRef.current.value
 	let match = otp.match(/\d/g)
 	if(match === null){
-		setMessage({
-			text: 'OTP is required.',
-			show: 1,
-			error: 1
-		})
+		setMessage('OTP is required.')
 	}
 	else if(match.length === 6){
 		// console.log(otp)
 		// console.log(otp.length)
 		// setPage('setNewPassword')
 		timerHook[1]('')
-
-		updateWaitLoader({
-			show: true,
-			message: 'Validating OTP.'
-		})
+		if(stateHook[0].intervalRef.current != null) clearInterval(stateHook[0].intervalRef.current)
 		axios.patch(`/users/${userId}/verifyEmail`, {otp: Number(otp)})
 		.then(res => {
 			// console.log(res)
-			updateWaitLoader({})
 			if(res.data.status){
-				if(stateHook[0].intervalRef.current != null) clearInterval(stateHook[0].intervalRef.current)
 				let data = res.data.data
 				const accessToken = data.accessToken
 				setPage({
@@ -154,39 +135,19 @@ const verifyOTPHandler = (setPage, otpRef, userId, userEmail, setMessage, update
 				})
 			}
 			else{
-				if(/Wrong OTP passed/.test(res.data.message))
-					setMessage({
-						text: 'Wrong OTP.',
-						show: 1,
-						error: 1
-					})
-				else
-					setMessage({
-						text: 'Something went wrong',
-						show: 1,
-						error: 1
-					})
+				setMessage('Something went wrong.')
 			}
 		})
 		.catch(e => {
 			// console.log(e)
-			updateWaitLoader({})
-			setMessage({
-				text: 'Something went wrong.A',
-				show: 1,
-				error: 1
-			})
+			setMessage('Something went wrong.A')
 		})
 	}
 	else{
-		setMessage({
-			text: 'Only six characters are allowed.',
-			show: 1,
-			error: 1
-		})
+		setMessage('Only six characters are allowed.')
 	}
 }
-const setPasswordHandler = (setPage, refObj, setMessage, updateWaitLoader, e) => {
+const setPasswordHandler = (setPage, refObj, setMessage, e) => {
 	e.preventDefault()
 	const pass1 = refObj.current.pass1Ref.current.value
 	const pass2 = refObj.current.pass2Ref.current.value
@@ -205,10 +166,6 @@ const setPasswordHandler = (setPage, refObj, setMessage, updateWaitLoader, e) =>
 	else{
 		setMessage( {text: '', show: 0, error: 0} )
 
-		updateWaitLoader({
-			show: true,
-			message: 'Setting new password.'
-		})
 		axios.patch('/users/resetPassword', {
 			email: userEmail,
 			newPass: userPass
@@ -220,7 +177,6 @@ const setPasswordHandler = (setPage, refObj, setMessage, updateWaitLoader, e) =>
 		})
 			.then(res => {
 				// console.log(res)
-				updateWaitLoader({})
 				if(res.data.status){
 					setMessage( {text: 'Password has been Reset successfully.', show: 1, error: 0} )
 
@@ -272,7 +228,6 @@ const setPasswordHandler = (setPage, refObj, setMessage, updateWaitLoader, e) =>
 			})
 			.catch(e => {
 				// console.log(e)
-				updateWaitLoader({})
 				setMessage( {text: 'Something went wrong. Try again later.', show: 1, error: 1} )
 			})
 	}
@@ -285,8 +240,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		updateAuth: (...args) => { dispatch( actions.updateAuth(...args) ) },
-		updateWaitLoader: (...args) => { dispatch( actions.updateWaitLoader(...args) ) }
+		updateAuth: (...args) => { dispatch( actions.updateAuth(...args) ) }
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FormResetPassword)

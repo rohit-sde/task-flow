@@ -1,7 +1,7 @@
 import * as constants from './constants'
 import axios from './../../axios'
 
-export const login = (e, emailRef, passRef, setLoginError, history, loginData, updateWaitLoader) => {
+export const login = (e, emailRef, passRef, setLoginError, history, loginData) => {
 	e.preventDefault()
 	const [ , setLogin] = loginData
 	let email = emailRef.current.value
@@ -45,16 +45,11 @@ export const login = (e, emailRef, passRef, setLoginError, history, loginData, u
 			}
 		}
 		if( sendLoginRequest ){
-			updateWaitLoader({
-				show: true,
-				message: 'Logging In'
-			})
 			axios.post('/users/login', {
 				userEmail: email,
 				userPass: pass
 			})
 				.then(res => {
-					updateWaitLoader({})
 					if(res.data.status){
 						let data = res.data.data
 						// console.log('response')
@@ -115,9 +110,6 @@ export const login = (e, emailRef, passRef, setLoginError, history, loginData, u
 							error: 1
 						})
 					}
-				})
-				.catch(e => {
-					updateWaitLoader({})
 				})
 		}
 	}
@@ -180,7 +172,7 @@ export const refreshToken = () => new Promise( (resolve, reject) => {
 	}
 }
 */
-export const signUp = (data, formReset, setMessage, history, loginData, updateWaitLoader) => {
+export const signUp = (data, formReset, setMessage, history, loginData) => {
 	/* 
 		data = {fname: ..., lname: ..., email: ..., pass: ..., sendOTP: ...}
 	*/
@@ -190,30 +182,17 @@ export const signUp = (data, formReset, setMessage, history, loginData, updateWa
 		sendOTP: true
 	}
 	return dispatch => {
-		updateWaitLoader({
-			show: true,
-			message: 'Creating new account.'
-		})
 		try{
 			axios.post('/users', sendData )
 				.then(res => {
 					// console.log(res)
-					updateWaitLoader({})
 					if(res.data.status){
-
 						setMessage({
 							text: 'You have successfully Signed-Up.',
 							show: 1,
 							error: 0
 						})
 						formReset()
-						
-						if(/\[Something went wrong with Email Server.\]/.test(res.data.message)){
-							// history.push('/login')
-							window.location.href = '/login'
-							return
-						}
-
 						
 						let data = res.data.data
 						
@@ -241,9 +220,6 @@ export const signUp = (data, formReset, setMessage, history, loginData, updateWa
 							// console.log("Signup ...")
 						}
 					}
-				})
-				.catch(e => {
-					updateWaitLoader({})
 				})
 		}
 		catch(e){
