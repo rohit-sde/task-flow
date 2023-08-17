@@ -89,7 +89,7 @@ const FormSignup = props => {
 					id="signup"
 					onClick={e => {
 						const formResetFun = formReset.bind(null, setValueRef, setMessage)
-						signupHandler.call(this, e, fnameRef, lnameRef, emailRef, passwordRef, message, setMessage, props.signUp, formResetFun, history, props.loginData)
+						signupHandler.call(this, e, fnameRef, lnameRef, emailRef, passwordRef, message, setMessage, props.signUp, formResetFun, history, props.loginData, props.updateWaitLoader)
 					}}
 					>Signup</Button>
 				<hr/>
@@ -216,7 +216,7 @@ const validate = (what, text) => {
 			return error
 	}
 }
-const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, message, setMessage, signUp, formReset, history, loginData) => {
+const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, message, setMessage, signUp, formReset, history, loginData, updateWaitLoader) => {
 	e.preventDefault()
 
 	let fname = fnameRef.current.value
@@ -238,7 +238,7 @@ const signupHandler = (e, fnameRef, lnameRef, emailRef, passwordRef, message, se
 		})
 	}
 	else{
-		signUp({fname, lname, email, pass}, formReset, setMessage, history, loginData)
+		signUp({fname, lname, email, pass}, formReset, setMessage, history, loginData, updateWaitLoader)
 	}
 }
 const formReset = (setValueRef, setMessage) => {
@@ -255,7 +255,8 @@ const formReset = (setValueRef, setMessage) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		signUp: (...args) => dispatch(actions.signUp(...args))
+		signUp: (...args) => dispatch(actions.signUp(...args)),
+		updateWaitLoader: (...args) => dispatch(actions.updateWaitLoader(...args))
 	}
 }
 export default connect(null, mapDispatchToProps)(FormSignup)

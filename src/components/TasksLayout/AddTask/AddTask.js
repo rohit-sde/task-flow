@@ -8,12 +8,15 @@ import { axiosAuth } from '../../../axios'
 import Radiogroup from '../../UI/RadioGroup/RadioGroup'
 import { useHistory } from 'react-router'
 import * as taskUtils from './../taskUtils'
+import * as actions from './../../../store/actions/index'
+import { connect } from 'react-redux'
 
 const AddTask = props => {
 	const stateObj = {}
 	const messageHST = useState({error: 1, show: 0, text: ''})
 	stateObj.messageHST = messageHST
 	stateObj.history = useHistory()
+	stateObj.updateWaitLoader = props.updateWaitLoader
 	const [message] = messageHST
 
 	return (
@@ -77,6 +80,7 @@ const addNewTaskHandler = (stateObj, e) => {
 	e.preventDefault()
 	// console.log(stateObj)
 	const setMessage = stateObj.messageHST[1]
+	const {updateWaitLoader} = stateObj
 
 	let title = stateObj.title.value
 	let description = stateObj.description.value
@@ -103,9 +107,14 @@ const addNewTaskHandler = (stateObj, e) => {
 	}
 	// console.log(data)	
 
+	updateWaitLoader({
+		show: true,
+		message: 'Adding new task.'
+	})
 	axiosAuth(axios => {
 		axios.post('tasks', data)
 			.then(res => {
+				updateWaitLoader({})
 				// console.log(res)
 				if(res.data.status){
 					stateObj.history.push('/tasks/recent/page/1')
@@ -115,9 +124,15 @@ const addNewTaskHandler = (stateObj, e) => {
 				}
 			})
 			.catch(e => {
+				updateWaitLoader({})
 				// console.log(e)
 			})
 	})
 }
 
-export default AddTask
+const mapDispatchToProps = dispatch => {
+	return {
+		updateWaitLoader: (...args) => { dispatch( actions.updateWaitLoader(...args) ) }
+	}
+}
+export default connect(null, mapDispatchToProps)(AddTask)

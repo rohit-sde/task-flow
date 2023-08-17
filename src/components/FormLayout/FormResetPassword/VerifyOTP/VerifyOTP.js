@@ -70,7 +70,7 @@ const VerifyOTP = (props, refObj) => {
 						<AlertMessage error>OTP is expired.</AlertMessage>
 						<Button
 							id="resendOTP"
-							onClick={resenOTP.bind(null, props.userId, props.userEmail, props.setPage, props.messageStateHook[1])}
+							onClick={resenOTP.bind(null, props.userId, props.userEmail, props.setPage, props.messageStateHook[1], refObj.current.updateWaitLoader)}
 							>Resend OTP</Button>
 						<br/>
 					</>
@@ -108,11 +108,24 @@ const otpHandler = (e, setValue, setError, messageStateHook) => {
 	}
 }
 
-const resenOTP = (userId, userEmail, setPage, setMessage, e) => {
+const resenOTP = (userId, userEmail, setPage, setMessage, updateWaitLoader, e) => {
 	e.preventDefault()
+
+	updateWaitLoader({
+		show: true,
+		message: 'Resending OTP'
+	})
+
+	// setPage({
+	// 	name: 'verifyOTP',
+	// 	props: {userId, userEmail, otpSent: true, setPage}
+	// })
+	// return
+
 	axios.patch('/users/000000000000000000000000/verifyEmail', {email: userEmail} )
 		.then(res => {
 			// console.log(res)
+			updateWaitLoader({})
 			if(res.data.status){
 				let data = res.data.data
 				const userId = data._id
@@ -127,6 +140,7 @@ const resenOTP = (userId, userEmail, setPage, setMessage, e) => {
 		})
 		.catch(e => {
 			// console.log(e)
+			updateWaitLoader({})
 			setMessage('Something went wrong.A')
 		})
 

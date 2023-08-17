@@ -8,6 +8,8 @@ import { axiosAuth } from '../../../axios'
 import Radiogroup from '../../UI/RadioGroup/RadioGroup'
 import { useHistory } from 'react-router'
 import * as taskUtils from './../taskUtils'
+import * as actions from './../../../store/actions/index'
+import { connect } from 'react-redux'
 
 const EditTask = props => {
 	const stateObj = {}
@@ -15,6 +17,7 @@ const EditTask = props => {
 	stateObj.messageHST = messageHST
 	stateObj.history = useHistory()
 	stateObj.EditTaskProps = props
+	stateObj.updateWaitLoader = props.updateWaitLoader
 	const [message] = messageHST
 	// console.log(props)
 
@@ -118,10 +121,16 @@ const updateTaskTaskHandler = (stateObj, e) => {
 	const id = stateObj.EditTaskProps.editTaskState.task._id
 
 	if(Object.keys(data).length > 0){
+		const {updateWaitLoader} = stateObj
+		updateWaitLoader({
+			show: true,
+			message: 'Updating task.'
+		})
 		axiosAuth(axios => {
 			axios.patch(`tasks/${id}`, data)
 				.then(res => {
 					// console.log(res)
+					updateWaitLoader({})
 					if(res.data.status){
 						stateObj.history.push(stateObj.EditTaskProps.editTaskState.url)
 					}
@@ -132,6 +141,7 @@ const updateTaskTaskHandler = (stateObj, e) => {
 				})
 				.catch(e => {
 					// console.log(e)
+					updateWaitLoader({})
 				})
 		})
 	}
@@ -140,4 +150,9 @@ const updateTaskTaskHandler = (stateObj, e) => {
 	}
 }
 
-export default EditTask
+const mapDispatchToProps = dispatch => {
+	return {
+		updateWaitLoader: (...args) => { dispatch( actions.updateWaitLoader(...args) ) }
+	}
+}
+export default connect(null, mapDispatchToProps)(EditTask)

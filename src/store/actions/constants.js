@@ -6,3 +6,6 @@ export const LOGIN = 'LOGIN'
 
 
 export const UPDATE_BACKDROP = 'UPDATE_BACKDROP'
+
+
+export const UPDATE_WAITLOADER = 'UPDATE_WAITLOADER'

@@ -101,7 +101,7 @@ const FormVerifyEmail = props => {
 								<Button
 									id="sendOTP"
 									onClick={e => {
-										sendOTPHandler.call(this, e, props.user._id, props.loginData, setLoginError, history)
+										sendOTPHandler.call(this, e, props.user._id, props.loginData, setLoginError, history, props.updateWaitLoader)
 									}}
 									>Verify Email</Button>
 							}
@@ -127,7 +127,7 @@ const FormVerifyEmail = props => {
 									<Button
 										id="submitOTP"
 										onClick={e => {
-											submitOTPHandler.call(this, e, otpRef, intervalRef, props.loginData, props.user._id, props.auth, props.updateAuth, setLoginError, history)
+											submitOTPHandler.call(this, e, otpRef, intervalRef, props.loginData, props.user._id, props.auth, props.updateAuth, setLoginError, history, props.updateWaitLoader)
 										}}
 										>Submit OTP</Button>
 								</>
@@ -137,7 +137,7 @@ const FormVerifyEmail = props => {
 									<Button
 										id="resendOTP"
 										onClick={e => {
-											resendOTPHandler.call(this, e, props.user._id, props.loginData, timerIsSet, setLoginError, history)
+											resendOTPHandler.call(this, e, props.user._id, props.loginData, timerIsSet, setLoginError, history, props.updateWaitLoader)
 										}}
 										>Resend OTP</Button>
 								</>
@@ -193,7 +193,7 @@ const FormVerifyEmail = props => {
 									<Button
 										id="submitOTP"
 										onClick={e => {
-											submitOTPHandler.call(this, e, otpRef, intervalRef, props.loginData, props.user._id, props.auth, props.updateAuth, setLoginError, history)
+											submitOTPHandler.call(this, e, otpRef, intervalRef, props.loginData, props.user._id, props.auth, props.updateAuth, setLoginError, history, props.updateWaitLoader)
 										}}
 										>Submit OTP</Button>
 								</>
@@ -203,7 +203,7 @@ const FormVerifyEmail = props => {
 									<Button
 										id="resendOTP"
 										onClick={e => {
-											resendOTPHandler.call(this, e, props.user._id, props.loginData, timerIsSet, setLoginError, history)
+											resendOTPHandler.call(this, e, props.user._id, props.loginData, timerIsSet, setLoginError, history, props.updateWaitLoader)
 										}}
 										>Resend OTP</Button>
 								</>
@@ -265,12 +265,19 @@ const setTimerFun = (intervalRef, totalSeconds, setSeconds, setTimer, callback )
 		}
 	}, 1000);
 }
-const sendOTPHandler = (e, userId, loginData, setLoginError, history) => {
+const sendOTPHandler = (e, userId, loginData, setLoginError, history, updateWaitLoader) => {
 	e.preventDefault()
 	const [login, setLogin] = loginData
 
+	setLoginError('')
+	updateWaitLoader({
+		show: true,
+		message: 'Sending OTP.'
+	})
 	axios.patch(`/users/${userId}/verifyEmail`)
 		.then(res => {
+			// console.log(res)
+			updateWaitLoader({})
 			if(res.data.status){
 				setLogin({
 					...login,
@@ -283,21 +290,30 @@ const sendOTPHandler = (e, userId, loginData, setLoginError, history) => {
 				if( (/Email is already verified./).test(res.data.message) ){
 					history.push('/')
 				}
+				else if(/Failed to send OTP/.test(res.data.message))
+					setLoginError('Please inform the app owner, Email Server not Working.')
 				else setLoginError('Something went wrong. Try again.')
 				// console.log(res)
 			}
 		})
 		.catch(e => {
+			updateWaitLoader({})
 			setLoginError('Something went wrong. Try again.')
 			// console.log(e)
 		})
 }
-const resendOTPHandler = (e, userId, loginData, timerIsSet, setLoginError, history) => {
+const resendOTPHandler = (e, userId, loginData, timerIsSet, setLoginError, history, updateWaitLoader) => {
 	e.preventDefault()
 	const [login, setLogin] = loginData
 
+	setLoginError('')
+	updateWaitLoader({
+		show: true,
+		message: 'Sending OTP.'
+	})
 	axios.patch(`/users/${userId}/verifyEmail`)
 		.then(res => {
+			updateWaitLoader({})
 			if(res.data.status){
 				timerIsSet.current = false
 				setLogin({
@@ -316,6 +332,7 @@ const resendOTPHandler = (e, userId, loginData, timerIsSet, setLoginError, histo
 			}
 		})
 		.catch(e => {
+			updateWaitLoader({})
 			setLoginError('Something went wrong. Try again.')
 			// console.log(e)
 		})
@@ -337,16 +354,21 @@ const otpHandler = (e, setValue, setError, setLoginError) => {
 		setError('Only numeric characters are allowed.')
 	}
 }
-const submitOTPHandler = (e, otpRef, intervalRef, loginData, userId, auth, updateAuth, setLoginError, history) => {
+const submitOTPHandler = (e, otpRef, intervalRef, loginData, userId, auth, updateAuth, setLoginError, history, updateWaitLoader) => {
 	e.preventDefault()
 	let value = otpRef.current.value
 	if(value && value.match(/\d/g).length === value.length && value.length === 6){
 		// console.log(intervalRef)
-		clearInterval(intervalRef.current)
 		const [login, setLogin] = loginData
 		
+		setLoginError('')
+		updateWaitLoader({
+			show: true,
+			message: 'Validating OTP'
+		})
 		axios.patch(`/users/${userId}/verifyEmail`, {otp: Number(value)})
 			.then(res => {
+				updateWaitLoader({})
 				if(res.data.status){
 					
 					// login user
@@ -354,6 +376,8 @@ const submitOTPHandler = (e, otpRef, intervalRef, loginData, userId, auth, updat
 					axios.post(`/users/login`, { userEmail: login.email, userPass: login.pass } )
 						.then(res => {
 							if(res.data.status){
+								clearInterval(intervalRef.current)
+								
 								let data = res.data.data
 								localStorage.setItem('task-cutive-token', data.token.refreshToken)
 								
@@ -401,6 +425,7 @@ const submitOTPHandler = (e, otpRef, intervalRef, loginData, userId, auth, updat
 				}
 			})
 			.catch(e => {
+				updateWaitLoader({})
 				setLoginError('Something went wrong. Try again.')
 				// console.log(e)
 			})
@@ -423,7 +448,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		updateAuth: (...args) => dispatch( actions.updateAuth(...args) )
+		updateAuth: (...args) => dispatch( actions.updateAuth(...args) ),
+		updateWaitLoader: (...args) => dispatch( actions.updateWaitLoader(...args) )
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FormVerifyEmail)
