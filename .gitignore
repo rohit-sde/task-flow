@@ -21,8 +21,8 @@ yarn-error.log*
 
 /*.bat
 local*
-.env
+.env*
 
 .dockerignore
 Dockerfile*
-docker-compose.yml*
+docker-compose*.yml
