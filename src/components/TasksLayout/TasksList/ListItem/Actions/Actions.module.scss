@@ -1,58 +1,57 @@
-.Actions{
-	// background-color: cadetblue;	
-	width: 5em;
-	// margin-left: 1em;
-	// margin-right: 1em;
-	display: flex;
-	flex-direction: column;
-	flex-shrink: 0;
+.Actions {
+    // background-color: cadetblue;
+    width: 5em;
+    // margin-left: 1em;
+    // margin-right: 1em;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
 }
-.Done{
-	color: silver;
-	height: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 1.2em;
-	cursor: pointer;
-	svg:focus{
-		outline: 2px solid #e1e1e1;
-	}
+.Done {
+    color: silver;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    cursor: pointer;
+    svg:focus {
+        outline: 2px solid #e1e1e1;
+    }
 
-	&[data-taskdone="1"]{
-		color: green;
-		font-size: 1.8em;
-		// background-color: blueviolet;
-		svg:focus{
-			outline: 2px solid #bae7ba;
-			
-		}
-	}
+    &[data-taskdone="1"] {
+        color: green;
+        font-size: 1.8em;
+        // background-color: blueviolet;
+        svg:focus {
+            outline: 2px solid #bae7ba;
+        }
+    }
 
-	&.NoPointer{
-		cursor: unset;
-	}
+    &.NoPointer {
+        cursor: unset;
+    }
 }
-.EditDelete{
-	display: flex;
-	flex-direction: row;
-	height: 50%;
-	justify-content: space-around;
-	align-items: center;
+.EditDelete {
+    display: flex;
+    flex-direction: row;
+    height: 50%;
+    justify-content: space-around;
+    align-items: center;
 }
-.Edit{
-	color: #5252fd;
-	cursor: pointer;
+.Edit {
+    color: #5252fd;
+    cursor: pointer;
 
-	svg:focus{
-		outline: 2px solid #9797ff;
-	}
+    svg:focus {
+        outline: 2px solid #9797ff;
+    }
 }
-.Delete{
-	color: #fd4d4d;
-	cursor: pointer;
+.Delete {
+    color: #fd4d4d;
+    cursor: pointer;
 
-	svg:focus{
-		outline: 2px solid #f1aeae;
-	}
+    svg:focus {
+        outline: 2px solid #f1aeae;
+    }
 }

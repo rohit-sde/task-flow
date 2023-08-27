@@ -1,12 +1,12 @@
 $app-width: 800px;
-.TasksLayout{
-	// background-color: pink;
-	width: $app-width;
-	position: relative;
+.TasksLayout {
+    // background-color: pink;
+    width: $app-width;
+    position: relative;
 }
 
 @media screen and (max-width: $app-width) {
-	.TasksLayout{
-		width: 100%;
-	}
+    .TasksLayout {
+        width: 100%;
+    }
 }

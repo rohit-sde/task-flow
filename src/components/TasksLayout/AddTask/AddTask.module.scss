@@ -1,35 +1,34 @@
-.AddTask{
+.AddTask {
+    > h2 {
+        text-align: center;
+        margin: 0.7em auto;
+        color: blueviolet;
+    }
+}
+.ButtonCon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0px;
+}
+.Error {
+    font-size: 1.2em;
+}
+.InputCon {
+    display: flex;
+    // margin: 0.4em 0.6em;
+    // background-color: pink;
 
-	>h2{
-		text-align: center;
-		margin: 0.7em auto;
-		color: blueviolet
-	}
-}
-.ButtonCon{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 1em 0px;
-}
-.Error{
-	font-size: 1.2em;
-}
-.InputCon{
-	display: flex;
-	// margin: 0.4em 0.6em;
-	// background-color: pink;
-
-	>div{
-		width: 50%;
-	}
+    > div {
+        width: 50%;
+    }
 }
 
 @media (max-width: 580px) {
-	.InputCon{
-		flex-direction: column;
-		>div{
-			width: 100%;
-		}
-	}
+    .InputCon {
+        flex-direction: column;
+        > div {
+            width: 100%;
+        }
+    }
 }

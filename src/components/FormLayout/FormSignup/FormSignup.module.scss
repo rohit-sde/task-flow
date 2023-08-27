@@ -1,64 +1,63 @@
-@import './../../UI/mixins.scss';
-.FormSignup{
-	padding: 0px 50px 30px;
-	>h2{
-		text-align: center;
-		margin: 0.2em;
-		color: blueviolet;
-		font-family: cursive;
-		margin-bottom: 20px;
-		user-select: none;
-	}
-	>form{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		
-		>div[id="fname_lname_con"]{
-			width: 100%;
-		}
-		>hr{
-			align-self: stretch;
-			border-top: 1px solid $toneColor;
-			width: 50%;
-			margin-bottom: 0.8em;
-		}
-		
-	}
+@import "./../../UI/mixins.scss";
+.FormSignup {
+    padding: 0px 50px 30px;
+    > h2 {
+        text-align: center;
+        margin: 0.2em;
+        color: blueviolet;
+        font-family: cursive;
+        margin-bottom: 20px;
+        user-select: none;
+    }
+    > form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        > div[id="fname_lname_con"] {
+            width: 100%;
+        }
+        > hr {
+            align-self: stretch;
+            border-top: 1px solid $toneColor;
+            width: 50%;
+            margin-bottom: 0.8em;
+        }
+    }
 }
-.Button{
-	background-color: blueviolet;
+.Button {
+    background-color: blueviolet;
 }
-.Button:hover{
-	background-color: #6622a5;
+.Button:hover {
+    background-color: #6622a5;
 }
-.Error{
-	@include inputTagError;
-	align-self: stretch;
-	text-align: center;
-	margin-left: 0;
-	margin-bottom: 0.4em;
-	margin-top: 0.2em;
+.Error {
+    @include inputTagError;
+    align-self: stretch;
+    text-align: center;
+    margin-left: 0;
+    margin-bottom: 0.4em;
+    margin-top: 0.2em;
 }
-.ForgotPassword{
-	margin: 0;
-	padding: 0;
-	>a{
-		text-decoration: none;
-	}
+.ForgotPassword {
+    margin: 0;
+    padding: 0;
+    > a {
+        text-decoration: none;
+    }
 }
 @media only screen and (min-width: 450px) {
-	.FormSignup{
-		form{
-			div[id="fname_lname_con"]{
-				display: flex;
-			}
-			div[id="fname_div"]{
-				margin-right: 0.5em;
-			}
-			div[id="lname_div"]{
-				margin-left: 0.5em;
-			}
-		}
-	}
+    .FormSignup {
+        form {
+            div[id="fname_lname_con"] {
+                display: flex;
+            }
+            div[id="fname_div"] {
+                margin-right: 0.5em;
+            }
+            div[id="lname_div"] {
+                margin-left: 0.5em;
+            }
+        }
+    }
 }

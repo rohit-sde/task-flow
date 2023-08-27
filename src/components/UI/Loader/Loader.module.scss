@@ -1,48 +1,69 @@
-$color-primary1:#736EFE;
-$color-primary2:#5999FF;
-$color-primary3:#44B9FF;
-$color-primary4:#40d6f8;
-$color-primary5:#5fe2ff;
+$color-primary1: #736efe;
+$color-primary2: #5999ff;
+$color-primary3: #44b9ff;
+$color-primary4: #40d6f8;
+$color-primary5: #5fe2ff;
 
-.Loader{
-	display: inline-block;
+.Loader {
+    display: inline-block;
 }
-.Debug{
-	background-color: #e9e9e9;	
+.Debug {
+    background-color: #e9e9e9;
 }
-.Common{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	display: inline-block;
-	
-	&::before,
-	&::after {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
+.Common {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: inline-block;
+
+    &::before,
+    &::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 }
-.SquareContainer{
-	list-style-type: none;
-	position: relative;
+.SquareContainer {
+    list-style-type: none;
+    position: relative;
 }
-.SquareCommon{
-	margin: 4px;
-	width: 30px;
-	height: 30px;
-	border-radius: 7px;
-	animation: rotating 2s ease infinite;
+.SquareCommon {
+    margin: 4px;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    animation: rotating 2s ease infinite;
 }
 
-.Square1 {background: $color-primary1; animation-delay: .2s};
-.Square2 {background: $color-primary2; animation-delay: .4s};
-.Square3 {background: $color-primary3; animation-delay: .6s};
-.Square4 {background: $color-primary4; animation-delay: .8s};
-.Square5 {background: $color-primary5; animation-delay: 1s};
+.Square1 {
+    background: $color-primary1;
+    animation-delay: 0.2s;
+}
+.Square2 {
+    background: $color-primary2;
+    animation-delay: 0.4s;
+}
+.Square3 {
+    background: $color-primary3;
+    animation-delay: 0.6s;
+}
+.Square4 {
+    background: $color-primary4;
+    animation-delay: 0.8s;
+}
+.Square5 {
+    background: $color-primary5;
+    animation-delay: 1s;
+}
 
 @keyframes rotating {
-	0% {transform: rotate(0) scale(1);}
-	50% {transform: rotate(90deg) scale(.6);}
-	100% {transform: rotate(90deg) scale(1);}
+    0% {
+        transform: rotate(0) scale(1);
+    }
+    50% {
+        transform: rotate(90deg) scale(0.6);
+    }
+    100% {
+        transform: rotate(90deg) scale(1);
+    }
 }

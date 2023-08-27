@@ -1,76 +1,76 @@
-@import './../../UI/mixins.scss';
-.VerifyEmail{
-	padding: 0px 50px 30px;
-	>h2{
-		text-align: center;
-		margin: 0.2em;
-		color: blueviolet;
-		font-family: cursive;
-		margin-bottom: 20px;
-		user-select: none;
-	}
-	>form{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		>hr{
-			align-self: stretch;
-			border-top: 1px solid $toneColor;
-			width: 90%;
-			margin-top: 0.8em;
-		}
-	}
+@import "./../../UI/mixins.scss";
+.VerifyEmail {
+    padding: 0px 50px 30px;
+    > h2 {
+        text-align: center;
+        margin: 0.2em;
+        color: blueviolet;
+        font-family: cursive;
+        margin-bottom: 20px;
+        user-select: none;
+    }
+    > form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        > hr {
+            align-self: stretch;
+            border-top: 1px solid $toneColor;
+            width: 90%;
+            margin-top: 0.8em;
+        }
+    }
 }
-.Button{
-	background-color: blueviolet;
+.Button {
+    background-color: blueviolet;
 }
-.Button:hover{
-	background-color: #6622a5;
+.Button:hover {
+    background-color: #6622a5;
 }
-.Error{
-	@include inputTagError;
-	align-self: stretch;
-	text-align: center;
-	margin-left: 0;
-	margin-bottom: 0.4em;
-	margin-top: 0.2em;
+.Error {
+    @include inputTagError;
+    align-self: stretch;
+    text-align: center;
+    margin-left: 0;
+    margin-bottom: 0.4em;
+    margin-top: 0.2em;
 }
-.ForgotPassword{
-	margin: 0;
-	padding: 0;
-	>a{
-		text-decoration: none;
-	}
+.ForgotPassword {
+    margin: 0;
+    padding: 0;
+    > a {
+        text-decoration: none;
+    }
 }
-.Timer{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0px;
-	padding: 0px;
-	margin-bottom: 0.9em;
-	user-select: none;
-	>div{
-		display: inline-block;
-		margin: 0px;
-		padding: 0px;
-		width: max-content;
-		>p{
-			margin: 0px;
-			padding-left: 20px;
-			padding-right: 20px;
-			border-radius: 5px;
-		}
-	}
+.Timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 0.9em;
+    user-select: none;
+    > div {
+        display: inline-block;
+        margin: 0px;
+        padding: 0px;
+        width: max-content;
+        > p {
+            margin: 0px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 5px;
+        }
+    }
 }
-.OTP{
-	align-self: stretch;
-	padding-left: 3em;
-	padding-right: 3em;
+.OTP {
+    align-self: stretch;
+    padding-left: 3em;
+    padding-right: 3em;
 
-	input{
-		padding-left: 1.5em;
-		padding-right: 1.5em;
-		letter-spacing: 3px;
-	}
+    input {
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+        letter-spacing: 3px;
+    }
 }

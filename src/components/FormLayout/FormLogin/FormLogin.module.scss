@@ -1,52 +1,52 @@
-@import './../../UI/mixins.scss';
-.FormLogin{
-	padding: 0px 50px 30px;
-	>h2{
-		text-align: center;
-		margin: 0.2em;
-		color: blueviolet;
-		font-family: cursive;
-		margin-bottom: 20px;
-		user-select: none;
-	}
-	>form{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		>hr{
-			align-self: stretch;
-			border-top: 1px solid $toneColor;
-			width: 90%;
-			margin-top: 0.8em;
-		}
-		button{
-			margin-bottom: 1em;
-		}
-	}
+@import "./../../UI/mixins.scss";
+.FormLogin {
+    padding: 0px 50px 30px;
+    > h2 {
+        text-align: center;
+        margin: 0.2em;
+        color: blueviolet;
+        font-family: cursive;
+        margin-bottom: 20px;
+        user-select: none;
+    }
+    > form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        > hr {
+            align-self: stretch;
+            border-top: 1px solid $toneColor;
+            width: 90%;
+            margin-top: 0.8em;
+        }
+        button {
+            margin-bottom: 1em;
+        }
+    }
 }
-.Message{
-	@include inputTagError;
-	align-self: stretch;
-	text-align: center;
-	margin-left: 0;
-	margin-bottom: 0.6em;
-	margin-top: 0em;
-	padding: 0.5em;
-	font-size: 0.9em;
-	letter-spacing: 0.7px;
+.Message {
+    @include inputTagError;
+    align-self: stretch;
+    text-align: center;
+    margin-left: 0;
+    margin-bottom: 0.6em;
+    margin-top: 0em;
+    padding: 0.5em;
+    font-size: 0.9em;
+    letter-spacing: 0.7px;
 }
-.Error{
-	background-color: #ffd4d4;
-	color: #df0000;
+.Error {
+    background-color: #ffd4d4;
+    color: #df0000;
 }
-.Success{
-	background-color: #acefac;
-	color: #008500;
+.Success {
+    background-color: #acefac;
+    color: #008500;
 }
-.ForgotPassword{
-	margin: 0;
-	padding: 0;
-	>a{
-		text-decoration: none;
-	}
+.ForgotPassword {
+    margin: 0;
+    padding: 0;
+    > a {
+        text-decoration: none;
+    }
 }

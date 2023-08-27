@@ -1,55 +1,55 @@
-.DialogAlert{
-	// height: 10em;
-	width: 20em;
-	background-color: white;
-	outline: 1px solid white;
-	display: flex;
-	flex-direction: column;
+.DialogAlert {
+    // height: 10em;
+    width: 20em;
+    background-color: white;
+    outline: 1px solid white;
+    display: flex;
+    flex-direction: column;
 }
-.Title{
-	background-color: blueviolet;
-	height: 3em;
-	color: white;
-	display: flex;
-	align-items: center;
-	padding: 0px 1em;
-	flex-shrink: 0;
+.Title {
+    background-color: blueviolet;
+    height: 3em;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0px 1em;
+    flex-shrink: 0;
 
-	>div:last-child{
-		margin-left: auto;
-		padding-top: 5px;
-	}
+    > div:last-child {
+        margin-left: auto;
+        padding-top: 5px;
+    }
 }
-.Body{
-	padding: 1em;
-	flex-grow: 1;
+.Body {
+    padding: 1em;
+    flex-grow: 1;
 }
-.ButtonCon{
-	flex-shrink: 0;
-	display: flex;
-	justify-content: center;
+.ButtonCon {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
 
-	>div{
-		display: flex;
-		justify-content: space-between;
-		padding: 1em;
-		width: 18em;
-	}
+    > div {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+        width: 18em;
+    }
 }
-.Button{
-	height: 2.5em;
-	background-color: blueviolet;
-	padding: 0px 1em;
-	border: none;
-	outline: none;
-	width: 7em;
-	color: white;
-	cursor: pointer;
+.Button {
+    height: 2.5em;
+    background-color: blueviolet;
+    padding: 0px 1em;
+    border: none;
+    outline: none;
+    width: 7em;
+    color: white;
+    cursor: pointer;
 
-	&:focus{
-		outline: 3px solid #d7acff;
-	}
+    &:focus {
+        outline: 3px solid #d7acff;
+    }
 }
-.Close{
-	cursor: pointer;
+.Close {
+    cursor: pointer;
 }

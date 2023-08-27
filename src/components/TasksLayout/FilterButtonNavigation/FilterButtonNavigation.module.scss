@@ -1,28 +1,28 @@
-.FilterButtonDiv{
-	// background-color: red;
-	height: 3em;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.FilterButtonDiv {
+    // background-color: red;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-	div{
-		// background-color: chartreuse;
-		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-		width: 250px;
-		height: inherit;
-	}
+    div {
+        // background-color: chartreuse;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 250px;
+        height: inherit;
+    }
 }
-.FilterButton{
-	text-decoration: none;
-	color: #0053f1;
-	display: inline-block;
-	user-select: none;
-	padding: 0.4em 1em;
-	white-space: nowrap;
+.FilterButton {
+    text-decoration: none;
+    color: #0053f1;
+    display: inline-block;
+    user-select: none;
+    padding: 0.4em 1em;
+    white-space: nowrap;
 }
-.FilterButtonActive{
-	color: white;
-	background-color: blueviolet;
+.FilterButtonActive {
+    color: white;
+    background-color: blueviolet;
 }

@@ -1,23 +1,23 @@
-.DataTimePicker{
-	label{
-		color: blueviolet;
-		font-weight: bold;
-		display: inline-block;
-		padding: 0.4em 0.6em;
-		font-size: 1.2em;
-	}
+.DataTimePicker {
+    label {
+        color: blueviolet;
+        font-weight: bold;
+        display: inline-block;
+        padding: 0.4em 0.6em;
+        font-size: 1.2em;
+    }
 }
-.Style{
-	padding: 0.4em 0.6em;
-	>div{
-		>div{
-			fieldset{
-				border: 2px solid blueviolet;
-				border-radius: 0px;
-			}
-			&:hover fieldset{
-				border-color: pink;
-			}
-		}
-	}
+.Style {
+    padding: 0.4em 0.6em;
+    > div {
+        > div {
+            fieldset {
+                border: 2px solid blueviolet;
+                border-radius: 0px;
+            }
+            &:hover fieldset {
+                border-color: pink;
+            }
+        }
+    }
 }

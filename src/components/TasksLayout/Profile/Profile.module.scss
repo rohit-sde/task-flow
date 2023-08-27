@@ -1,36 +1,35 @@
-.Profile{
-	
+.Profile {
 }
-.Heading{
-	text-align: center;
-	color: blueviolet;
+.Heading {
+    text-align: center;
+    color: blueviolet;
 }
-.MainCon{
-	display: flex;
-	justify-content: center;
-	text-align: center;
+.MainCon {
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
-.DivTable{
-	display: flex;
-	flex-direction: column;
+.DivTable {
+    display: flex;
+    flex-direction: column;
 
-	>div{
-		display: flex;
-		justify-content: stretch;
-		// background-color: brown;
-		padding: 0.4em 0em;
+    > div {
+        display: flex;
+        justify-content: stretch;
+        // background-color: brown;
+        padding: 0.4em 0em;
 
-		>div:nth-child(1){
-			// background-color: pink;
-			min-width: 8em;
-			flex-shrink: 0;
-			text-align: start;
-			font-weight: bold;
-		}
-		>div:nth-child(2){
-			// background-color: silver;
-			flex-shrink: 0;
-			text-align: start;
-		}
-	}
+        > div:nth-child(1) {
+            // background-color: pink;
+            min-width: 8em;
+            flex-shrink: 0;
+            text-align: start;
+            font-weight: bold;
+        }
+        > div:nth-child(2) {
+            // background-color: silver;
+            flex-shrink: 0;
+            text-align: start;
+        }
+    }
 }

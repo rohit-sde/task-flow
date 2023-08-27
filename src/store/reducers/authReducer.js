@@ -1,24 +1,24 @@
-import * as constants from './../actions/constants'
+import * as constants from "./../actions/constants";
 
 const initialState = {
-	loadApp: false,
-	isLoggedIn: false,
-	accessToken: null,
-	refreshToken: null,
-	user: {
-		_id: null,
-		fname: null,
-		lname: null,
-		email: null,
-		role: null,
-		verified: false,
-		verifyMeta: {
-			otp: null,
+    loadApp: false,
+    isLoggedIn: false,
+    accessToken: null,
+    refreshToken: null,
+    user: {
+        _id: null,
+        fname: null,
+        lname: null,
+        email: null,
+        role: null,
+        verified: false,
+        verifyMeta: {
+            otp: null,
             issued_at: null,
-            used_for: null
-		}
-	}
-}
+            used_for: null,
+        },
+    },
+};
 // const login = (state, action) => {
 // 	console.log("LOGIN - OK!")
 // 	return state
@@ -55,19 +55,20 @@ const initialState = {
 // 	}
 // }
 
-
 const authReducer = (state = initialState, action) => {
-	switch (action.type) {
-		// case constants.LOGIN: return login(state, action)
-		// case constants.UPDATE_LOGGED_IN: return updateLoggedIn(state, action)
-		// case constants.REFRESH_TOKEN: return refreshToken(state, action)
-		// case constants.UPDATE_LOAD_APP: return updateLoadApp(state, action)
-		case constants.UPDATE_AUTH: return {
-			...state,
-			...action.payload
-		}
-		default: return state
-	}
-}
+    switch (action.type) {
+        // case constants.LOGIN: return login(state, action)
+        // case constants.UPDATE_LOGGED_IN: return updateLoggedIn(state, action)
+        // case constants.REFRESH_TOKEN: return refreshToken(state, action)
+        // case constants.UPDATE_LOAD_APP: return updateLoadApp(state, action)
+        case constants.UPDATE_AUTH:
+            return {
+                ...state,
+                ...action.payload,
+            };
+        default:
+            return state;
+    }
+};
 
-export default authReducer
+export default authReducer;
